@@ -48,6 +48,9 @@ namespace dataAccess
                         .HasColumnType("char(36)");
                 entity.Property(e => e.ModifiedByUser)
                         .HasColumnType("char(36)");
+                entity.Property(e => e.Subject)
+                        .HasColumnType("varchar(100)");
+                entity.Property(e => e.DurationMinutes);
             });
 
             modelBuilder.Entity<User>(entity =>

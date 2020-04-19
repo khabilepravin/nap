@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using dataAccess;
 
 namespace dataAccess.Migrations
 {
     [DbContext(typeof(dataContext))]
-    partial class dataContextModelSnapshot : ModelSnapshot
+    [Migration("20200419180817_Subject_in_Test")]
+    partial class Subject_in_Test
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,9 +66,6 @@ namespace dataAccess.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("varchar(1000)");
-
-                    b.Property<short>("DurationMinutes")
-                        .HasColumnType("smallint");
 
                     b.Property<string>("ModifiedAt")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");

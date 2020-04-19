@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -30,6 +30,10 @@
   <ItemGroup>
     <ProjectReference Include="..\dataAccess\dataAccess.csproj" />
     <ProjectReference Include="..\models\models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ApiContracts\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
