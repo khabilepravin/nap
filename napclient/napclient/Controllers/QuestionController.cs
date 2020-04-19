@@ -7,8 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace napclient.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
     public class QuestionController : ControllerBase
     {
     }
