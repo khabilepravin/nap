@@ -86,6 +86,8 @@ namespace dataAccess
                         .HasColumnType("char(36)");
                 entity.Property(e => e.ModifiedByUser)
                         .HasColumnType("char(36)");
+                entity.Property(e => e.ImageUrl)
+                        .HasColumnType("varchar(3000)");
             });
         }
     }
