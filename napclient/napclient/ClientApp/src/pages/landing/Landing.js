@@ -35,17 +35,8 @@ const Header = () => (
   <Navbar dark expand="xs" className="absolute-top w-100 py-2">
     <Container>
       <NavbarBrand className="font-weight-bold" href="/">
-        <IosPulse /> Spark
-      </NavbarBrand>
-      <Button
-        color="success"
-        href="https://themes.getbootstrap.com/product/spark-admin-dashboard-template-reactjs/"
-        target="_blank"
-        rel="noreferrer noopener"
-        className="my-2 ml-2 btn-pill"
-      >
-        Purchase Now
-      </Button>
+        <IosPulse /> Practice Naplan
+      </NavbarBrand>      
     </Container>
   </Navbar>
 );
@@ -59,53 +50,13 @@ const Intro = () => (
             <Col md={12} xl={8} className="mx-auto text-center">
               <div className="d-block my-4">
                 <h1 className="display-4 font-weight-bold mb-3 text-white">
-                  Modern, Flexible and Responsive ReactJS Admin Template
+                  Ever increasing comprehensive suite of tests for year 3, 5 students, completely free
                 </h1>
                 <p className="lead font-weight-light mb-3 landing-text">
-                  A professional package that comes with hunderds of UI
-                  components, forms, tables, charts, dashboards, pages and svg
-                  icons. Each one is fully customizable, responsive and easy to
-                  use.
-                </p>
-
-                <div className="my-4">
-                  <img
-                    src={brandBootstrap}
-                    alt="Bootstrap"
-                    width="40"
-                    className="align-middle mr-2"
-                  />{" "}
-                  <img
-                    src={brandSass}
-                    alt="Sass"
-                    width="40"
-                    className="align-middle mr-2"
-                  />{" "}
-                  <img
-                    src={brandWebpack}
-                    alt="Webpack"
-                    width="40"
-                    className="align-middle mr-2"
-                  />{" "}
-                  <img
-                    src={brandNpm}
-                    alt="NPM"
-                    width="40"
-                    className="align-middle mr-2"
-                  />{" "}
-                  <img
-                    src={brandReact}
-                    alt="React"
-                    width="42"
-                    className="align-middle"
-                  />{" "}
-                  <img
-                    src={brandRedux}
-                    alt="Redux"
-                    width="34"
-                    className="align-middle"
-                  />
-                </div>
+                                    A professional package that comes with hunderds of tests with score tracking and automatic shuffling of questions and answers.
+                                    Makes re-taking test a challange and less repetitive
+                                    </p>
+                
               </div>
             </Col>
           </Row>
@@ -165,52 +116,13 @@ const Styles = () => (
   <section className="py-6">
     <Container>
       <div className="mb-4 text-center">
-        <h2>Multiple demos</h2>
+        <h2>Quick links to try the samples</h2>
         <p className="text-muted">
           Multiple color schemes available to make this template your very own.
         </p>
       </div>
 
-      <Row>
-        <Col lg="4" className="text-center">
-          <Card tag={Link} to="/layouts/theme-modern" target="_blank">
-            <div className="px-4 pt-4">
-              <img
-                src={screenshotThemeModern}
-                className="img-fluid card-img-hover landing-img"
-                alt="Modern Bootstrap 4 ReactJS Dashboard Theme"
-              />
-            </div>
-          </Card>
-          <h4>Modern Theme</h4>
-        </Col>
-
-        <Col lg="4" className="text-center">
-          <Card tag={Link} to="/layouts/theme-light" target="_blank">
-            <div className="px-4 pt-4">
-              <img
-                src={screenshotThemeLight}
-                className="img-fluid card-img-hover landing-img"
-                alt="Light Bootstrap 4 ReactJS Dashboard Theme"
-              />
-            </div>
-          </Card>
-          <h4>Light Theme</h4>
-        </Col>
-
-        <Col lg="4" className="text-center">
-          <Card tag={Link} to="/layouts/theme-dark" target="_blank">
-            <div className="px-4 pt-4">
-              <img
-                src={screenshotThemeDark}
-                className="img-fluid card-img-hover landing-img"
-                alt="Dark Bootstrap 4 ReactJS Dashboard Theme"
-              />
-            </div>
-          </Card>
-          <h4>Dark Theme</h4>
-        </Col>
-      </Row>
+      
     </Container>
   </section>
 );
@@ -450,16 +362,8 @@ const Footer = () => (
       <Row>
         <Col lg={6} className="mx-auto">
           <h2 className="mb-3">
-            Join over 2,500 developers who are already working with our products
-          </h2>
-          <Button
-            href="https://themes.getbootstrap.com/product/spark-admin-dashboard-template-reactjs/"
-            target="_blank"
-            rel="noreferrer noopener"
-            className="align-middle btn btn-success btn-lg mt-n1"
-          >
-            Purchase Now
-          </Button>
+            Join over 1000 of students who are already mastering with our practice tests
+          </h2>          
         </Col>
       </Row>
     </Container>
