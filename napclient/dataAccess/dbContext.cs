@@ -82,6 +82,8 @@ namespace dataAccess
                         .HasColumnType("varchar(3000)");
                 entity.Property(e => e.Description)
                         .HasColumnType("varchar(3000)");
+                entity.Property(e => e.TestId)
+                        .HasColumnType("char(36)");
                 entity.Property(e => e.CreatedAt);
                 entity.Property(e => e.ModifiedAt);
                 entity.Property(e => e.CreatedByUser)

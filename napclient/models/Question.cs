@@ -8,6 +8,7 @@ namespace models
         public string Text { get; set; }
         public string Description { get; set; }
         public string QuestionType { get; set; }
+        public string TestId { get; set; }
         public Int16 Sequence { get; set; }
         public string ImageUrl { get; set; }
         public DateTime CreatedAt { get; set; }
