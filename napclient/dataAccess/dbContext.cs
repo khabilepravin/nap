@@ -15,6 +15,8 @@ namespace dataAccess
         public DbSet<User> User { get; set; }
         public DbSet<Test> Test { get; set; }
         public DbSet<Question> Question { get; set; }
+        public DbSet<UserTest> UserTest { get; set; }
+        public DbSet<Answer> Answer { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -90,6 +92,22 @@ namespace dataAccess
                         .HasColumnType("char(36)");
                 entity.Property(e => e.ModifiedByUser)
                         .HasColumnType("char(36)");
+                entity.Property(e => e.ImageUrl)
+                        .HasColumnType("varchar(3000)");
+            });
+
+            modelBuilder.Entity<Answer>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Text)
+                        .HasColumnType("varchar(3000)");
+                entity.Property(e => e.Description)
+                        .HasColumnType("varchar(3000)");
+                entity.Property(e => e.QuestionId)
+                        .HasColumnType("char(36)");
+                entity.Property(e => e.Type)
+                        .HasColumnType("varchar(100)");
+                entity.Property(e => e.IsCorrect);
                 entity.Property(e => e.ImageUrl)
                         .HasColumnType("varchar(3000)");
             });
