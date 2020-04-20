@@ -66,6 +66,8 @@ namespace dataAccess
                         .HasColumnType("varchar(100)");
                 entity.Property(e => e.UserType)
                         .HasColumnType("varchar(100)");
+                entity.Property(e => e.ParentUserId)
+                        .HasColumnType("char(36)");
                 entity.Property(e => e.CreatedAt)
                         .HasColumnType("datetime");
                 entity.Property(e => e.ModifiedAt)

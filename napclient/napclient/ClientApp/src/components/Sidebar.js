@@ -150,7 +150,7 @@ class Sidebar extends React.Component {
             href="/"
           >
             {sidebar.isOnRight || <IosPulse />}{" "}
-            <span className="align-middle">Spark</span>{" "}
+            <span className="align-middle">Practice Naplan</span>{" "}
             {!sidebar.isOnRight || <IosPulse />}
           </a>
 
