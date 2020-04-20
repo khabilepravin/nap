@@ -1,0 +1,23 @@
+.text-sm {
+  font-size: $font-size-sm;
+}
+
+.text-lg {
+  font-size: $font-size-lg;
+}
+
+b, strong {
+	font-weight: $font-weight-bold;
+}
+
+pre.snippet {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  text-align: justify;
+}
+
+.display-5 {
+  @include font-size($display5-size);
+  font-weight: $display5-weight;
+  line-height: $display-line-height;
+}

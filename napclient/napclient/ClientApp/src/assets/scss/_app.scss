@@ -1,0 +1,74 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Hind+Vadodara:400,500&display=swap');
+@import url('https://indestructibletype.com/fonts/Jost.css');
+
+// Theme variables
+@import "1-variables/app";
+
+// Bootstrap
+@import "bootstrap/scss/bootstrap";
+
+// Theme mixins
+@import "2-mixins/button";
+@import "2-mixins/modal";
+@import "2-mixins/placeholder";
+@import "2-mixins/switch";
+@import "2-mixins/tabs";
+@import "2-mixins/wizard";
+
+// Theme components
+@import "3-components/accordion";
+@import "3-components/alert";
+@import "3-components/avatar";
+@import "3-components/badge";
+@import "3-components/breadcrumb";
+@import "3-components/buttons";
+@import "3-components/card";
+@import "3-components/chart";
+@import "3-components/collapse";
+@import "3-components/content";
+@import "3-components/dropdown";
+@import "3-components/feather";
+@import "3-components/footer";
+@import "3-components/forms";
+@import "3-components/grid";
+@import "3-components/hamburger";
+@import "3-components/header";
+@import "3-components/icon";
+@import "3-components/landing";
+@import "3-components/main";
+@import "3-components/modal";
+@import "3-components/nav";
+@import "3-components/navbar";
+@import "3-components/reboot";
+@import "3-components/sidebar";
+@import "3-components/splash";
+@import "3-components/tables";
+@import "3-components/tabs";
+@import "3-components/type";
+@import "3-components/wrapper";
+
+// Theme utilities
+@import "4-utilities/background";
+@import "4-utilities/cursors";
+@import "4-utilities/overflow";
+@import "4-utilities/position";
+@import "4-utilities/sizing";
+
+// 3rd party plugins
+@import "react-quill/dist/quill.bubble";
+@import "react-quill/dist/quill.snow";
+@import 'react-redux-toastr/src/styles/index';
+@import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min';
+@import "jvectormap-next/jquery-jvectormap";
+@import "react-dragula/dist/dragula";
+@import "fullcalendar/dist/fullcalendar";
+@import "ionicons/dist/scss/ionicons";
+
+// 3rd party plugin styles
+@import "5-vendor/fullcalendar";
+@import "5-vendor/quill";
+@import "5-vendor/react-bootstrap-table";
+@import "5-vendor/react-datetime";
+@import "5-vendor/react-select";
+@import "5-vendor/toastr";

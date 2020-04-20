@@ -1,14 +1,33 @@
-﻿import React from 'react';
-import { Route } from 'react-router';
-import Layout from './components/Layout';
-import Home from './components/Home';
-import Counter from './components/Counter';
-import FetchData from './components/FetchData';
+import React from "react";
+import { Provider } from "react-redux";
+import ReduxToastr from "react-redux-toastr";
 
-export default () => (
-  <Layout>
-    <Route exact path='/' component={Home} />
-    <Route path='/counter' component={Counter} />
-    <Route path='/fetchdata/:startDateIndex?' component={FetchData} />
-  </Layout>
-);
+import store from "./redux/store/index";
+import Routes from "./routes/Routes";
+
+class App extends React.Component {
+  componentDidMount() {
+    // Remove `active` className from `.splash` element in `public/index.html`
+    !document.querySelector(".splash") ||
+      document.querySelector(".splash").classList.remove("active");
+  }
+
+  render() {
+    return (
+      <Provider store={store}>
+        <Routes />
+        <ReduxToastr
+          timeOut={5000}
+          newestOnTop={true}
+          position="top-right"
+          transitionIn="fadeIn"
+          transitionOut="fadeOut"
+          progressBar
+          closeOnToastrClick
+        />
+      </Provider>
+    );
+  }
+}
+
+export default App;
