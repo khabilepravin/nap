@@ -12,7 +12,7 @@ namespace models
         public Int16 DurationMinutes { get; set; }
 
         public DateTime CreatedAt { get; set; }
-        public string ModifiedAt { get; set; }
+        public DateTime ModifiedAt { get; set; }
         public string CreatedByUser { get; set; }
         public string ModifiedByUser { get; set; }
     }
