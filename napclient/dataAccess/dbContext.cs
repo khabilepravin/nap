@@ -89,6 +89,17 @@ namespace dataAccess
                 entity.Property(e => e.ImageUrl)
                         .HasColumnType("varchar(3000)");
             });
+
+            modelBuilder.Entity<UserTest>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.UserId)
+                        .HasColumnType("char(36)");
+                entity.Property(e => e.Status)
+                        .HasColumnType("varchar(100)");
+                entity.Property(e => e.CreatedAt);
+                entity.Property(e => e.ModifiedAt);
+            });
         }
     }
 }

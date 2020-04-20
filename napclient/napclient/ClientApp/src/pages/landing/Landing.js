@@ -118,7 +118,7 @@ const Styles = () => (
       <div className="mb-4 text-center">
         <h2>Quick links to try the samples</h2>
         <p className="text-muted">
-          Multiple color schemes available to make this template your very own.
+          Multiple numeracy tests to try from.
         </p>
       </div>
 
