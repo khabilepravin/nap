@@ -1,3 +1,5 @@
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -5,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace napclient
 {
@@ -16,9 +19,10 @@ namespace napclient
         }
 
         public IConfiguration Configuration { get; }
+        public IContainer Container { get; set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddControllers();
@@ -30,6 +34,13 @@ namespace napclient
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
+            var containerBuilder = new ContainerBuilder();
+            containerBuilder.Populate(services);
+            dataAccess.DataBootstrapper.Boostrap(containerBuilder);
+            this.Container = containerBuilder.Build();
+
+            return new AutofacServiceProvider(this.Container);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

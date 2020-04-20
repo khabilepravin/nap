@@ -11,7 +11,7 @@ namespace models
         public Int16 Sequence { get; set; }
         public string ImageUrl { get; set; }
         public DateTime CreatedAt { get; set; }
-        public string ModifiedAt { get; set; }
+        public DateTime ModifiedAt { get; set; }
         public string CreatedByUser { get; set; }
         public string ModifiedByUser { get; set; }
     }

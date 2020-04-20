@@ -1,4 +1,6 @@
-﻿namespace dataAccess.Repositories
+﻿using dataModel.Repositories;
+
+namespace dataAccess.Repositories
 {
     public class BaseRepository
     {
