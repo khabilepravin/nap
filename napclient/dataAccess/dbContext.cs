@@ -17,6 +17,7 @@ namespace dataAccess
         public DbSet<Question> Question { get; set; }
         public DbSet<UserTest> UserTest { get; set; }
         public DbSet<Answer> Answer { get; set; }
+        public DbSet<UserTestRecord> UserTestRecord { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -123,6 +124,17 @@ namespace dataAccess
                         .HasColumnType("char(36)");
                 entity.Property(e => e.CreatedAt);
                 entity.Property(e => e.ModifiedAt);
+            });
+
+            modelBuilder.Entity<UserTestRecord>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.UserTestId)
+                        .HasColumnType("char(36)");
+                entity.Property(e => e.QuestionId)
+                        .HasColumnType("char(36)");
+                entity.Property(e => e.AnswerId)
+                        .HasColumnType("char(36)");                
             });
         }
     }
