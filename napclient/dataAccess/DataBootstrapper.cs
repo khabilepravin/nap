@@ -1,8 +1,5 @@
 ﻿using Autofac;
 using dataAccess.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace dataAccess
 {
@@ -14,6 +11,7 @@ namespace dataAccess
             containerBuilder.RegisterType<UserRepository>().As<IUserRepository>();
             containerBuilder.RegisterType<QuestionRepository>().As<IQuestionRepository>();
             containerBuilder.RegisterType<UserTestRepository>().As<IUserTestRepository>();
+            containerBuilder.RegisterType<UserTestRecordRepository>().As<IUserTestRecordRepository>();
         }
     }
 }
