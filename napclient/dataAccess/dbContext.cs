@@ -119,6 +119,8 @@ namespace dataAccess
                         .HasColumnType("char(36)");
                 entity.Property(e => e.Status)
                         .HasColumnType("varchar(100)");
+                entity.Property(e => e.TestId)
+                        .HasColumnType("char(36)");
                 entity.Property(e => e.CreatedAt);
                 entity.Property(e => e.ModifiedAt);
             });
