@@ -22,17 +22,17 @@ namespace dataAccess
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             #region Comment this region-code for database migration and update
-            //if (!optionsBuilder.IsConfigured)
-            //{
-            //    optionsBuilder.UseMySql("server=localhost;database=naplanpractice_dev;user=root;password=p0k5PgOzmgkF");
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseMySql("server=localhost;database=naplanpractice_dev;user=root;password=p0k5PgOzmgkF");
 
-            //    this.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
-            //}
+                this.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            }
             #endregion
 
             #region Uncomment this region-code for database migration and update
             //Note: Put the connection string of your db
-            optionsBuilder.UseMySql("server=localhost;database=naplanpractice_dev;user=root;password=p0k5PgOzmgkF");
+            //optionsBuilder.UseMySql("server=localhost;database=naplanpractice_dev;user=root;password=p0k5PgOzmgkF");
             #endregion
         }
 
@@ -55,6 +55,8 @@ namespace dataAccess
                         .HasColumnType("varchar(100)");
                 entity.Property(e => e.DurationMinutes);
             });
+            
+            modelBuilder.Entity<Test>().Property(e => e.Id).ValueGeneratedOnAdd();
 
             modelBuilder.Entity<User>(entity =>
             {
@@ -77,6 +79,7 @@ namespace dataAccess
                         .HasColumnType("datetime");
 
             });
+            modelBuilder.Entity<User>().Property(e => e.Id).ValueGeneratedOnAdd();
 
             modelBuilder.Entity<Question>(entity =>
             {
@@ -96,6 +99,7 @@ namespace dataAccess
                 entity.Property(e => e.ImageUrl)
                         .HasColumnType("varchar(3000)");
             });
+            modelBuilder.Entity<Question>().Property(e => e.Id).ValueGeneratedOnAdd();
 
             modelBuilder.Entity<Answer>(entity =>
             {
@@ -112,6 +116,7 @@ namespace dataAccess
                 entity.Property(e => e.ImageUrl)
                         .HasColumnType("varchar(3000)");
             });
+            modelBuilder.Entity<Answer>().Property(e => e.Id).ValueGeneratedOnAdd();
 
             modelBuilder.Entity<UserTest>(entity =>
             {
@@ -125,6 +130,7 @@ namespace dataAccess
                 entity.Property(e => e.CreatedAt);
                 entity.Property(e => e.ModifiedAt);
             });
+            modelBuilder.Entity<UserTest>().Property(e => e.Id).ValueGeneratedOnAdd();
 
             modelBuilder.Entity<UserTestRecord>(entity =>
             {
@@ -136,6 +142,7 @@ namespace dataAccess
                 entity.Property(e => e.AnswerId)
                         .HasColumnType("char(36)");                
             });
+            modelBuilder.Entity<UserTestRecord>().Property(e => e.Id).ValueGeneratedOnAdd();
         }
     }
 }

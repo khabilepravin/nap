@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using dataAccess.Repositories;
+using dataModel.Repositories;
 
 namespace dataAccess
 {
@@ -7,6 +8,7 @@ namespace dataAccess
     {
         public static void Boostrap(ContainerBuilder containerBuilder)
         {
+            containerBuilder.RegisterType<DbContextFactory>().As<IDbContextFactory>().SingleInstance();
             containerBuilder.RegisterType<TestRepository>().As<ITestRepository>();
             containerBuilder.RegisterType<UserRepository>().As<IUserRepository>();
             containerBuilder.RegisterType<QuestionRepository>().As<IQuestionRepository>();
