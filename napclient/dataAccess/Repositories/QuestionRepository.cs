@@ -12,7 +12,7 @@ namespace dataAccess.Repositories
     {
         public QuestionRepository(IDbContextFactory dbContextFactory) : base(dbContextFactory) { }
 
-        public async Task<string> AddAsync(Question question)
+        public async Task<Guid> AddAsync(Question question)
         {
             using (var db = base._dbContextFactory.Create())
             {
@@ -23,7 +23,7 @@ namespace dataAccess.Repositories
             }
         }
 
-        public async Task<IEnumerable<Question>> GetQuestionsByTestIdAsync(string testId)
+        public async Task<IEnumerable<Question>> GetQuestionsByTestIdAsync(Guid testId)
         {
             using(var db = base._dbContextFactory.Create())
             {
@@ -33,7 +33,7 @@ namespace dataAccess.Repositories
             }
         }
 
-        public async Task<string> UpdateAsync(Question question)
+        public async Task<Guid> UpdateAsync(Question question)
         {
             using (var db = base._dbContextFactory.Create())
             {

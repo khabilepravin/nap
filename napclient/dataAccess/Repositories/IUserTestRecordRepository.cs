@@ -8,8 +8,8 @@ namespace dataAccess.Repositories
 {
     public interface IUserTestRecordRepository
     {
-        Task<string> AddAsync(UserTestRecord userTestRecord);
-        Task<IEnumerable<UserTestRecord>> GetByUserIdAsync(string userId);
-        Task<string> UpdateAsync(UserTestRecord userTestRecord);
+        Task<Guid> AddAsync(UserTestRecord userTestRecord);
+        Task<IEnumerable<UserTestRecord>> GetByUserIdAsync(Guid userId);
+        Task<Guid> UpdateAsync(UserTestRecord userTestRecord);
     }
 }

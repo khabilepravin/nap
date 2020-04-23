@@ -1,12 +1,13 @@
 ﻿using models;
+using System;
 using System.Threading.Tasks;
 
 namespace dataAccess.Repositories
 {
     public interface IUserRepository
     {
-        Task<string> AddAsync(User user);
-        Task<User> GetByIdAsync(string id);
-        Task<string> UpdateAsync(User user);
+        Task<Guid> AddAsync(User user);
+        Task<User> GetByIdAsync(Guid id);
+        Task<Guid> UpdateAsync(User user);
     }
 }

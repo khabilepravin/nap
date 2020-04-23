@@ -19,10 +19,16 @@ namespace graphqlMiddleware.Queries
                 ("tests",
                 resolve: context => this.testRepository.GetAll());
 
-            Field<TestType>(
-                    "test",
+            Field<ListGraphType<TestType>>(
+                    "testsBySubject",
                     arguments: new QueryArguments(new QueryArgument<StringGraphType> { Name = "subject" }), 
                     resolve: context => this.testRepository.GetBySubjectAsync(context.GetArgument<string>("subject"))
+                );
+
+            Field<TestType>(
+                    "test",
+                    arguments: new QueryArguments(new QueryArgument<StringGraphType> { Name="id"}),
+                    resolve: context => this.testRepository.GetByIdAsync(context.GetArgument<Guid>("id"))
                 );
         }
 

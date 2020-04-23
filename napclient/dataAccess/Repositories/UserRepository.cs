@@ -11,7 +11,7 @@ namespace dataAccess.Repositories
     {
         public UserRepository(IDbContextFactory dbContextFactory) : base(dbContextFactory) { }
 
-        public async Task<string> AddAsync(User user)
+        public async Task<Guid> AddAsync(User user)
         {
             using(var db = base._dbContextFactory.Create())
             {
@@ -22,7 +22,7 @@ namespace dataAccess.Repositories
             }
         }
 
-        public async Task<User> GetByIdAsync(string id)
+        public async Task<User> GetByIdAsync(Guid id)
         {
             using (var db = base._dbContextFactory.Create())
             {
@@ -32,7 +32,7 @@ namespace dataAccess.Repositories
             }
         }
 
-        public async Task<string> UpdateAsync(User user)
+        public async Task<Guid> UpdateAsync(User user)
         {
             using (var db = base._dbContextFactory.Create())
             {

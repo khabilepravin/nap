@@ -10,7 +10,7 @@ namespace dataAccess.Repositories
     {
         public UserTestRecordRepository(IDbContextFactory dbContextFactory) : base(dbContextFactory) { }
 
-        public async Task<string> AddAsync(UserTestRecord userTestRecord)
+        public async Task<Guid> AddAsync(UserTestRecord userTestRecord)
         {
             using (var db = base._dbContextFactory.Create())
             {
@@ -20,7 +20,7 @@ namespace dataAccess.Repositories
             }
         }
 
-        public  Task<IEnumerable<UserTestRecord>> GetByUserIdAsync(string userId)
+        public  Task<IEnumerable<UserTestRecord>> GetByUserIdAsync(Guid userId)
         {
             throw new NotImplementedException();
             //using (var db = base._dbContextFactory.Create())
@@ -32,7 +32,7 @@ namespace dataAccess.Repositories
             //}
         }
 
-        public async Task<string> UpdateAsync(UserTestRecord userTestRecord)
+        public async Task<Guid> UpdateAsync(UserTestRecord userTestRecord)
         {
             using (var db = base._dbContextFactory.Create())
             {   
