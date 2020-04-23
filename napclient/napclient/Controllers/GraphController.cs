@@ -7,10 +7,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace napclient.Controllers
 {
-    [Route("api/v{version:apiVersion}/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
-    [ApiVersion("1.0")]
-    public class BaseController : ControllerBase
+    public class GraphController : ControllerBase
     {
+        //[HttpPost]
+        //public async Task<ActionResult> Post()
+        //{
+
+        //}
     }
 }

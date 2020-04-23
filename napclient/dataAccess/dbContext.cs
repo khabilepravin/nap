@@ -40,7 +40,7 @@ namespace dataAccess
         {
             modelBuilder.Entity<Test>(entity =>
             {
-                entity.HasKey(e => e.Id);
+                entity.HasKey(e => e.Id);                        
                 entity.Property(e => e.Text)
                         .HasColumnType("varchar(500)");
                 entity.Property(e => e.Description)

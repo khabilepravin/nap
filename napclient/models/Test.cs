@@ -4,7 +4,7 @@ namespace models
 {
     public class Test
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
         public string Text { get; set; }
         public string Description { get; set; }
         public Int16 Sequence { get; set; }
@@ -13,7 +13,7 @@ namespace models
 
         public DateTime CreatedAt { get; set; }
         public DateTime ModifiedAt { get; set; }
-        public string CreatedByUser { get; set; }
-        public string ModifiedByUser { get; set; }
+        public Guid CreatedByUser { get; set; }
+        public Guid ModifiedByUser { get; set; }
     }
 }

@@ -19,7 +19,7 @@ namespace dataAccess.Repositories
                 test.CreatedAt = DateTime.UtcNow;
                 await db.Test.AddAsync(test);
                 await db.SaveChangesAsync();
-                return test.Id;
+                return test.Id.ToString();
             }
         }
 
@@ -40,7 +40,16 @@ namespace dataAccess.Repositories
                 test.ModifiedAt = DateTime.UtcNow;
                 db.Test.Update(test);
                 await db.SaveChangesAsync();
-                return test.Id;
+                return test.Id.ToString();
+            }
+        }
+
+        public async Task<IEnumerable<Test>> GetAll()
+        {
+            using (var db = base._dbContextFactory.Create())
+            {
+                return await (from t in db.Test
+                              select t).ToListAsync<Test>();
             }
         }
     }

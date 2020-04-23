@@ -9,5 +9,6 @@ namespace dataAccess.Repositories
         Task<string> AddAsync(Test test);
         Task<IEnumerable<Test>> GetBySubjectAsync(string subject);
         Task<string> UpdateAsync(Test test);
+        Task<IEnumerable<Test>> GetAll();
     }
 }

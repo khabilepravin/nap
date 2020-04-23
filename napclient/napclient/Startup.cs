@@ -1,5 +1,13 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using GraphQL;
+using GraphQL.Server;
+using GraphQL.Server.Ui.Playground;
+using GraphQL.Types;
+using GraphQL.Utilities;
+using graphqlMiddleware.GraphTypes;
+using graphqlMiddleware.NapSchema;
+using graphqlMiddleware.Queries;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -24,21 +32,35 @@ namespace napclient
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-            services.AddControllers();
-            services.AddApiVersioning();
-            services.AddMvc(option => option.EnableEndpointRouting = false);
+            services.AddSingleton<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
+            services.AddSingleton<ISchema, TestSchema>();
+            services.AddSingleton<TestQuery>();
+            services.AddSingleton<TestType>();
+            services.AddGraphQL();
+
+            services.Configure<IISServerOptions>(options =>
+            {
+                options.AllowSynchronousIO = true;
+            });
+
+            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            //services.AddControllers();
+            //services.AddApiVersioning();
+            //services.AddMvc(option => option.EnableEndpointRouting = false);
 
             // In production, the React files will be served from this directory
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp/build";
-            });
+            //services.AddSpaStaticFiles(configuration =>
+            //{
+            //    configuration.RootPath = "ClientApp/build";
+            //});
 
             var containerBuilder = new ContainerBuilder();
             containerBuilder.Populate(services);
             dataAccess.DataBootstrapper.Boostrap(containerBuilder);
+            graphqlMiddleware.GraphqlBootstrapper.Bootstrap(containerBuilder);
             this.Container = containerBuilder.Build();
+
+            
 
             return new AutofacServiceProvider(this.Container);
         }
@@ -56,26 +78,34 @@ namespace napclient
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
-            app.UseSpaStaticFiles();
+            //app.UseHttpsRedirection();
+            //app.UseStaticFiles();
+            //app.UseSpaStaticFiles();
 
-            app.UseMvc(routes =>
+            // add http for Schema at default url /graphql
+            app.UseGraphQL<ISchema>("/graphql");
+            // use graphql-playground at default url /ui/playground
+            app.UseGraphQLPlayground(new GraphQLPlaygroundOptions
             {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller}/{action=Index}/{id?}");
+                Path = "/ui/playground"
             });
 
-            app.UseSpa(spa =>
-            {
-                spa.Options.SourcePath = "ClientApp";
+            //app.UseMvc(routes =>
+            //{
+            //    routes.MapRoute(
+            //        name: "default",
+            //        template: "{controller}/{action=Index}/{id?}");
+            //});
 
-                if (env.IsDevelopment())
-                {
-                    spa.UseReactDevelopmentServer(npmScript: "start");
-                }
-            });
+            //app.UseSpa(spa =>
+            //{
+            //    spa.Options.SourcePath = "ClientApp";
+
+            //    if (env.IsDevelopment())
+            //    {
+            //        spa.UseReactDevelopmentServer(npmScript: "start");
+            //    }
+            //});
         }
     }
 }
