@@ -20,6 +20,18 @@ namespace graphqlMiddleware.Mutations
                     var test = context.GetArgument<Test>("test");
                     return testRepository.AddAsync(test);
                 });
+
+            Field<TestType>(
+                "updateTest",
+                arguments: new QueryArguments(
+                new QueryArgument<NonNullGraphType<TestInputType>> { Name = "test" }
+                ),
+                resolve: context =>
+                {
+                    var test = context.GetArgument<Test>("test");
+                    return testRepository.UpdateAsync(test);
+                });
+
         }
     }
 }

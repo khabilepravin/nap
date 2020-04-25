@@ -10,7 +10,7 @@ namespace dataAccess.Repositories
         Task<Test> AddAsync(Test test);
         Task<IEnumerable<Test>> GetBySubjectAsync(string subject);
         Task<Test> GetByIdAsync(Guid id);
-        Task<Guid> UpdateAsync(Test test);
+        Task<Test> UpdateAsync(Test test);
         Task<IEnumerable<Test>> GetAll();
     }
 }

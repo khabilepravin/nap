@@ -33,14 +33,14 @@ namespace dataAccess.Repositories
             }
         }
 
-        public async Task<Guid> UpdateAsync(Test test)
+        public async Task<Test> UpdateAsync(Test test)
         {
             using (var db = base._dbContextFactory.Create())
             {
                 test.ModifiedAt = DateTime.UtcNow;
                 db.Test.Update(test);
                 await db.SaveChangesAsync();
-                return test.Id;
+                return test;
             }
         }
 
