@@ -7,7 +7,7 @@ namespace dataAccess.Repositories
 {
     public interface ITestRepository
     {
-        Task<Guid> AddAsync(Test test);
+        Task<Test> AddAsync(Test test);
         Task<IEnumerable<Test>> GetBySubjectAsync(string subject);
         Task<Test> GetByIdAsync(Guid id);
         Task<Guid> UpdateAsync(Test test);
