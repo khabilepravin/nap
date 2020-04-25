@@ -50,11 +50,11 @@ const Intro = () => (
             <Col md={12} xl={8} className="mx-auto text-center">
               <div className="d-block my-4">
                 <h1 className="display-4 font-weight-bold mb-3 text-white">
-                  Ever increasing comprehensive suite of tests for year 3, 5 students, completely free
+                  Ever increasing comprehensive set of tests for year 3, 6 students
                 </h1>
                 <p className="lead font-weight-light mb-3 landing-text">
                                     A professional package that comes with hunderds of tests with score tracking and automatic shuffling of questions and answers.
-                                    Makes re-taking test a challange and less repetitive
+                                    Makes re-taking test less repetitive and more challanging
                                     </p>
                 
               </div>
@@ -362,7 +362,7 @@ const Footer = () => (
       <Row>
         <Col lg={6} className="mx-auto">
           <h2 className="mb-3">
-            Join over 1000 of students who are already mastering with our practice tests
+            Join thousands of students who are already mastering with our practice tests
           </h2>          
         </Col>
       </Row>
