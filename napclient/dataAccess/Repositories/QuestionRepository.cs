@@ -38,7 +38,7 @@ namespace dataAccess.Repositories
             using (var db = base._dbContextFactory.Create())
             {
                 question.ModifiedAt = DateTime.UtcNow;
-                db.Update(question);
+                db.Question.Update(question);
                 await db.SaveChangesAsync();
                 return question;
             }

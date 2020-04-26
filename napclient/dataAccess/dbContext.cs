@@ -18,6 +18,8 @@ namespace dataAccess
         public DbSet<UserTest> UserTest { get; set; }
         public DbSet<Answer> Answer { get; set; }
         public DbSet<UserTestRecord> UserTestRecord { get; set; }
+        public DbSet<Explanation> Explanation { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -150,6 +152,29 @@ namespace dataAccess
                         .HasColumnType("char(36)");                
             });
             modelBuilder.Entity<UserTestRecord>().Property(e => e.Id).ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Explanation>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.QuestionId)
+                        .HasColumnType("char(36)");
+                entity.Property(e => e.TextExplanation)
+                        .HasColumnType("varchar(3000)");
+                entity.Property(e => e.ExternalLink)
+                        .HasColumnType("varchar(3000)");
+                entity.Property(e => e.LinkType)
+                        .HasColumnType("varchar(100)");
+                entity.Property(e => e.CreatedAt);
+                entity.Property(e => e.ModifiedAt);
+                entity.Property(e => e.CreatedByUser)
+                                .HasColumnType("char(36)");
+                entity.Property(e => e.ModifiedByUser)
+                                .HasColumnType("char(36)");
+                entity.Property(e => e.ModifiedByUser)
+                            .HasColumnType("char(1)");
+
+            });
+            modelBuilder.Entity<Explanation>().Property(e => e.Id).ValueGeneratedOnAdd();
         }
     }
 }
