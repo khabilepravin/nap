@@ -8,7 +8,9 @@ namespace graphqlMiddleware.Mutations
     public class TestMutation : ObjectGraphType<Test>
     {
 
-        public TestMutation(ITestRepository testRepository, IQuestionRepository questionRepository)
+        public TestMutation(ITestRepository testRepository, 
+                            IQuestionRepository questionRepository,
+                            IAnswerRepository answerRepository)
         {
             Field<TestType>(
                 "createTest",
@@ -55,6 +57,28 @@ namespace graphqlMiddleware.Mutations
                         return questionRepository.UpdateAsync(question);
                     });
 
+            Field<AnswerType>(
+                "addAnswer",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<AnswerInputType>> { Name = "answer" }
+                    ),
+                    resolve: context =>
+                    {
+                        var answer = context.GetArgument<Answer>("answer");
+                        return answerRepository.AddAsync(answer);
+                    });
+
+            Field<AnswerType>(
+                    "updateAnswer",
+                    arguments: new QueryArguments(
+                        new QueryArgument<NonNullGraphType<AnswerInputType>> { Name = "answer" }
+                        ),
+                        resolve: context =>
+                        {
+
+                            var answer = context.GetArgument<Answer>("answer");
+                            return answerRepository.UpdateAsync(answer);
+                        });
         }
     }
 }

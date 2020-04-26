@@ -44,6 +44,8 @@ namespace napclient
             services.AddSingleton<UserQuery>();
             services.AddSingleton<UserType>();
             services.AddSingleton<QuestionInputType>();
+            services.AddSingleton<AnswerType>();
+            services.AddSingleton<AnswerInputType>();
 
 
             services.AddGraphQL();
