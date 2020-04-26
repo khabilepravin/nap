@@ -18,6 +18,7 @@ namespace graphqlMiddleware.GraphTypes
             Field(t => t.ModifiedAt);
             Field(t => t.CreatedByUser, type: typeof(IdGraphType));
             Field(t => t.ModifiedByUser, type: typeof(IdGraphType));
+            Field(t => t.Status);
         }
     }
 }

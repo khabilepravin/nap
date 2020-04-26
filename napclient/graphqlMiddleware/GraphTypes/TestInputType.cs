@@ -13,6 +13,7 @@ namespace graphqlMiddleware.GraphTypes
             Field<StringGraphType>("subject");
             Field<IntGraphType>("durationMinutes");
             Field<IdGraphType>("id");
+            Field<StringGraphType>("status");
         }
     }
 }

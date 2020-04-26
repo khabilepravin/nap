@@ -16,7 +16,8 @@ namespace graphqlMiddleware.GraphTypes
             Field(t => t.Password);                        
             Field(t => t.CreatedAt);
             Field(t => t.ModifiedAt);
-            Field(t => t.ParentUserId, type: typeof(IdGraphType));            
+            Field(t => t.ParentUserId, type: typeof(IdGraphType));
+            Field(t => t.Status);
         }
     }
 }

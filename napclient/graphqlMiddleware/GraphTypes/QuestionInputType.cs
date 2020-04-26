@@ -16,6 +16,7 @@ namespace graphqlMiddleware.GraphTypes
             Field<DateGraphType>("createdAt");
             Field<IdGraphType>("createdByUser");
             Field<IdGraphType>("id");
+            Field<StringGraphType>("status");
         }
     }
 }

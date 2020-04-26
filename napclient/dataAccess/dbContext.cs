@@ -54,6 +54,8 @@ namespace dataAccess
                 entity.Property(e => e.Subject)
                         .HasColumnType("varchar(100)");
                 entity.Property(e => e.DurationMinutes);
+                entity.Property(e => e.Status)
+                    .HasColumnType("char(1)");
             });
             
             modelBuilder.Entity<Test>().Property(e => e.Id).ValueGeneratedOnAdd();
@@ -77,6 +79,8 @@ namespace dataAccess
                         .HasColumnType("datetime");
                 entity.Property(e => e.ModifiedAt)
                         .HasColumnType("datetime");
+                entity.Property(e => e.Status)
+                        .HasColumnType("char(1)");
 
             });
             modelBuilder.Entity<User>().Property(e => e.Id).ValueGeneratedOnAdd();
@@ -98,6 +102,8 @@ namespace dataAccess
                         .HasColumnType("char(36)");
                 entity.Property(e => e.ImageUrl)
                         .HasColumnType("varchar(3000)");
+                entity.Property(e => e.Status)
+                        .HasColumnType("char(1)");
             });
             modelBuilder.Entity<Question>().Property(e => e.Id).ValueGeneratedOnAdd();
 
