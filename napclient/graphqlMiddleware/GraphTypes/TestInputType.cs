@@ -14,6 +14,7 @@ namespace graphqlMiddleware.GraphTypes
             Field<IntGraphType>("durationMinutes");
             Field<IdGraphType>("id");
             Field<StringGraphType>("status");
+            Field<StringGraphType>("difficultyLevel");
         }
     }
 }

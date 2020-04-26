@@ -17,6 +17,8 @@ namespace graphqlMiddleware.GraphTypes
             Field<IdGraphType>("createdByUser");
             Field<IdGraphType>("id");
             Field<StringGraphType>("status");
+            Field<StringGraphType>("difficultyLevel");
+
         }
     }
 }
