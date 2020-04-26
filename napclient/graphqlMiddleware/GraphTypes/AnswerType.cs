@@ -14,7 +14,8 @@ namespace graphqlMiddleware.GraphTypes
             Field(t => t.ImageUrl);
             Field(t => t.Type);
             Field(t => t.IsCorrect, type: typeof(BooleanGraphType));
-            Field(t => t.Status);            
+            Field(t => t.Status);
+            Field(t => t.Sequence);
         }
     }
 }

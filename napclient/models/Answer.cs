@@ -12,5 +12,6 @@ namespace models
         public Guid QuestionId { get; set; }
         public bool IsCorrect { get; set; }
         public string Status { get; set; }
+        public int Sequence { get; set; }
     }
 }

@@ -15,6 +15,8 @@ namespace graphqlMiddleware.GraphTypes
             Field<BooleanGraphType>("isCorrect");
             Field<StringGraphType>("status");
             Field<IdGraphType>("id");
+            Field<IntGraphType>("sequence");
+
         }
     }
 }

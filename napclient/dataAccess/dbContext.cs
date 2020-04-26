@@ -121,6 +121,7 @@ namespace dataAccess
                 entity.Property(e => e.IsCorrect);
                 entity.Property(e => e.ImageUrl)
                         .HasColumnType("varchar(3000)");
+                entity.Property(e => e.Sequence);
             });
             modelBuilder.Entity<Answer>().Property(e => e.Id).ValueGeneratedOnAdd();
 
