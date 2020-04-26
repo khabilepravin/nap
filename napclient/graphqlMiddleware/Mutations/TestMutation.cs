@@ -10,7 +10,8 @@ namespace graphqlMiddleware.Mutations
 
         public TestMutation(ITestRepository testRepository, 
                             IQuestionRepository questionRepository,
-                            IAnswerRepository answerRepository)
+                            IAnswerRepository answerRepository,
+                            IExplanationRepository explanationRepository)
         {
             Field<TestType>(
                 "createTest",
@@ -79,6 +80,30 @@ namespace graphqlMiddleware.Mutations
                             var answer = context.GetArgument<Answer>("answer");
                             return answerRepository.UpdateAsync(answer);
                         });
+
+            Field<ExplanationType>(
+                "addExplanation",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<ExplanationInputType>> { Name = "explanation" }
+                    ),
+                    resolve: context =>
+                    {
+                        var explanation = context.GetArgument<Explanation>("explanation");
+                        return explanationRepository.AddAsync(explanation);
+                    });
+
+            Field<ExplanationType>(
+                    "updateExplanation",
+                    arguments: new QueryArguments(
+                        new QueryArgument<NonNullGraphType<ExplanationInputType>> { Name = "explanation" }
+                        ),
+                        resolve: context =>
+                        {
+
+                            var explanation = context.GetArgument<Explanation>("explanation");
+                            return explanationRepository.UpdateAsync(explanation);
+                        });
+
         }
     }
 }
