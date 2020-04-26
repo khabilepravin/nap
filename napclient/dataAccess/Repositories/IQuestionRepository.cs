@@ -7,8 +7,8 @@ namespace dataAccess.Repositories
 {
     public interface IQuestionRepository
     {
-        Task<Guid> AddAsync(Question question);
+        Task<Question> AddAsync(Question question);
         Task<IEnumerable<Question>> GetQuestionsByTestIdAsync(Guid testId);
-        Task<Guid> UpdateAsync(Question question);
+        Task<Question> UpdateAsync(Question question);
     }
 }

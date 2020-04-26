@@ -15,6 +15,7 @@ namespace graphqlMiddleware.GraphTypes
             Field<StringGraphType>("imageUrl");
             Field<DateGraphType>("createdAt");
             Field<IdGraphType>("createdByUser");
+            Field<IdGraphType>("id");
         }
     }
 }

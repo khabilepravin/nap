@@ -43,6 +43,7 @@ namespace napclient
             services.AddSingleton<TestInputType>();
             services.AddSingleton<UserQuery>();
             services.AddSingleton<UserType>();
+            services.AddSingleton<QuestionInputType>();
 
 
             services.AddGraphQL();
