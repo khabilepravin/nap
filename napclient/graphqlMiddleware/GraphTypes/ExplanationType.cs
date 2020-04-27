@@ -11,6 +11,7 @@ namespace graphqlMiddleware.GraphTypes
             Field(t => t.QuestionId, type: typeof(IdGraphType));
             Field(t => t.TextExplanation);
             Field(t => t.ExternalLink);
+            Field(t => t.LinkType);
             Field(t => t.Status);
             Field(t => t.CreatedAt);
             Field(t => t.ModifiedAt);

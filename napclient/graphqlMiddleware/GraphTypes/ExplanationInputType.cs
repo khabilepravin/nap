@@ -7,7 +7,7 @@ namespace graphqlMiddleware.GraphTypes
         public ExplanationInputType()
         {
             Name = "ExplanationInput";
-            Field<NonNullGraphType<IdGraphType>>("questionId");
+            Field<IdGraphType>("questionId");
             Field<StringGraphType>("textExplanation");
             Field<StringGraphType>("externalLink");
             Field<StringGraphType>("linkType");
