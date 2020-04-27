@@ -19,7 +19,9 @@ namespace dataAccess
         public DbSet<Answer> Answer { get; set; }
         public DbSet<UserTestRecord> UserTestRecord { get; set; }
         public DbSet<Explanation> Explanation { get; set; }
+        public DbSet<LookupGroup> LookupGroup { get; set; }
 
+        public DbSet<LookupValue> LookupValue { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -176,6 +178,31 @@ namespace dataAccess
                                 .HasColumnType("char(36)");
                 entity.Property(e => e.Status)
                             .HasColumnType("char(1)");
+
+            });
+            modelBuilder.Entity<Explanation>().Property(e => e.Id).ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<LookupGroup>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Name)
+                                .HasColumnType("varchar(100)");
+                entity.Property(e => e.Code)
+                                .HasColumnType("varchar(30)");
+
+            });
+            modelBuilder.Entity<Explanation>().Property(e => e.Id).ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<LookupValue>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.HasKey(e => e.GroupId);
+                entity.Property(e => e.Name)
+                                .HasColumnType("varchar(100)");
+                entity.Property(e => e.Code)
+                                .HasColumnType("varchar(30)");
+                entity.Property(e => e.Description)
+                                .HasColumnType("varchar(1000)");
 
             });
             modelBuilder.Entity<Explanation>().Property(e => e.Id).ValueGeneratedOnAdd();
