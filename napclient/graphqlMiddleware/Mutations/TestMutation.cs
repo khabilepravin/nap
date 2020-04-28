@@ -2,6 +2,7 @@
 using GraphQL.Types;
 using graphqlMiddleware.GraphTypes;
 using models;
+using System.Linq;
 
 namespace graphqlMiddleware.Mutations
 {
@@ -11,7 +12,8 @@ namespace graphqlMiddleware.Mutations
         public TestMutation(ITestRepository testRepository, 
                             IQuestionRepository questionRepository,
                             IAnswerRepository answerRepository,
-                            IExplanationRepository explanationRepository)
+                            IExplanationRepository explanationRepository,
+                            ILookupRepository lookupRepository)
         {
             Field<TestType>(
                 "createTest",
@@ -102,6 +104,28 @@ namespace graphqlMiddleware.Mutations
 
                             var explanation = context.GetArgument<Explanation>("explanation");
                             return explanationRepository.UpdateAsync(explanation);
+                        });
+
+            Field<LookupGroupType>(
+                    "addLookupGroup",
+                    arguments: new QueryArguments(
+                        new QueryArgument<NonNullGraphType<LookupGroupInputType>> { Name = "lookupGroup" }
+                        ),
+                        resolve: context =>
+                        {
+                            var lookupGroup = context.GetArgument<LookupGroup>("lookupGroup");
+                            return lookupRepository.AddGroupAsync(lookupGroup);
+                        });
+
+            Field<LookupValueType>(
+                    "addLookupValue",
+                    arguments: new QueryArguments(
+                        new QueryArgument<NonNullGraphType<LookupValueInputType>> { Name = "lookupValue" }
+                        ),
+                        resolve: context =>
+                        {
+                            var lookupValue = context.GetArgument<LookupValue>("lookupValue");
+                            return lookupRepository.AddValueAsync(lookupValue);
                         });
 
         }

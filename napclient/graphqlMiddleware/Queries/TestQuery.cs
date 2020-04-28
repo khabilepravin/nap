@@ -8,7 +8,9 @@ namespace graphqlMiddleware.Queries
     public class TestQuery : ObjectGraphType
     {
         
-        public TestQuery(ITestRepository testRepository, IQuestionRepository questionRepository)
+        public TestQuery(ITestRepository testRepository, 
+                        IQuestionRepository questionRepository,
+                        ILookupRepository lookupRepository)
         {
             Field<ListGraphType<TestType>>
                 ("tests",
@@ -32,8 +34,18 @@ namespace graphqlMiddleware.Queries
                         resolve: context => questionRepository.GetQuestionsByTestIdAsync(context.GetArgument<Guid>("testId"))
                 );
 
-        }
+            Field<ListGraphType<LookupGroupType>>(
+                        "lookupGroups",
+                        resolve: context => lookupRepository.GetGroupsAsync()
+                );
 
+            Field<ListGraphType<LookupValueType>>(
+                    "lookupValues",
+                    arguments: new QueryArguments(new QueryArgument<IdGraphType> { Name = "groupId" }),
+                    resolve: context => lookupRepository.GetValuesByGroupAsync(context.GetArgument<Guid>("groupId"))
+                );
+
+        }
 
     }
 }

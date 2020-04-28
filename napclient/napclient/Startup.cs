@@ -48,7 +48,10 @@ namespace napclient
             services.AddSingleton<AnswerInputType>();
             services.AddSingleton<ExplanationInputType>();
             services.AddSingleton<ExplanationType>();
-
+            services.AddSingleton<LookupGroupType>();
+            services.AddSingleton<LookupGroupInputType>();
+            services.AddSingleton<LookupValueType>();
+            services.AddSingleton<LookupValueInputType>();
 
             services.AddGraphQL();
 

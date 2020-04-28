@@ -16,6 +16,7 @@ namespace dataAccess
             containerBuilder.RegisterType<UserTestRecordRepository>().As<IUserTestRecordRepository>();
             containerBuilder.RegisterType<AnswerRepository>().As<IAnswerRepository>();
             containerBuilder.RegisterType<ExplanationRepository>().As<IExplanationRepository>();
+            containerBuilder.RegisterType<LookupRepository>().As<ILookupRepository>();
         }
     }
 }

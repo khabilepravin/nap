@@ -191,12 +191,13 @@ namespace dataAccess
                                 .HasColumnType("varchar(30)");
 
             });
-            modelBuilder.Entity<Explanation>().Property(e => e.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<LookupGroup>().Property(e => e.Id).ValueGeneratedOnAdd();
 
             modelBuilder.Entity<LookupValue>(entity =>
             {
                 entity.HasKey(e => e.Id);
-                entity.HasKey(e => e.GroupId);
+                entity.Property(e => e.GroupId)
+                        .HasColumnType("char(36)");
                 entity.Property(e => e.Name)
                                 .HasColumnType("varchar(100)");
                 entity.Property(e => e.Code)
@@ -205,7 +206,7 @@ namespace dataAccess
                                 .HasColumnType("varchar(1000)");
 
             });
-            modelBuilder.Entity<Explanation>().Property(e => e.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<LookupValue>().Property(e => e.Id).ValueGeneratedOnAdd();
         }
     }
 }
