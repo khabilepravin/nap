@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using dataAccess;
 
 namespace dataAccess.Migrations
 {
     [DbContext(typeof(dataContext))]
-    partial class dataContextModelSnapshot : ModelSnapshot
+    [Migration("20200427120448_Fix_ModifiedByUser_Col_in_Explanation")]
+    partial class Fix_ModifiedByUser_Col_in_Explanation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -88,46 +90,6 @@ namespace dataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Explanation");
-                });
-
-            modelBuilder.Entity("models.LookupGroup", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("varchar(30)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("varchar(100)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("LookupGroup");
-                });
-
-            modelBuilder.Entity("models.LookupValue", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("varchar(30)");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("varchar(1000)");
-
-                    b.Property<Guid>("GroupId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("varchar(100)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("LookupValue");
                 });
 
             modelBuilder.Entity("models.Question", b =>

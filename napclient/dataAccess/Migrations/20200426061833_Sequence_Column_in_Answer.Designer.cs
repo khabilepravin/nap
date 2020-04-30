@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using dataAccess;
 
 namespace dataAccess.Migrations
 {
     [DbContext(typeof(dataContext))]
-    partial class dataContextModelSnapshot : ModelSnapshot
+    [Migration("20200426061833_Sequence_Column_in_Answer")]
+    partial class Sequence_Column_in_Answer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,84 +54,6 @@ namespace dataAccess.Migrations
                     b.ToTable("Answer");
                 });
 
-            modelBuilder.Entity("models.Explanation", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<Guid>("CreatedByUser")
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("ExternalLink")
-                        .HasColumnType("varchar(3000)");
-
-                    b.Property<string>("LinkType")
-                        .HasColumnType("varchar(100)");
-
-                    b.Property<DateTime>("ModifiedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<Guid>("ModifiedByUser")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("QuestionId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("Status")
-                        .HasColumnType("char(1)");
-
-                    b.Property<string>("TextExplanation")
-                        .HasColumnType("varchar(3000)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Explanation");
-                });
-
-            modelBuilder.Entity("models.LookupGroup", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("varchar(30)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("varchar(100)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("LookupGroup");
-                });
-
-            modelBuilder.Entity("models.LookupValue", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("varchar(30)");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("varchar(1000)");
-
-                    b.Property<Guid>("GroupId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("varchar(100)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("LookupValue");
-                });
-
             modelBuilder.Entity("models.Question", b =>
                 {
                     b.Property<Guid>("Id")
@@ -144,9 +68,6 @@ namespace dataAccess.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("varchar(3000)");
-
-                    b.Property<string>("DifficultyLevel")
-                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("ImageUrl")
                         .HasColumnType("varchar(3000)");
@@ -191,9 +112,6 @@ namespace dataAccess.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("varchar(1000)");
-
-                    b.Property<string>("DifficultyLevel")
-                        .HasColumnType("varchar(100)");
 
                     b.Property<short>("DurationMinutes")
                         .HasColumnType("smallint");

@@ -1,11 +1,12 @@
-﻿using GraphQL.Types;
+﻿using dataAccess.Repositories;
+using GraphQL.Types;
 using models;
 
 namespace graphqlMiddleware.GraphTypes
 {
     public class TestType : ObjectGraphType<Test>
-    {
-        public TestType()
+    {   
+        public TestType(IQuestionRepository questionRepository)
         {
             Field(t => t.Id, type: typeof(IdGraphType));
             Field(t => t.Text);
@@ -17,6 +18,10 @@ namespace graphqlMiddleware.GraphTypes
             Field(t => t.ModifiedAt);
             Field(t => t.CreatedByUser, type: typeof(IdGraphType));
             Field(t => t.ModifiedByUser, type: typeof(IdGraphType));
+            Field(t => t.Status);
+            Field(t => t.DifficultyLevel);
+            Field<ListGraphType<QuestionType>>("questions",
+                resolve: context => questionRepository.GetQuestionsByTestIdAsync(context.Source.Id));
         }
     }
 }

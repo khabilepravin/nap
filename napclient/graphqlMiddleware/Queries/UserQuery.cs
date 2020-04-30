@@ -1,8 +1,7 @@
 ﻿using dataAccess.Repositories;
 using GraphQL.Types;
+using graphqlMiddleware.GraphTypes;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace graphqlMiddleware.Queries
 {
@@ -13,11 +12,11 @@ namespace graphqlMiddleware.Queries
         {
             this.userRepository = userRepository;
 
-            //Field<UserType>(
-            //        "test",
-            //        arguments: new QueryArguments(new QueryArgument<StringGraphType> { Name = "id" }),
-            //        resolve: context => this.testRepository.GetByIdAsync(context.GetArgument<string>("id"))
-            //    );
+            Field<UserType>(
+                    "user",
+                    arguments: new QueryArguments(new QueryArgument<StringGraphType> { Name = "id" }),
+                    resolve: context => this.userRepository.GetByIdAsync(context.GetArgument<Guid>("id"))
+                );
         }
     }
 }

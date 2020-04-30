@@ -15,5 +15,7 @@ namespace models
         public DateTime ModifiedAt { get; set; }
         public Guid CreatedByUser { get; set; }
         public Guid ModifiedByUser { get; set; }
+        public string Status { get; set; }
+        public string DifficultyLevel { get; set; }
     }
 }

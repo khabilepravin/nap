@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using dataAccess;
 
 namespace dataAccess.Migrations
 {
     [DbContext(typeof(dataContext))]
-    partial class dataContextModelSnapshot : ModelSnapshot
+    [Migration("20200428103240_Lookup_Tables_Id_Col_AutogenerateFix")]
+    partial class Lookup_Tables_Id_Col_AutogenerateFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -109,7 +111,7 @@ namespace dataAccess.Migrations
 
             modelBuilder.Entity("models.LookupValue", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("GroupId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
@@ -119,13 +121,14 @@ namespace dataAccess.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("varchar(1000)");
 
-                    b.Property<Guid>("GroupId")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
                     b.Property<string>("Name")
                         .HasColumnType("varchar(100)");
 
-                    b.HasKey("Id");
+                    b.HasKey("GroupId");
 
                     b.ToTable("LookupValue");
                 });

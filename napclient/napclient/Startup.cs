@@ -6,6 +6,7 @@ using GraphQL.Server.Ui.Playground;
 using GraphQL.Types;
 using GraphQL.Utilities;
 using graphqlMiddleware.GraphTypes;
+using graphqlMiddleware.Mutations;
 using graphqlMiddleware.NapSchema;
 using graphqlMiddleware.Queries;
 using Microsoft.AspNetCore.Builder;
@@ -34,8 +35,24 @@ namespace napclient
         {
             services.AddSingleton<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
             services.AddSingleton<ISchema, TestSchema>();
+           // services.AddSingleton<ISchema, UserSchema>();
             services.AddSingleton<TestQuery>();
+            services.AddSingleton<TestMutation>();
             services.AddSingleton<TestType>();
+            services.AddSingleton<QuestionType>();
+            services.AddSingleton<TestInputType>();
+            services.AddSingleton<UserQuery>();
+            services.AddSingleton<UserType>();
+            services.AddSingleton<QuestionInputType>();
+            services.AddSingleton<AnswerType>();
+            services.AddSingleton<AnswerInputType>();
+            services.AddSingleton<ExplanationInputType>();
+            services.AddSingleton<ExplanationType>();
+            services.AddSingleton<LookupGroupType>();
+            services.AddSingleton<LookupGroupInputType>();
+            services.AddSingleton<LookupValueType>();
+            services.AddSingleton<LookupValueInputType>();
+
             services.AddGraphQL();
 
             services.Configure<IISServerOptions>(options =>
