@@ -73,3 +73,7 @@ _[Ss]cripts
 *.nupkg
 *.ncrunchsolution
 *.dot[Cc]over
+napclient/.vs/napclient/v16/Server/sqlite3/db.lock
+napclient/.vs/napclient/v16/Server/sqlite3/storage.ide
+napclient/.vs/napclient/v16/Server/sqlite3/storage.ide-shm
+napclient/.vs/napclient/v16/Server/sqlite3/storage.ide-wal
