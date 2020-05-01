@@ -73,6 +73,8 @@ namespace dataAccess
                         .HasColumnType("varchar(100)");
                 entity.Property(e => e.LastName)
                         .HasColumnType("varchar(100)");
+                entity.Property(e => e.Password)
+                        .HasColumnType("varchar(500)");
                 entity.Property(e => e.Email)
                         .HasColumnType("varchar(100)");
                 entity.Property(e => e.UserName)
@@ -130,6 +132,8 @@ namespace dataAccess
                 entity.Property(e => e.ImageUrl)
                         .HasColumnType("varchar(3000)");
                 entity.Property(e => e.Sequence);
+                entity.Property(e => e.Status)
+                        .HasColumnType("char(1)");
             });
             modelBuilder.Entity<Answer>().Property(e => e.Id).ValueGeneratedOnAdd();
 
