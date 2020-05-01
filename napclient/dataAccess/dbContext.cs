@@ -26,17 +26,17 @@ namespace dataAccess
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             #region Comment this region-code for database migration and update
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseMySql("server=localhost;database=naplanpractice_dev;user=root;password=p0k5PgOzmgkF");
+            //if (!optionsBuilder.IsConfigured)
+            //{
+            //    optionsBuilder.UseMySql("server=localhost;database=naplanpractice_dev;user=root;password=p0k5PgOzmgkF");
 
-                this.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
-            }
+            //    this.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            //}
             #endregion
 
             #region Uncomment this region-code for database migration and update
             //Note: Put the connection string of your db
-            //optionsBuilder.UseMySql("server=localhost;database=naplanpractice_dev;user=root;password=p0k5PgOzmgkF");
+            optionsBuilder.UseMySql("server=localhost;database=naplanpractice_dev;user=root;password=p0k5PgOzmgkF");
             #endregion
         }
 
@@ -62,6 +62,7 @@ namespace dataAccess
                     .HasColumnType("char(1)");
                 entity.Property(e => e.DifficultyLevel)
                         .HasColumnType("varchar(100)");
+                entity.Property(e => e.Year);
             });
             
             modelBuilder.Entity<Test>().Property(e => e.Id).ValueGeneratedOnAdd();
