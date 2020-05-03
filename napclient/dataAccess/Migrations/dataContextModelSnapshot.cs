@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using dataAccess;
 
@@ -15,13 +16,14 @@ namespace dataAccess.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.3")
-                .HasAnnotation("Relational:MaxIdentifierLength", 64);
+                .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("models.Answer", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
                         .HasColumnType("varchar(3000)");
@@ -30,9 +32,10 @@ namespace dataAccess.Migrations
                         .HasColumnType("varchar(3000)");
 
                     b.Property<bool>("IsCorrect")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("bit");
 
-                    b.Property<Guid>("QuestionId")
+                    b.Property<string>("QuestionId")
+                        .IsRequired()
                         .HasColumnType("char(36)");
 
                     b.Property<int>("Sequence")
@@ -56,12 +59,13 @@ namespace dataAccess.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime2");
 
-                    b.Property<Guid>("CreatedByUser")
+                    b.Property<string>("CreatedByUser")
+                        .IsRequired()
                         .HasColumnType("char(36)");
 
                     b.Property<string>("ExternalLink")
@@ -71,12 +75,14 @@ namespace dataAccess.Migrations
                         .HasColumnType("varchar(100)");
 
                     b.Property<DateTime>("ModifiedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime2");
 
-                    b.Property<Guid>("ModifiedByUser")
+                    b.Property<string>("ModifiedByUser")
+                        .IsRequired()
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid>("QuestionId")
+                    b.Property<string>("QuestionId")
+                        .IsRequired()
                         .HasColumnType("char(36)");
 
                     b.Property<string>("Status")
@@ -94,7 +100,7 @@ namespace dataAccess.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Code")
                         .HasColumnType("varchar(30)");
@@ -111,7 +117,7 @@ namespace dataAccess.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Code")
                         .HasColumnType("varchar(30)");
@@ -119,7 +125,8 @@ namespace dataAccess.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("varchar(1000)");
 
-                    b.Property<Guid>("GroupId")
+                    b.Property<string>("GroupId")
+                        .IsRequired()
                         .HasColumnType("char(36)");
 
                     b.Property<string>("Name")
@@ -134,12 +141,13 @@ namespace dataAccess.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime2");
 
-                    b.Property<Guid>("CreatedByUser")
+                    b.Property<string>("CreatedByUser")
+                        .IsRequired()
                         .HasColumnType("char(36)");
 
                     b.Property<string>("Description")
@@ -152,13 +160,14 @@ namespace dataAccess.Migrations
                         .HasColumnType("varchar(3000)");
 
                     b.Property<DateTime>("ModifiedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime2");
 
-                    b.Property<Guid>("ModifiedByUser")
+                    b.Property<string>("ModifiedByUser")
+                        .IsRequired()
                         .HasColumnType("char(36)");
 
                     b.Property<string>("QuestionType")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<short>("Sequence")
                         .HasColumnType("smallint");
@@ -166,7 +175,8 @@ namespace dataAccess.Migrations
                     b.Property<string>("Status")
                         .HasColumnType("char(1)");
 
-                    b.Property<Guid>("TestId")
+                    b.Property<string>("TestId")
+                        .IsRequired()
                         .HasColumnType("char(36)");
 
                     b.Property<string>("Text")
@@ -181,12 +191,13 @@ namespace dataAccess.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime2");
 
-                    b.Property<Guid>("CreatedByUser")
+                    b.Property<string>("CreatedByUser")
+                        .IsRequired()
                         .HasColumnType("char(36)");
 
                     b.Property<string>("Description")
@@ -199,9 +210,10 @@ namespace dataAccess.Migrations
                         .HasColumnType("smallint");
 
                     b.Property<DateTime>("ModifiedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime2");
 
-                    b.Property<Guid>("ModifiedByUser")
+                    b.Property<string>("ModifiedByUser")
+                        .IsRequired()
                         .HasColumnType("char(36)");
 
                     b.Property<short>("Sequence")
@@ -228,10 +240,10 @@ namespace dataAccess.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .HasColumnType("varchar(100)");
@@ -243,9 +255,10 @@ namespace dataAccess.Migrations
                         .HasColumnType("varchar(100)");
 
                     b.Property<DateTime>("ModifiedAt")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime2");
 
-                    b.Property<Guid>("ParentUserId")
+                    b.Property<string>("ParentUserId")
+                        .IsRequired()
                         .HasColumnType("char(36)");
 
                     b.Property<string>("Password")
@@ -269,21 +282,23 @@ namespace dataAccess.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("ModifiedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Status")
                         .HasColumnType("varchar(100)");
 
-                    b.Property<Guid>("TestId")
+                    b.Property<string>("TestId")
+                        .IsRequired()
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("char(36)");
 
                     b.HasKey("Id");
@@ -295,15 +310,18 @@ namespace dataAccess.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AnswerId")
+                        .IsRequired()
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid>("AnswerId")
+                    b.Property<string>("QuestionId")
+                        .IsRequired()
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid>("QuestionId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("UserTestId")
+                    b.Property<string>("UserTestId")
+                        .IsRequired()
                         .HasColumnType("char(36)");
 
                     b.HasKey("Id");

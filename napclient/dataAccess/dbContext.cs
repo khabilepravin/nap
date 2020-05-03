@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using models;
 using System;
+using Microsoft.EntityFrameworkCore.SqlServer;
 
 namespace dataAccess
 {
@@ -28,7 +29,7 @@ namespace dataAccess
             #region Comment this region-code for database migration and update
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseMySql("server=localhost;database=naplanpractice_dev;user=root;password=p0k5PgOzmgkF");
+                optionsBuilder.UseSqlServer("Data Source=(local);Initial Catalog=nap;Integrated Security=true;");
 
                 this.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
             }
@@ -37,6 +38,7 @@ namespace dataAccess
             #region Uncomment this region-code for database migration and update
             //Note: Put the connection string of your db
             //optionsBuilder.UseMySql("server=localhost;database=naplanpractice_dev;user=root;password=p0k5PgOzmgkF");
+            //optionsBuilder.UseSqlServer("Data Source=(local);Initial Catalog=nap;Integrated Security=true;");
             #endregion
         }
 
@@ -44,7 +46,7 @@ namespace dataAccess
         {
             modelBuilder.Entity<Test>(entity =>
             {
-                entity.HasKey(e => e.Id);                        
+                entity.HasKey(e => e.Id);
                 entity.Property(e => e.Text)
                         .HasColumnType("varchar(500)");
                 entity.Property(e => e.Description)
@@ -64,7 +66,7 @@ namespace dataAccess
                         .HasColumnType("varchar(100)");
                 entity.Property(e => e.Year);
             });
-            
+
             modelBuilder.Entity<Test>().Property(e => e.Id).ValueGeneratedOnAdd();
 
             modelBuilder.Entity<User>(entity =>
@@ -85,9 +87,9 @@ namespace dataAccess
                 entity.Property(e => e.ParentUserId)
                         .HasColumnType("char(36)");
                 entity.Property(e => e.CreatedAt)
-                        .HasColumnType("datetime");
+                        ;
                 entity.Property(e => e.ModifiedAt)
-                        .HasColumnType("datetime");
+                        ;
                 entity.Property(e => e.Status)
                         .HasColumnType("char(1)");
 
@@ -160,7 +162,7 @@ namespace dataAccess
                 entity.Property(e => e.QuestionId)
                         .HasColumnType("char(36)");
                 entity.Property(e => e.AnswerId)
-                        .HasColumnType("char(36)");                
+                        .HasColumnType("char(36)");
             });
             modelBuilder.Entity<UserTestRecord>().Property(e => e.Id).ValueGeneratedOnAdd();
 

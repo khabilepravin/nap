@@ -15,7 +15,7 @@ namespace dataModel.Repositories
         public dataContext Create()
         {
             var options = new DbContextOptionsBuilder<dataContext>()
-                .UseMySql(_configuration.GetConnectionString("DefaultConnection"))
+                .UseSqlServer(_configuration.GetConnectionString("DefaultConnection"))
                 .Options;
 
             var context = new dataContext(options);
