@@ -88,6 +88,10 @@ const Calendar = async(() => import("../pages/calendar/Calendar"));
 const VectorMaps = async(() => import("../pages/maps/VectorMaps"));
 const GoogleMaps = async(() => import("../pages/maps/GoogleMaps"));
 
+// Contrib Test
+const TestAdd = async(() => import("../pages/contribtest/TestAdd"));
+const TestList = async(() => import("../pages/contribtest/TestList"));
+
 // Routes
 const landingRoutes = {
   path: "/",
@@ -322,6 +326,24 @@ const mapRoutes = {
   ]
 };
 
+const contribtestRoutes = {
+  path: "/contribtest",
+  name: "Tests",
+  icon: faMapMarkerAlt,
+  children: [
+    {
+      path: "/contribtest/testlist",
+      name: "Test List",
+      component: TestList
+    },
+    {
+      path: "/contribtest/testadd",
+      name: "Add Test",
+      component: TestAdd
+    }
+  ]
+};
+
 const pageRoutes = {
   path: "/pages",
   name: "Pages",
@@ -430,7 +452,8 @@ export const dashboard = [
   mapRoutes,
   pageRoutes,
   documentationRoutes,
-  privateRoutes
+  privateRoutes,
+  contribtestRoutes
 ];
 
 // Landing specific routes
@@ -452,5 +475,6 @@ export default [
   calendarRoutes,
   mapRoutes,
   documentationRoutes,
-  layoutRoutes
+  layoutRoutes,
+  contribtestRoutes
 ];
