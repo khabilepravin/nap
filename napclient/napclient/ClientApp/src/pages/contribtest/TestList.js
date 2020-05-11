@@ -18,10 +18,8 @@ import Header from "../../components/themecomponents/Header";
 import HeaderTitle from "../../components/themecomponents/HeaderTitle";
 
 import BootstrapTable from "react-bootstrap-table-next";
-import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import paginationFactory from "react-bootstrap-table2-paginator";
 
-import { MinusCircle, PlusCircle } from "react-feather";
 
 const getTests = gql`
   query {
@@ -82,7 +80,6 @@ const TestList = () => {
       <Container fluid>
         <Header>
           <HeaderTitle>Test List</HeaderTitle>
-
           <Breadcrumb>
             <BreadcrumbItem>
               <Link to="/dashboard">Dashboard</Link>
@@ -96,7 +93,7 @@ const TestList = () => {
           </CardHeader>
           <CardBody>
             <BootstrapTable
-              keyField="name"
+              keyField="id"
               data={data.tests}
               columns={tableColumns}
               bootstrap4
