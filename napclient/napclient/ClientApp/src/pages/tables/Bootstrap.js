@@ -13,8 +13,8 @@ import {
   Table
 } from "reactstrap";
 
-import Header from "../../components/Header";
-import HeaderTitle from "../../components/HeaderTitle";
+import Header from "../../components/themecomponents/Header";
+import HeaderTitle from "../../components/themecomponents/HeaderTitle";
 
 import avatar2 from "../../assets/img/avatars/avatar-2.jpg";
 import avatar3 from "../../assets/img/avatars/avatar-3.jpg";

@@ -14,8 +14,8 @@ import {
   Container,
 } from "reactstrap";
 
-import Header from "../../components/Header";
-import HeaderTitle from "../../components/HeaderTitle";
+import Header from "../../components/themecomponents/Header";
+import HeaderTitle from "../../components/themecomponents/HeaderTitle";
 
 import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider from "react-bootstrap-table2-toolkit";

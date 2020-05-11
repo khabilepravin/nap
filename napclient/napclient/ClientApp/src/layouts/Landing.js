@@ -1,6 +1,6 @@
 import React from "react";
 
-import Main from "../components/Main";
+import Main from "../components/themecomponents/Main";
 
 const Landing = ({ children }) => <Main>{children}</Main>;
 

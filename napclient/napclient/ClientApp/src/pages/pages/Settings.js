@@ -24,8 +24,8 @@ import {
   UncontrolledDropdown
 } from "reactstrap";
 
-import Header from "../../components/Header";
-import HeaderTitle from "../../components/HeaderTitle";
+import Header from "../../components/themecomponents/Header";
+import HeaderTitle from "../../components/themecomponents/HeaderTitle";
 
 import { MoreVertical, RefreshCw } from "react-feather";
 

@@ -1,12 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import Wrapper from "../components/Wrapper";
-import Sidebar from "../components/Sidebar";
-import Main from "../components/Main";
-import Navbar from "../components/Navbar";
-import Content from "../components/Content";
-import Footer from "../components/Footer";
+import Wrapper from "../components/themecomponents/Wrapper";
+import Sidebar from "../components/themecomponents/Sidebar";
+import Main from "../components/themecomponents/Main";
+import Navbar from "../components/themecomponents/Navbar";
+import Content from "../components/themecomponents/Content";
+import Footer from "../components/themecomponents/Footer";
 
 const Dashboard = ({ sidebar, children }) => (
   <React.Fragment>

@@ -12,9 +12,9 @@ import {
   TabPane
 } from "reactstrap";
 
-import Header from "../../components/Header";
-import HeaderTitle from "../../components/HeaderTitle";
-import HeaderSubtitle from "../../components/HeaderSubtitle";
+import Header from "../../components/themecomponents/Header";
+import HeaderTitle from "../../components/themecomponents/HeaderTitle";
+import HeaderSubtitle from "../../components/themecomponents/HeaderSubtitle";
 
 class Pricing extends React.Component {
   constructor(props) {

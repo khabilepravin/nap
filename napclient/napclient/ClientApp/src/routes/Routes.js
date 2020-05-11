@@ -11,7 +11,7 @@ import LandingLayout from "../layouts/Landing";
 import AuthLayout from "../layouts/Auth";
 import Page404 from "../pages/auth/Page404";
 
-import ScrollToTop from "../components/ScrollToTop";
+import ScrollToTop from "../components/themecomponents/ScrollToTop";
 
 const childRoutes = (Layout, routes) =>
   routes.map(({ children, path, component: Component }, index) =>

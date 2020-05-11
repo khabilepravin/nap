@@ -20,8 +20,8 @@ import {
   UncontrolledButtonDropdown
 } from "reactstrap";
 
-import Header from "../../components/Header";
-import HeaderTitle from "../../components/HeaderTitle";
+import Header from "../../components/themecomponents/Header";
+import HeaderTitle from "../../components/themecomponents/HeaderTitle";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {

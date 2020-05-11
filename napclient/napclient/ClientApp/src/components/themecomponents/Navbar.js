@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { toggleSidebar } from "../redux/actions/sidebarActions";
+import { toggleSidebar } from "../../redux/actions/sidebarActions";
 import classNames from "classnames";
 
 import {
@@ -33,10 +33,10 @@ import {
   faUser
 } from "@fortawesome/free-solid-svg-icons";
 
-import avatar2 from "../assets/img/avatars/avatar-2.jpg";
-import avatar3 from "../assets/img/avatars/avatar-3.jpg";
-import avatar4 from "../assets/img/avatars/avatar-4.jpg";
-import avatar5 from "../assets/img/avatars/avatar-5.jpg";
+import avatar2 from "../../assets/img/avatars/avatar-2.jpg";
+import avatar3 from "../../assets/img/avatars/avatar-3.jpg";
+import avatar4 from "../../assets/img/avatars/avatar-4.jpg";
+import avatar5 from "../../assets/img/avatars/avatar-5.jpg";
 
 const notifications = [
   {

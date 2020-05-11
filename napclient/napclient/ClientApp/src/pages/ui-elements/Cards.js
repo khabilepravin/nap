@@ -25,8 +25,8 @@ import {
   TabPane
 } from "reactstrap";
 
-import Header from "../../components/Header";
-import HeaderTitle from "../../components/HeaderTitle";
+import Header from "../../components/themecomponents/Header";
+import HeaderTitle from "../../components/themecomponents/HeaderTitle";
 
 import unsplash1 from "../../assets/img/photos/unsplash-1.jpg";
 import unsplash2 from "../../assets/img/photos/unsplash-2.jpg";

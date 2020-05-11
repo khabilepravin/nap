@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 
 import { Breadcrumb, BreadcrumbItem, Col, Container, Row } from "reactstrap";
 
-import Header from "../../../components/Header";
-import HeaderTitle from "../../../components/HeaderTitle";
+import Header from "../../../components/themecomponents/Header";
+import HeaderTitle from "../../../components/themecomponents/HeaderTitle";
 
 import Line from "./Line";
 import Bar from "./Bar";

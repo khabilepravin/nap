@@ -8,9 +8,9 @@ import { Badge, Collapse } from "reactstrap";
 import IosPulse from "react-ionicons/lib/IosPulse";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import routes from "../routes/index";
+import routes from "../../routes/index";
 
-import avatar from "../assets/img/avatars/avatar.jpg";
+import avatar from "../../assets/img/avatars/avatar.jpg";
 
 const SidebarCategory = withRouter(
   ({

@@ -2,7 +2,7 @@ import React from "react";
 
 import { Col, Container, Row } from "reactstrap";
 
-import Main from "../components/Main";
+import Main from "../components/themecomponents/Main";
 
 const Auth = ({ children }) => (
   <React.Fragment>

@@ -1,4 +1,4 @@
-import async from "../components/Async";
+import async from "../components/themecomponents/Async";
 
 import {
   faBook,
