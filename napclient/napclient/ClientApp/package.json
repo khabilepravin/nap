@@ -71,7 +71,8 @@
     "react-select": "3.0.8",
     "react-transition-group": "4.3.0",
     "reactstrap": "8.1.1",
-    "redux": "4.0.4"
+    "redux": "4.0.4",
+    "yup": "^0.28.5"
   },
   "devDependencies": {}
 }
