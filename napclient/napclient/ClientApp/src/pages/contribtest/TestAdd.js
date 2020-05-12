@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Formik } from "formik";
+import { useForm } from "react-hook-form";
 import * as Yup from 'yup';
 
 import gql from "graphql-tag";
@@ -38,6 +38,10 @@ const ADD_TEST = gql`
 
 const TestAdd = () => {
   const [addTest] = useMutation(ADD_TEST);
+  const { register, handleSubmit } = useForm(); // initialise the hook  
+  const onSubmit = (data) => {   
+    addTest({variables: { test: data } });
+  };  
 
   return (
     <Container fluid>
@@ -62,39 +66,14 @@ const TestAdd = () => {
               </CardTitle>
             </CardHeader>
             <CardBody>
-              <Formik
-                initialValues={{
-                  text: "",
-                  description: "",
-                  subject: "",
-                  year: 3,
-                }}
-                validationSchema={Yup.object({
-                  text: Yup.string()
-                    .max(15, 'Must be 15 characters or less')
-                    .required('Name is required'),
-                  description: Yup.string()
-                    .max(20, 'Must be 20 characters or less')
-                    .required('Description is required'),
-                  subject: Yup.string()                    
-                    .required('Subject is required'),
-                  year: Yup.string()
-                    .required('Year is required')
-                })}
-                onSubmit={(values, { setSubmitting }) => {
-                  addTest({variables: { test: values } });
-                  setSubmitting(false);                  
-                }}
-              >
-                {(formik) => (
-                  <Form onSubmit={formik.handleSubmit}>
+              <Form onSubmit={handleSubmit(onSubmit)}>
                     <FormGroup>
                       <Label>Name</Label>
                       <Input
                         type="text"
                         name="text"
                         placeholder="Name"
-                       {...formik.getFieldProps('text')}
+                        innerRef={register}
                       />
                     </FormGroup>
                     <FormGroup>
@@ -104,7 +83,7 @@ const TestAdd = () => {
                         name="description"
                         placeholder="Description"
                         rows="1"
-                        {...formik.getFieldProps('description')}
+                        innerRef={register}
                       />
                     </FormGroup>
                     <FormGroup>
@@ -114,7 +93,7 @@ const TestAdd = () => {
                         id="exampleCustomSelect"
                         name="subject"
                         className="mb-3"
-                        {...formik.getFieldProps('subject')}
+                        innerRef={register}
                       >
                         <option value="">Select Subject</option>
                         <option>Math</option>
@@ -129,7 +108,7 @@ const TestAdd = () => {
                         id="exampleCustomSelect"
                         name="year"
                         className="mb-3"
-                        {...formik.getFieldProps('year')}
+                        innerRef={register}
                       >
                         <option value="">Select Year</option>
                         <option>3</option>
@@ -137,10 +116,8 @@ const TestAdd = () => {
                         <option>5</option>
                       </Input>
                     </FormGroup>
-                    <Button color="primary">Submit</Button>
-                  </Form>
-                )}
-              </Formik>
+                    <Button type="submit" color="primary">Add</Button>
+                  </Form>                    
             </CardBody>
           </Card>
         </Col>
