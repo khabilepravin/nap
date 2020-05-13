@@ -23,6 +23,8 @@ import {
 
 import Header from "../../components/themecomponents/Header";
 import HeaderTitle from "../../components/themecomponents/HeaderTitle";
+import { faSave, faCross, faWindowClose } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const ADD_TEST = gql`
   mutation($test: TestInput!) {
@@ -128,8 +130,11 @@ const TestAdd = ({history}) => {
                       </Input>
                       {errors.year && <p className="text-danger">{errors.year.message}</p>}
                     </FormGroup>
-                    <Button type="submit" color="primary" className="mr-1 mb-1">Add</Button>
-                    <Button type="button" color="warning" className="mr-1 mb-1" onClick={() => history.push("/contribtest/testlist") }>Cancel</Button>
+                    <Button type="submit" color="primary" className="mr-1 mb-1">
+                    <FontAwesomeIcon icon={faSave} /> Save</Button>
+                    <Button type="button" color="warning" className="mr-1 mb-1" 
+                    onClick={() => history.push("/contribtest/testlist") }>
+                      <FontAwesomeIcon icon={faWindowClose} /> Cancel</Button>
                   </Form>                    
             </CardBody>
           </Card>
