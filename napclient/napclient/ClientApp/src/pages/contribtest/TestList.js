@@ -12,6 +12,7 @@ import {
   CardHeader,
   CardTitle,
   Container,
+  Button,
 } from "reactstrap";
 
 import Header from "../../components/themecomponents/Header";
@@ -19,6 +20,9 @@ import HeaderTitle from "../../components/themecomponents/HeaderTitle";
 
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 
 
 const getTests = gql`
@@ -56,7 +60,7 @@ const tableColumns = [
   },
 ];
 
-const TestList = () => {
+const TestList = ({history}) => {
   const { loading, error, data } = useQuery(getTests);
 
   if (loading) {
@@ -92,6 +96,11 @@ const TestList = () => {
             <CardTitle tag="h5">Test List</CardTitle>
           </CardHeader>
           <CardBody>
+             <Button color="secondary" className="mr-1 mb-1" onClick={
+              () => history.push('/contribtest/testadd')
+            }>
+          <FontAwesomeIcon icon={faPlus} /> Add Test
+        </Button>
             <BootstrapTable
               keyField="id"
               data={data.tests}
