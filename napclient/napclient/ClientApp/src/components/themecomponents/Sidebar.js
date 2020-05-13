@@ -182,13 +182,13 @@ class Sidebar extends React.Component {
                       onClick={() => this.toggle(index)}
                     >
                       {category.children.map((route, index) => (
-                        <SidebarItem
+                        !route.hiddenInSideBar ? (<SidebarItem
                           key={index}
                           name={route.name}
                           to={route.path}
                           badgeColor={route.badgeColor}
                           badgeText={route.badgeText}
-                        />
+                        />) : null
                       ))}
                     </SidebarCategory>
                   ) : (

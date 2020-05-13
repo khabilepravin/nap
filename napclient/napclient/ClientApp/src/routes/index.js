@@ -46,6 +46,7 @@ import Modals from "../pages/ui-elements/Modals";
 import Notifications from "../pages/ui-elements/Notifications";
 import Tabs from "../pages/ui-elements/Tabs";
 import Typography from "../pages/ui-elements/Typography";
+import TestDetails from "../pages/contribtest/TestDetails";
 
 // Pages
 const Settings = async(() => import("../pages/pages/Settings"));
@@ -340,6 +341,12 @@ const contribtestRoutes = {
       path: "/contribtest/testadd",
       name: "Add Test",
       component: TestAdd
+    },
+    {
+      path:"/contribtest/testdetails/:id",
+      name: "Test Details",
+      component: TestDetails,
+      hiddenInSideBar: true
     }
   ]
 };

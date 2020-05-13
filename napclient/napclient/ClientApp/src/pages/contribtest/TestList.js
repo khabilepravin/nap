@@ -37,31 +37,47 @@ const getTests = gql`
   }
 `;
 
-const tableColumns = [
-  {
-    dataField: "text",
-    text: "Text",
-    sort: true,
-  },
-  {
-    dataField: "description",
-    text: "Description",
-    sort: true,
-  },
-  {
-    dataField: "subject",
-    text: "Subject",
-    sort: true,
-  },
-  {
-    dataField: "year",
-    text: "Year",
-    sort: true,
-  },
-];
+
 
 const TestList = ({history}) => {
   const { loading, error, data } = useQuery(getTests);
+
+  const tableColumns = [
+    {
+      dataField: "id",
+      text: "Id",
+      hidden: true,
+    },
+    {
+      dataField: "text",
+      text: "Text",
+      sort: true,
+    },
+    {
+      dataField: "description",
+      text: "Description",
+      sort: true,
+    },
+    {
+      dataField: "subject",
+      text: "Subject",
+      sort: true,
+    },
+    {
+      dataField: "year",
+      text: "Year",
+      sort: true,
+    },
+    {
+      text: "Actions",
+      dataField: "",
+      formatter: (cell, row, rowIndex) => (
+        <Button  onClick={
+          () => history.push(`/contribtest/testdetails/${row.id}`)
+        }>Details</Button>
+      )
+    }
+  ];
 
   if (loading) {
     return (
@@ -108,7 +124,7 @@ const TestList = ({history}) => {
               bootstrap4
               bordered={false}
               pagination={paginationFactory({
-                sizePerPage: 5,
+                sizePerPage: 10,
                 sizePerPageList: [5, 10, 25, 50],
               })}
             />
