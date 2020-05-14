@@ -46,7 +46,7 @@ import Modals from "../pages/ui-elements/Modals";
 import Notifications from "../pages/ui-elements/Notifications";
 import Tabs from "../pages/ui-elements/Tabs";
 import Typography from "../pages/ui-elements/Typography";
-import TestDetails from "../pages/contribtest/TestDetails";
+import TestDetails from "../pages/testpages/TestDetails";
 
 // Pages
 const Settings = async(() => import("../pages/pages/Settings"));
@@ -90,8 +90,8 @@ const VectorMaps = async(() => import("../pages/maps/VectorMaps"));
 const GoogleMaps = async(() => import("../pages/maps/GoogleMaps"));
 
 // Contrib Test
-const TestAdd = async(() => import("../pages/contribtest/TestAdd"));
-const TestList = async(() => import("../pages/contribtest/TestList"));
+const TestAdd = async(() => import("../pages/testpages/TestAdd"));
+const TestList = async(() => import("../pages/testpages/TestList"));
 
 // Routes
 const landingRoutes = {
@@ -328,22 +328,22 @@ const mapRoutes = {
 };
 
 const contribtestRoutes = {
-  path: "/contribtest",
+  path: "/testpages",
   name: "Tests",
   icon: faMapMarkerAlt,
   children: [
     {
-      path: "/contribtest/testlist",
+      path: "/testpages/testlist",
       name: "Test List",
       component: TestList
     },
     {
-      path: "/contribtest/testadd",
+      path: "/testpages/testadd",
       name: "Add Test",
       component: TestAdd
     },
     {
-      path:"/contribtest/testdetails/:id",
+      path:"/testpages/testdetails/:id",
       name: "Test Details",
       component: TestDetails,
       hiddenInSideBar: true

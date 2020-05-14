@@ -63,7 +63,7 @@ const TestDetails = ({history}) => {
             <Link to="/dashboard">Dashboard</Link>
           </BreadcrumbItem>
           <BreadcrumbItem>
-            <Link to="/contribtest/testlist">Tests</Link>
+            <Link to="/testpages/testlist">Tests</Link>
           </BreadcrumbItem>
           <BreadcrumbItem active>Add</BreadcrumbItem>
         </Breadcrumb>
@@ -133,7 +133,7 @@ const TestDetails = ({history}) => {
                     <Button type="submit" color="primary" className="mr-1 mb-1">
                     <FontAwesomeIcon icon={faSave} /> Save</Button>
                     <Button type="button" color="warning" className="mr-1 mb-1" 
-                    onClick={() => history.push("/contribtest/testlist") }>
+                    onClick={() => history.push("/testpages/testlist") }>
                       <FontAwesomeIcon icon={faWindowClose} /> Cancel</Button>
                   </Form>                    
             </CardBody>

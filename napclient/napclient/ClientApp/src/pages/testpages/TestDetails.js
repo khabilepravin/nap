@@ -45,7 +45,7 @@ const schema = Yup.object().shape({
 });
 
 
-const TestAdd = ({history}) => {
+const TestDetails = ({history}) => {
   const [addTest] = useMutation(ADD_TEST);
   const { register, handleSubmit, errors } = useForm({
     validationSchema: schema
@@ -57,13 +57,13 @@ const TestAdd = ({history}) => {
   return (
     <Container fluid>
       <Header>
-        <HeaderTitle>Add Test</HeaderTitle>
+        <HeaderTitle>Test Details</HeaderTitle>
         <Breadcrumb>
           <BreadcrumbItem>
             <Link to="/dashboard">Dashboard</Link>
           </BreadcrumbItem>
           <BreadcrumbItem>
-            <Link to="/contribtest/testlist">Tests</Link>
+            <Link to="/testpages/testlist">Tests</Link>
           </BreadcrumbItem>
           <BreadcrumbItem active>Add</BreadcrumbItem>
         </Breadcrumb>
@@ -133,7 +133,7 @@ const TestAdd = ({history}) => {
                     <Button type="submit" color="primary" className="mr-1 mb-1">
                     <FontAwesomeIcon icon={faSave} /> Save</Button>
                     <Button type="button" color="warning" className="mr-1 mb-1" 
-                    onClick={() => history.push("/contribtest/testlist") }>
+                    onClick={() => history.push("/testpages/testlist") }>
                       <FontAwesomeIcon icon={faWindowClose} /> Cancel</Button>
                   </Form>                    
             </CardBody>
@@ -144,4 +144,4 @@ const TestAdd = ({history}) => {
   );
 };
 
-export default TestAdd;
+export default TestDetails;

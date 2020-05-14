@@ -73,7 +73,7 @@ const TestList = ({history}) => {
       dataField: "",
       formatter: (cell, row, rowIndex) => (
         <Button  onClick={
-          () => history.push(`/contribtest/testdetails/${row.id}`)
+          () => history.push(`/testpages/testdetails/${row.id}`)
         }>Details</Button>
       )
     }
@@ -113,7 +113,7 @@ const TestList = ({history}) => {
           </CardHeader>
           <CardBody>
              <Button color="secondary" className="mr-1 mb-1" onClick={
-              () => history.push('/contribtest/testadd')
+              () => history.push('/testpages/testadd')
             }>
           <FontAwesomeIcon icon={faPlus} /> Add Test
         </Button>
