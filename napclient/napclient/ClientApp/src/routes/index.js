@@ -93,6 +93,9 @@ const GoogleMaps = async(() => import("../pages/maps/GoogleMaps"));
 const TestAdd = async(() => import("../pages/testpages/TestAdd"));
 const TestList = async(() => import("../pages/testpages/TestList"));
 
+const LookupGroupList = async(() => import("../pages/lookup/LookupGroupList"));
+const LookupValuesList = async(() => import("../pages/lookup/LookupValuesList"));
+
 // Routes
 const landingRoutes = {
   path: "/",
@@ -351,6 +354,24 @@ const contribtestRoutes = {
   ]
 };
 
+const lookupRoutes = {
+  path: "/lookup",
+  name: "Lookup",
+  icon: faMapMarkerAlt,
+  children: [
+    {
+      path: "/lookup/lookupgrouplist",
+      name: "Lookup List",
+      component: LookupGroupList
+    },
+    {
+      path: "/lookup/lookupvalueslist",
+      name: "Lookup Values",
+      component: LookupValuesList
+    }
+  ]
+};
+
 const pageRoutes = {
   path: "/pages",
   name: "Pages",
@@ -460,7 +481,8 @@ export const dashboard = [
   pageRoutes,
   documentationRoutes,
   privateRoutes,
-  contribtestRoutes
+  contribtestRoutes,
+  lookupRoutes
 ];
 
 // Landing specific routes
@@ -483,5 +505,6 @@ export default [
   mapRoutes,
   documentationRoutes,
   layoutRoutes,
-  contribtestRoutes
+  contribtestRoutes,
+  lookupRoutes
 ];
