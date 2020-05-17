@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import gql from "graphql-tag";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery, useLazyQuery } from "@apollo/react-hooks";
 
 import { Link } from "react-router-dom";
+import LookupGroup  from "../../components/appcomponents/LookupGroup";
+import LookupValues from "../../components/appcomponents/LookupValues";
 
 import {
   Breadcrumb,
@@ -19,84 +21,32 @@ import {
 import Header from "../../components/themecomponents/Header";
 import HeaderTitle from "../../components/themecomponents/HeaderTitle";
 
-import BootstrapTable from "react-bootstrap-table-next";
-import paginationFactory from "react-bootstrap-table2-paginator";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-const getLookupGroups = gql`
-    query{
-        lookupGroups{
-        id
-        name
-        code
-        }
-    }`;
+const getLookupValuesQuery = gql`
+query lookupValues($groupId: ID!) {
+  lookupValues(groupId: $groupId){
+   id
+   groupId
+   code
+   description
+   name
+ } 
+ }`;
 
 const LookupValuesList = ({history}) => {
-  const { loading, error, data } = useQuery(getLookupGroups);
-  const [selectedGroup, setGroup] = useState('');
-
-  const tableColumns = [
-    {
-      dataField: "id",
-      text: "Id",
-      hidden: true,
-    },
-    {
-      dataField: "name",
-      text: "Name",
-      sort: true,
-    },
-    {
-      dataField: "code",
-      text: "Code",
-      sort: true,
-    },
-    {
-      text: "Actions",
-      dataField: "",
-      formatter: (cell, row, rowIndex) => (
-        <>
-            <Button  onClick={
-            () => history.push(`/lookup/lookupgroupadd/${row.id}`)
-            }>Edit</Button>
-            <Button onClick={
-            () => history.push('/lookup/lookupvalueadd/:lookupGroupId')     
-            }>Add Values</Button>
-        </>
-      )
-    }
-  ];
-
+  const [getLookupValues, {loadingValues, data }] = useLazyQuery(getLookupValuesQuery);
+  
   const handleChange = (event) =>{
-    setGroup(event.target.value);
-    console.log(selectedGroup);
+    getLookupValues({ variables: { groupId: event }});
   }
 
-  if (loading) {
+  if (loadingValues) {
     return (
       <div>
         <p>Loading</p>
       </div>
     );
   }
-
-  if (error) {
-    return (
-      <div>
-        <p>There was an error</p>
-      </div>
-    );
-  }
-
-  if (data) {
-      
-    let options =   data.lookupGroups.map((group) => 
-    <option name={group.id} key={group.id} value={group.id}>
-        {group.name}
-    </option>
-        );
+    
     return (
       <Container fluid>
         <Header>
@@ -113,21 +63,12 @@ const LookupValuesList = ({history}) => {
             <CardTitle tag="h5">Lookup Groups</CardTitle>
           </CardHeader>
           <CardBody>
-          <Input type="select"
-                        id="exampleCustomSelect"
-                        name="subject"
-                        className="mb-3"
-                        onChange={handleChange}>
-                          <option key="0" value="">Select Group</option>
-                        {options}
-                      </Input>
+            <LookupGroup onChange={handleChange} defaultOptionText="Select Lookup Group"/>
+            <LookupValues lookupValues={data}/>
           </CardBody>
-
-          <span>{selectedGroup}</span>
         </Card>
       </Container>
     );
-  }
 };
 
 export default LookupValuesList;
