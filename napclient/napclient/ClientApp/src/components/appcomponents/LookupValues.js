@@ -4,11 +4,10 @@ import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
 
 const LookupValues = (data) => {
-  let values = [{ id: "", name: "", code: "" }];
+  let values = [{ id: "", name: "", code: "", description:"" }];
 
   if (data != undefined) {
-    if(data.lookupValues != undefined){
-        console.log(data.lookupValues.lookupValues);
+    if(data.lookupValues != undefined){        
         values = data.lookupValues.lookupValues;
     }
   }
@@ -28,6 +27,11 @@ const LookupValues = (data) => {
       dataField: "code",
       text: "Code",
       sort: true,
+    },
+    {
+      dataField: "description",
+      text: "Description",
+      sort: false,
     },
   ];
 
