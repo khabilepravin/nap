@@ -23,20 +23,22 @@ import paginationFactory from "react-bootstrap-table2-paginator";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const getTests = gql`
-  query {
-    tests {
+const getQuestions = gql`
+  query questions($testId: String!) {
+    questions(testId: $testId) {
       id
       text
       description
-      subject
-      year
+      sequence
     }
   }
 `;
 
-const TestList = ({ history }) => {
-  const { loading, error, data } = useQuery(getTests);
+const QuestionsList = ({ history, match }) => {
+  let { testId } = match.params;
+  const { loading, error, data } = useQuery(getQuestions, {
+    variables: { testId: testId },
+  });
 
   const tableColumns = [
     {
@@ -55,24 +57,26 @@ const TestList = ({ history }) => {
       sort: true,
     },
     {
-      dataField: "subject",
-      text: "Subject",
-      sort: true,
-    },
-    {
-      dataField: "year",
-      text: "Year",
+      dataField: "sequence",
+      text: "Sequence",
       sort: true,
     },
     {
       text: "Actions",
       dataField: "",
       formatter: (cell, row, rowIndex) => (
-        <Button
-          onClick={() => history.push(`/testpages/questionslist/${row.id}`)}
-        >
-         Questions
-        </Button>
+        <>
+          <Button
+            onClick={() => history.push(`/testpages/questionadd/${row.id}`)}
+          >
+            Edit
+          </Button>
+          <Button
+            onClick={() => history.push(`/testpages/answerslist/${row.id}`)}
+          >
+            Answers
+          </Button>
+        </>
       ),
     },
   ];
@@ -97,29 +101,29 @@ const TestList = ({ history }) => {
     return (
       <Container fluid>
         <Header>
-          <HeaderTitle>Test List</HeaderTitle>
+          <HeaderTitle>Questions List</HeaderTitle>
           <Breadcrumb>
             <BreadcrumbItem>
               <Link to="/dashboard">Dashboard</Link>
             </BreadcrumbItem>
-            <BreadcrumbItem active>Test List</BreadcrumbItem>
+            <BreadcrumbItem active>Questions List</BreadcrumbItem>
           </Breadcrumb>
         </Header>
         <Card>
           <CardHeader>
-            <CardTitle tag="h5">Test List</CardTitle>
+            <CardTitle tag="h5">Questions List</CardTitle>
           </CardHeader>
           <CardBody>
             <Button
               color="secondary"
               className="mr-1 mb-1"
-              onClick={() => history.push("/testpages/testadd")}
+              onClick={() => history.push(`/testpages/questionadd/${testId}`)}
             >
-              <FontAwesomeIcon icon={faPlus} /> Add Test
+              <FontAwesomeIcon icon={faPlus} /> Add New
             </Button>
             <BootstrapTable
               keyField="id"
-              data={data.tests}
+              data={data.questions}
               columns={tableColumns}
               bootstrap4
               bordered={false}
@@ -135,4 +139,4 @@ const TestList = ({ history }) => {
   }
 };
 
-export default TestList;
+export default QuestionsList;

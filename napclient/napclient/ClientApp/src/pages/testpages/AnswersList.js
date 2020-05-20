@@ -23,20 +23,20 @@ import paginationFactory from "react-bootstrap-table2-paginator";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const getTests = gql`
-  query {
-    tests {
+const getAnswers = gql`query answers($questionId: ID!){
+    answers(questionId: $questionId){
       id
       text
       description
-      subject
-      year
+      sequence
+      isCorrect
     }
   }
 `;
 
-const TestList = ({ history }) => {
-  const { loading, error, data } = useQuery(getTests);
+const AnswersList = ({ history, match }) => {
+  let {questionId} = match.params;
+  const { loading, error, data } = useQuery(getAnswers, { variables: { questionId:questionId  }});
 
   const tableColumns = [
     {
@@ -55,13 +55,13 @@ const TestList = ({ history }) => {
       sort: true,
     },
     {
-      dataField: "subject",
-      text: "Subject",
+      dataField: "sequence",
+      text: "Sequence",
       sort: true,
     },
     {
-      dataField: "year",
-      text: "Year",
+      dataField: "isCorrect",
+      text: "Is Correct",
       sort: true,
     },
     {
@@ -69,9 +69,9 @@ const TestList = ({ history }) => {
       dataField: "",
       formatter: (cell, row, rowIndex) => (
         <Button
-          onClick={() => history.push(`/testpages/questionslist/${row.id}`)}
+          onClick={() => history.push(`/testpages/answeradd/${row.id}`)}
         >
-         Questions
+          Add
         </Button>
       ),
     },
@@ -97,29 +97,29 @@ const TestList = ({ history }) => {
     return (
       <Container fluid>
         <Header>
-          <HeaderTitle>Test List</HeaderTitle>
+          <HeaderTitle>Answers List</HeaderTitle>
           <Breadcrumb>
             <BreadcrumbItem>
               <Link to="/dashboard">Dashboard</Link>
             </BreadcrumbItem>
-            <BreadcrumbItem active>Test List</BreadcrumbItem>
+            <BreadcrumbItem active>Answers List</BreadcrumbItem>
           </Breadcrumb>
         </Header>
         <Card>
           <CardHeader>
-            <CardTitle tag="h5">Test List</CardTitle>
+            <CardTitle tag="h5">Answers List</CardTitle>
           </CardHeader>
           <CardBody>
             <Button
               color="secondary"
               className="mr-1 mb-1"
-              onClick={() => history.push("/testpages/testadd")}
+              onClick={() => history.push(`/testpages/answeradd/${questionId}`)}
             >
-              <FontAwesomeIcon icon={faPlus} /> Add Test
+              <FontAwesomeIcon icon={faPlus} /> Add New
             </Button>
             <BootstrapTable
               keyField="id"
-              data={data.tests}
+              data={data.answers}
               columns={tableColumns}
               bootstrap4
               bordered={false}
@@ -135,4 +135,4 @@ const TestList = ({ history }) => {
   }
 };
 
-export default TestList;
+export default AnswersList;

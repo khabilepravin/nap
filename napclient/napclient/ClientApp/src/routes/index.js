@@ -92,6 +92,10 @@ const GoogleMaps = async(() => import("../pages/maps/GoogleMaps"));
 // Contrib Test
 const TestAdd = async(() => import("../pages/testpages/TestAdd"));
 const TestList = async(() => import("../pages/testpages/TestList"));
+const QuestionAdd = async(() => import("../pages/testpages/QuestionAdd"));
+const QuestionsList = async(() => import("../pages/testpages/QuestionsList"));
+const AnswerAdd = async(() => import("../pages/testpages/AnswerAdd"));
+const AnswersList = async(() => import("../pages/testpages/AnswersList"));
 
 const LookupGroupList = async(() => import("../pages/lookup/LookupGroupList"));
 const LookupValuesList = async(() => import("../pages/lookup/LookupValuesList"));
@@ -349,6 +353,30 @@ const contribtestRoutes = {
       path:"/testpages/testdetails/:id",
       name: "Test Details",
       component: TestDetails,
+      hiddenInSideBar: true
+    },
+    {
+      path:"/testpages/questionadd/:testId",
+      name:"Add Question",
+      component: QuestionAdd,
+      hiddenInSideBar: true
+    },
+    {
+      path:"/testpages/questionslist/:testId",
+      name:"Questions List",
+      component: QuestionsList,
+      hiddenInSideBar: true
+    },
+    {
+      path:"/testpages/answerslist/:questionId",
+      name:"Answers List",
+      component: AnswersList,
+      hiddenInSideBar: true
+    },
+    {
+      path:"/testpages/answeradd/:questionId",
+      name:"Add Answer",
+      component: AnswerAdd,
       hiddenInSideBar: true
     }
   ]
