@@ -1,6 +1,7 @@
 ﻿using dataAccess.Repositories;
 using GraphQL.Types;
 using graphqlMiddleware.GraphTypes;
+using models;
 using System;
 
 namespace graphqlMiddleware.Queries
@@ -10,7 +11,8 @@ namespace graphqlMiddleware.Queries
         
         public TestQuery(ITestRepository testRepository, 
                         IQuestionRepository questionRepository,
-                        ILookupRepository lookupRepository)
+                        ILookupRepository lookupRepository,
+                        IAnswerRepository answerRepository)
         {
             Field<ListGraphType<TestType>>
                 ("tests",
@@ -43,6 +45,12 @@ namespace graphqlMiddleware.Queries
                     "lookupValues",
                     arguments: new QueryArguments(new QueryArgument<IdGraphType> { Name = "groupId" }),
                     resolve: context => lookupRepository.GetValuesByGroupAsync(context.GetArgument<Guid>("groupId"))
+                );
+
+            Field<ListGraphType<AnswerType>>(
+                    "answers",
+                    arguments: new QueryArguments(new QueryArgument<IdGraphType> { Name="questionId"}),
+                    resolve: context => answerRepository.GetByQuestionIdAsync(context.GetArgument<Guid>("questionId"))
                 );
 
         }
