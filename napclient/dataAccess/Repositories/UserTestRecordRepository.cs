@@ -3,6 +3,8 @@ using models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace dataAccess.Repositories
 {
@@ -20,16 +22,16 @@ namespace dataAccess.Repositories
             }
         }
 
-        public  Task<IEnumerable<UserTestRecord>> GetByUserIdAsync(Guid userId)
+        public async  Task<IEnumerable<UserTestRecord>> GetByUserIdAsync(Guid userId)
         {
-            throw new NotImplementedException();
-            //using (var db = base._dbContextFactory.Create())
-            //{
-            //    return await(from u in db.UserTestRecord join 
-
-            //                 where u. == id
-            //                 select u).FirstOrDefaultAsync<User>();
-            //}
+            using (var db = base._dbContextFactory.Create())
+            {
+                return await (from u in db.UserTestRecord
+                              join ut in db.UserTest
+                              on u.UserTestId equals ut.Id
+                              where ut.UserId == userId
+                              select u).ToListAsync<UserTestRecord>();
+            }
         }
 
         public async Task<Guid> UpdateAsync(UserTestRecord userTestRecord)
