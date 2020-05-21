@@ -32,9 +32,15 @@ namespace graphqlMiddleware.Queries
 
             Field<ListGraphType<QuestionType>>(
                         "questions",
-                        arguments: new QueryArguments(new QueryArgument<StringGraphType> { Name = "testId" }),
+                        arguments: new QueryArguments(new QueryArgument<IdGraphType> { Name = "testId" }),
                         resolve: context => questionRepository.GetQuestionsByTestIdAsync(context.GetArgument<Guid>("testId"))
                 );
+
+            Field<QuestionType>(
+                        "question",
+                        arguments: new QueryArguments(new QueryArgument<IdGraphType> { Name = "questionId" }),
+                        resolve: context => questionRepository.GetQuestionById(context.GetArgument<Guid>("questionId"))
+              );
 
             Field<ListGraphType<LookupGroupType>>(
                         "lookupGroups",
