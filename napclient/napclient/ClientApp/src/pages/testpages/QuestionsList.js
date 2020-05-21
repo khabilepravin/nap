@@ -24,7 +24,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const getQuestions = gql`
-  query questions($testId: String!) {
+  query questions($testId: ID!) {
     questions(testId: $testId) {
       id
       text

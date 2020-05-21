@@ -23,8 +23,12 @@ import paginationFactory from "react-bootstrap-table2-paginator";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const getAnswers = gql`query answers($questionId: ID!){
-    answers(questionId: $questionId){
+const getAnswers = gql`query($questionId:ID!){
+  question(questionId:$questionId){
+    id
+    text
+    description
+    answers{
       id
       text
       description
@@ -32,6 +36,7 @@ const getAnswers = gql`query answers($questionId: ID!){
       isCorrect
     }
   }
+}
 `;
 
 const AnswersList = ({ history, match }) => {
@@ -107,9 +112,10 @@ const AnswersList = ({ history, match }) => {
         </Header>
         <Card>
           <CardHeader>
-            <CardTitle tag="h5">Answers List</CardTitle>
+            <CardTitle tag="h2">Answers List</CardTitle>
           </CardHeader>
           <CardBody>
+            <h4>Answers for: {data.question.text}</h4>
             <Button
               color="secondary"
               className="mr-1 mb-1"
@@ -119,14 +125,11 @@ const AnswersList = ({ history, match }) => {
             </Button>
             <BootstrapTable
               keyField="id"
-              data={data.answers}
+              data={data.question.answers}
               columns={tableColumns}
               bootstrap4
               bordered={false}
-              pagination={paginationFactory({
-                sizePerPage: 10,
-                sizePerPageList: [5, 10, 25, 50],
-              })}
+              
             />
           </CardBody>
         </Card>
