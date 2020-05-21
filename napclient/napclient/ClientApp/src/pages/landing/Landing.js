@@ -26,7 +26,7 @@ import brandNpm from "../../assets/img/brands/npm.svg";
 import brandReact from "../../assets/img/brands/react.svg";
 import brandRedux from "../../assets/img/brands/redux.svg";
 
-import IosPulse from "react-ionicons/lib/IosPulse";
+import IosTrendingUp from "react-ionicons/lib/IosTrendingUp";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
@@ -35,7 +35,7 @@ const Header = () => (
   <Navbar dark expand="xs" className="absolute-top w-100 py-2">
     <Container>
       <NavbarBrand className="font-weight-bold" href="/">
-        <IosPulse /> Practice Naplan
+        <IosTrendingUp /> Prac Test
       </NavbarBrand>      
     </Container>
   </Navbar>

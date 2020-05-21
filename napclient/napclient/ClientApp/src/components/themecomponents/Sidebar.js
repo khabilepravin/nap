@@ -5,7 +5,8 @@ import classNames from "classnames";
 
 import { Badge, Collapse } from "reactstrap";
 
-import IosPulse from "react-ionicons/lib/IosPulse";
+
+import IosTrendingUp from "react-ionicons/lib/IosTrendingUp";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import routes from "../../routes/index";
@@ -149,9 +150,9 @@ class Sidebar extends React.Component {
             )}
             href="/"
           >
-            {sidebar.isOnRight || <IosPulse />}{" "}
-            <span className="align-middle">Practice Naplan</span>{" "}
-            {!sidebar.isOnRight || <IosPulse />}
+            {sidebar.isOnRight || <IosTrendingUp />}{" "}
+            <span className="align-middle">Prac Test</span>{" "}
+            {!sidebar.isOnRight || <IosTrendingUp />}
           </a>
 
           <div className="sidebar-user">

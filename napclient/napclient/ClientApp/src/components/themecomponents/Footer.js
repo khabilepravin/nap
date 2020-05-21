@@ -34,7 +34,7 @@ const Footer = () => (
           <p className="mb-0">
             &copy; {new Date().getFullYear()} -{" "}
             <Link to="dashboard" className="text-muted">
-              Spark
+              PracTest
             </Link>
           </p>
         </Col>
