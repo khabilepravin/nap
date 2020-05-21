@@ -11,7 +11,9 @@ import {
   faHome,
   faMapMarkerAlt,
   faTable,
-  faSignInAlt
+  faSignInAlt,
+  faCube,
+  faAlignJustify
 } from "@fortawesome/free-solid-svg-icons";
 import { faCalendarAlt } from "@fortawesome/free-regular-svg-icons";
 
@@ -337,7 +339,7 @@ const mapRoutes = {
 const contribtestRoutes = {
   path: "/testpages",
   name: "Tests",
-  icon: faMapMarkerAlt,
+  icon: faCube,
   children: [
     {
       path: "/testpages/testlist",
@@ -385,7 +387,7 @@ const contribtestRoutes = {
 const lookupRoutes = {
   path: "/lookup",
   name: "Lookup",
-  icon: faMapMarkerAlt,
+  icon: faAlignJustify,
   children: [
     {
       path: "/lookup/lookupgrouplist",
@@ -521,7 +523,12 @@ export const page = [authRoutes];
 
 // All routes
 export default [
-  dashboardRoutes,
+  contribtestRoutes,
+  lookupRoutes
+];
+
+
+/*dashboardRoutes,
   pageRoutes,
   authRoutes,
   uiRoutes,
@@ -532,7 +539,4 @@ export default [
   calendarRoutes,
   mapRoutes,
   documentationRoutes,
-  layoutRoutes,
-  contribtestRoutes,
-  lookupRoutes
-];
+  layoutRoutes,*/
