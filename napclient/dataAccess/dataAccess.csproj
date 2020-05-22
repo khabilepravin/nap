@@ -9,6 +9,8 @@
     <Compile Remove="Migrations\20200419075532_ProperDataTypes.Designer.cs" />
     <Compile Remove="Migrations\20200419081957_ProperDataTypes_2.cs" />
     <Compile Remove="Migrations\20200419081957_ProperDataTypes_2.Designer.cs" />
+    <Compile Remove="Migrations\20200522103434_FileStorage_Table.cs" />
+    <Compile Remove="Migrations\20200522103434_FileStorage_Table.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -21,8 +21,8 @@ namespace dataAccess
         public DbSet<UserTestRecord> UserTestRecord { get; set; }
         public DbSet<Explanation> Explanation { get; set; }
         public DbSet<LookupGroup> LookupGroup { get; set; }
-
         public DbSet<LookupValue> LookupValue { get; set; }
+        public DbSet<FileStorage> FileStorage { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -117,6 +117,9 @@ namespace dataAccess
                         .HasColumnType("char(1)");
                 entity.Property(e => e.DifficultyLevel)
                         .HasColumnType("varchar(100)");
+                entity.Property(e => e.FileId)
+                        .HasColumnType("char(36)");
+
             });
             modelBuilder.Entity<Question>().Property(e => e.Id).ValueGeneratedOnAdd();
 
@@ -214,6 +217,23 @@ namespace dataAccess
 
             });
             modelBuilder.Entity<LookupValue>().Property(e => e.Id).ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<FileStorage>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.FileType)
+                        .HasColumnType("varchar(100)");
+                entity.Property(e => e.Name)
+                                .HasColumnType("varchar(300)");
+                entity.Property(e => e.Extension)
+                                .HasColumnType("varchar(30)");
+                entity.Property(e => e.Data)
+                                .HasColumnType("varbinary(max)");
+                entity.Property(e => e.CreatedAt);
+                entity.Property(e => e.ModifiedAt);
+            });
+
+            modelBuilder.Entity<FileStorage>().Property(e => e.Id).ValueGeneratedOnAdd();
         }
     }
 }
