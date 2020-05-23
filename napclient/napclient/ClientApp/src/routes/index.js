@@ -99,6 +99,10 @@ const QuestionsList = async(() => import("../pages/testpages/QuestionsList"));
 const AnswerAdd = async(() => import("../pages/testpages/AnswerAdd"));
 const AnswersList = async(() => import("../pages/testpages/AnswersList"));
 
+// Practice Test
+const PracticeTest = async(() => import("../pages/practicepages/PracticeTest"));
+const TestSelection =  async(() => import("../pages/practicepages/TestSelection"));
+
 const LookupGroupList = async(() => import("../pages/lookup/LookupGroupList"));
 const LookupValuesList = async(() => import("../pages/lookup/LookupValuesList"));
 
@@ -384,6 +388,24 @@ const contribtestRoutes = {
   ]
 };
 
+const practiceTestRoutes = {
+  path: "/practicepages",
+  name: "Practice Pages",
+  icon: faFile,
+  children: [
+    {
+      path: "/practicepages/practicetest",
+      name: "Practice Tests",
+      component: PracticeTest
+    },
+    {
+      path: "/practicepages/testselection",
+      name: "Select Test",
+      component: TestSelection
+    }
+  ]
+};
+
 const lookupRoutes = {
   path: "/lookup",
   name: "Lookup",
@@ -512,7 +534,8 @@ export const dashboard = [
   documentationRoutes,
   privateRoutes,
   contribtestRoutes,
-  lookupRoutes
+  lookupRoutes,
+  practiceTestRoutes
 ];
 
 // Landing specific routes
@@ -524,7 +547,8 @@ export const page = [authRoutes];
 // All routes
 export default [
   contribtestRoutes,
-  lookupRoutes
+  lookupRoutes,
+  practiceTestRoutes
 ];
 
 

@@ -2,6 +2,7 @@ import React from "react";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 
+import TestFilter from "../../components/appcomponents/practicetest/TestFilter";
 import { Link } from "react-router-dom";
 
 import {
@@ -39,9 +40,9 @@ const getAnswers = gql`query($questionId:ID!){
 }
 `;
 
-const AnswersList = ({ history, match }) => {
+const TestSelection = ({ history, match }) => {
   let {questionId} = match.params;
-  const { loading, error, data } = useQuery(getAnswers, { variables: { questionId:questionId  }});
+//  const { loading, error, data } = useQuery(getAnswers, { variables: { questionId:questionId  }});
 
   const tableColumns = [
     {
@@ -71,60 +72,45 @@ const AnswersList = ({ history, match }) => {
     }
   ];
 
-  if (loading) {
-    return (
-      <div>
-        <p>Loading</p>
-      </div>
-    );
-  }
+//   if (loading) {
+//     return (
+//       <div>
+//         <p>Loading</p>
+//       </div>
+//     );
+//   }
 
-  if (error) {
-    return (
-      <div>
-        <p>There was an error</p>
-      </div>
-    );
-  }
+//   if (error) {
+//     return (
+//       <div>
+//         <p>There was an error</p>
+//       </div>
+//     );
+//   }
 
-  if (data) {
+  //if (data) {
     return (
       <Container fluid>
         <Header>
-          <HeaderTitle>Answers List</HeaderTitle>
+          <HeaderTitle>Practice Tests</HeaderTitle>
           <Breadcrumb>
             <BreadcrumbItem>
               <Link to="/dashboard">Dashboard</Link>
             </BreadcrumbItem>
-            <BreadcrumbItem active>Answers List</BreadcrumbItem>
+            <BreadcrumbItem active>Practice Tests</BreadcrumbItem>
           </Breadcrumb>
         </Header>
         <Card>
           <CardHeader>
-            <CardTitle tag="h2">Answers List</CardTitle>
+            <CardTitle tag="h2">Select Tests</CardTitle>
           </CardHeader>
           <CardBody>
-            <h4>Answers for: {data.question.text}</h4>
-            <Button
-              color="secondary"
-              className="mr-1 mb-1"
-              onClick={() => history.push(`/testpages/answeradd/${questionId}`)}
-            >
-              <FontAwesomeIcon icon={faPlus} /> Add New
-            </Button>
-            <BootstrapTable
-              keyField="id"
-              data={data.question.answers}
-              columns={tableColumns}
-              bootstrap4
-              bordered={false}
-              
-            />
+            <TestFilter/> 
           </CardBody>
         </Card>
       </Container>
     );
-  }
+ // }
 };
 
-export default AnswersList;
+export default TestSelection;
