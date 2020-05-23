@@ -24,25 +24,21 @@ import paginationFactory from "react-bootstrap-table2-paginator";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const getAnswers = gql`query($questionId:ID!){
-  question(questionId:$questionId){
-    id
-    text
-    description
-    answers{
+const getTests = gql`
+  query {
+    tests {
       id
       text
       description
-      sequence
-      isCorrect
+      subject
+      year
     }
   }
-}
 `;
 
 const TestSelection = ({ history, match }) => {
-  let {questionId} = match.params;
-//  const { loading, error, data } = useQuery(getAnswers, { variables: { questionId:questionId  }});
+  let { questionId } = match.params;
+  const { loading, error, data } = useQuery(getTests);
 
   const tableColumns = [
     {
@@ -61,34 +57,57 @@ const TestSelection = ({ history, match }) => {
       sort: true,
     },
     {
-      dataField: "sequence",
-      text: "Sequence",
+      dataField: "subject",
+      text: "Subject",
       sort: true,
     },
     {
-      dataField: "isCorrect",
-      text: "Is Correct",
+      dataField: "year",
+      text: "Year",
       sort: true,
-    }
+    },
+    {
+      text: "Actions",
+      dataField: "",
+      formatter: (cell, row, rowIndex) => (
+        <>
+          <Button
+            onClick={() =>
+              history.push(`/practicepages/practicetest/${row.id}`)
+            }
+          >
+            Practice
+          </Button>
+          <span> </span>
+          <Button
+            onClick={() =>
+              history.push(`/practicepages/practicetest/${row.id}`)
+            }
+          >
+            Exam
+          </Button>
+        </>
+      ),
+    },
   ];
 
-//   if (loading) {
-//     return (
-//       <div>
-//         <p>Loading</p>
-//       </div>
-//     );
-//   }
+  if (loading) {
+    return (
+      <div>
+        <p>Loading</p>
+      </div>
+    );
+  }
 
-//   if (error) {
-//     return (
-//       <div>
-//         <p>There was an error</p>
-//       </div>
-//     );
-//   }
+  if (error) {
+    return (
+      <div>
+        <p>There was an error</p>
+      </div>
+    );
+  }
 
-  //if (data) {
+  if (data) {
     return (
       <Container fluid>
         <Header>
@@ -105,12 +124,23 @@ const TestSelection = ({ history, match }) => {
             <CardTitle tag="h2">Select Tests</CardTitle>
           </CardHeader>
           <CardBody>
-            <TestFilter/> 
+            <TestFilter />
+            <BootstrapTable
+              keyField="id"
+              data={data.tests}
+              columns={tableColumns}
+              bootstrap4
+              bordered={false}
+              pagination={paginationFactory({
+                sizePerPage: 10,
+                sizePerPageList: [5, 10, 25, 50],
+              })}
+            />
           </CardBody>
         </Card>
       </Container>
     );
- // }
+  }
 };
 
 export default TestSelection;

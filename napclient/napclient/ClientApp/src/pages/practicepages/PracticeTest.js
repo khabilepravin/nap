@@ -8,6 +8,9 @@ import Answers from "../../components/appcomponents/practicetest/Answers";
 import TestProgress from "../../components/appcomponents/practicetest/TestProgress";
 import Timer from "../../components/appcomponents/practicetest/Timer";
 
+import { faSave, faCross, faWindowClose, faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -22,25 +25,29 @@ import {
 import Header from "../../components/themecomponents/Header";
 import HeaderTitle from "../../components/themecomponents/HeaderTitle";
 
-import BootstrapTable from "react-bootstrap-table-next";
-import paginationFactory from "react-bootstrap-table2-paginator";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-const getTests = gql`
-  query {
-    tests {
+const GET_TEST = gql`query($id:ID!){
+  test(id:$id){
+    id
+    text
+    description
+    questions{
       id
       text
       description
-      subject
-      year
+      questionType
+    	answers{
+        id
+        text
+        isCorrect
+        description
+      }
     }
   }
-`;
+}`;
 
-const PracticeTest = ({ history }) => {
-  const { loading, error, data } = useQuery(getTests);
+const PracticeTest = ({ history, match }) => {
+  let {testId} = match.params;
+  const { loading, error, data } = useQuery(GET_TEST, { variables: { id:testId  }});
 
   if (loading) {
     return (
@@ -72,13 +79,19 @@ const PracticeTest = ({ history }) => {
         </Header>
         <Card>
           <CardHeader>
-            <CardTitle tag="h5">Test List</CardTitle>
+            <CardTitle tag="h5">{data.test.text}</CardTitle>
           </CardHeader>
           <CardBody>
               <TestProgress/>
-              <Timer/>
-              <Question/>
-              <Answers/>
+              <Timer minutes="100"/>
+              <Question question={data.test.questions[0].text} />
+              <Answers answers={data.test.questions[0].answers}/>
+              <Button type="button" color="warning" className="mr-1 mb-1" 
+                    >
+                      <FontAwesomeIcon icon={faArrowLeft} /> Previous</Button>
+              <Button type="submit" color="primary" className="mr-1 mb-1">
+                    <FontAwesomeIcon icon={faArrowRight} /> Next</Button>
+                    
           </CardBody>
         </Card>
       </Container>

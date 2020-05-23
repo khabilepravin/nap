@@ -1,7 +1,7 @@
 import React from 'react';
 
-const Question = () => (
-    <div>Question</div>
+const Question = (props) => (
+    <h3>{props.question}</h3>
 );
 
 export default Question;

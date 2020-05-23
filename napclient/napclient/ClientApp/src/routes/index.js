@@ -394,9 +394,10 @@ const practiceTestRoutes = {
   icon: faFile,
   children: [
     {
-      path: "/practicepages/practicetest",
+      path: "/practicepages/practicetest/:testId",
       name: "Practice Tests",
-      component: PracticeTest
+      component: PracticeTest,
+      hiddenInSideBar: true
     },
     {
       path: "/practicepages/testselection",
