@@ -26,7 +26,7 @@ namespace graphqlMiddleware.Queries
 
             Field<TestType>(
                     "test",
-                    arguments: new QueryArguments(new QueryArgument<StringGraphType> { Name="id"}),
+                    arguments: new QueryArguments(new QueryArgument<IdGraphType> { Name="id"}),
                     resolve: context => testRepository.GetByIdAsync(context.GetArgument<Guid>("id"))
                 );
 

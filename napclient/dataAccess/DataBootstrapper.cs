@@ -17,6 +17,7 @@ namespace dataAccess
             containerBuilder.RegisterType<AnswerRepository>().As<IAnswerRepository>();
             containerBuilder.RegisterType<ExplanationRepository>().As<IExplanationRepository>();
             containerBuilder.RegisterType<LookupRepository>().As<ILookupRepository>();
+            containerBuilder.RegisterType<FileStorageRepository>().As<IFileStorageRepository>();
         }
     }
 }

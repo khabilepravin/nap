@@ -21,6 +21,7 @@ namespace graphqlMiddleware.GraphTypes
             Field(t => t.CreatedByUser, type: typeof(IdGraphType));
             Field(t => t.ModifiedByUser, type: typeof(IdGraphType));
             Field(t => t.Status);
+            Field(t => t.FileId, type: typeof(IdGraphType));
             Field<ListGraphType<AnswerType>>("answers",
                 resolve: context => answerRepository.GetByQuestionIdAsync(context.Source.Id));
             Field<ListGraphType<ExplanationType>>("explanations",

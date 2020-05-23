@@ -1,7 +1,11 @@
 ﻿using dataAccess.Repositories;
+using GraphQL;
 using GraphQL.Types;
 using graphqlMiddleware.GraphTypes;
+using Microsoft.AspNetCore.Http;
 using models;
+using System;
+using System.IO;
 using System.Linq;
 
 namespace graphqlMiddleware.Mutations
@@ -13,7 +17,8 @@ namespace graphqlMiddleware.Mutations
                             IQuestionRepository questionRepository,
                             IAnswerRepository answerRepository,
                             IExplanationRepository explanationRepository,
-                            ILookupRepository lookupRepository)
+                            ILookupRepository lookupRepository,
+                            IFileStorageRepository fileStorageRepository)
         {
             Field<TestType>(
                 "createTest",
@@ -45,8 +50,24 @@ namespace graphqlMiddleware.Mutations
                     resolve: context =>
                     {
                         var question = context.GetArgument<Question>("question");
+                        var files = context.UserContext.As<IFormFileCollection>();
+                        if(files?.Count > 0)
+                        {
+                            FileStorage fileStorage = new FileStorage();
+                            if (files[0].Length > 0)
+                            {
+                                using (var ms = new MemoryStream())
+                                {
+                                    files[0].CopyTo(ms);
+                                    fileStorage.Data = ms.ToArray();
+                                }
+                                fileStorage.Name = files[0].FileName;
+                                fileStorage.FileType = files[0].ContentType;
+                            }
+                        }
                         return questionRepository.AddAsync(question);
                     });
+
 
             Field<QuestionType>(
                 "updateQuestion",
