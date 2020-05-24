@@ -4,7 +4,7 @@ import { Progress } from "reactstrap";
 
 const TestProgress = () => (
     <Progress striped value="50" className="mb-3">
-        Striped
+        Test Progress
   </Progress>   
 );
 
