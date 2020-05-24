@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using System;
 
 namespace napclient
@@ -59,6 +60,10 @@ namespace napclient
             services.AddSingleton<LookupGroupInputType>();
             services.AddSingleton<LookupValueType>();
             services.AddSingleton<LookupValueInputType>();
+            services.AddSingleton<UserTestInputType>();
+            services.AddSingleton<UserTestRecordInputType>();
+            services.AddSingleton<UserTestType>();
+            services.AddSingleton<UserTestRecordType>();
 
             services.AddGraphQL();
 

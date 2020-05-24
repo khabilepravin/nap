@@ -18,7 +18,9 @@ namespace graphqlMiddleware.Mutations
                             IAnswerRepository answerRepository,
                             IExplanationRepository explanationRepository,
                             ILookupRepository lookupRepository,
-                            IFileStorageRepository fileStorageRepository)
+                            IFileStorageRepository fileStorageRepository,
+                            IUserTestRecordRepository userTestRecordRepository,
+                            IUserTestRepository userTestRepository)
         {
             Field<TestType>(
                 "createTest",
@@ -149,6 +151,29 @@ namespace graphqlMiddleware.Mutations
                             return lookupRepository.AddValueAsync(lookupValue);
                         });
 
+            Field<UserTestType>(
+                    "addUserTest",
+                    arguments: new QueryArguments(
+                        new QueryArgument<NonNullGraphType<UserTestInputType>> { Name = "userTest" }
+                        ),
+                        resolve: context =>
+                        {
+                            var userTest = context.GetArgument<UserTest>("userTest");
+                            return userTestRepository.AddAsync(userTest);
+                        });
+                    
+
+            Field<UserTestRecordType>(
+                    "addUserTestRecord",
+                    arguments: new QueryArguments(
+                            new QueryArgument<NonNullGraphType<UserTestRecordInputType>> { Name="userTestRecord" }
+                        ),
+                    resolve: context =>
+                    {
+                        var userTestRecord = context.GetArgument<UserTestRecord>("userTestRecord");
+                        return userTestRecordRepository.AddAsync(userTestRecord);
+                    });
+                
         }
     }
 }

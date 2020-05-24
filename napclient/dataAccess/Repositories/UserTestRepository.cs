@@ -12,14 +12,14 @@ namespace dataAccess.Repositories
     {
         public UserTestRepository(IDbContextFactory dbContextFactory) : base(dbContextFactory) { }
 
-        public async Task<Guid> AddAsync(UserTest userTest)
+        public async Task<UserTest> AddAsync(UserTest userTest)
         {
             using(var db = base._dbContextFactory.Create())
             {
                 userTest.CreatedAt = DateTime.UtcNow;
                 await db.AddAsync(userTest);
                 await db.SaveChangesAsync();
-                return userTest.Id;
+                return userTest;
             }
         }
 
@@ -33,14 +33,14 @@ namespace dataAccess.Repositories
             }
         }
 
-        public async Task<Guid> UpdateAsync(UserTest userTest)
+        public async Task<UserTest> UpdateAsync(UserTest userTest)
         {
             using (var db = base._dbContextFactory.Create())
             {
                 userTest.ModifiedAt = DateTime.UtcNow;
                 db.Update(userTest);
                 await db.SaveChangesAsync();
-                return userTest.Id;
+                return userTest;
             }
         }
     }
