@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 
@@ -47,7 +47,16 @@ const GET_TEST = gql`query($id:ID!){
 
 const PracticeTest = ({ history, match }) => {
   let {testId} = match.params;
+  const [currentQuestionIndex, setcurrentQuestionIndex] = useState(0)
   const { loading, error, data } = useQuery(GET_TEST, { variables: { id:testId  }});
+
+  const incrementQuestionIndex = () =>{
+    setcurrentQuestionIndex(currentQuestionIndex+1);
+  }
+
+  const decrementQuestionIndex = () => {
+    setcurrentQuestionIndex(currentQuestionIndex-1);
+  }
 
   if (loading) {
     return (
@@ -84,14 +93,17 @@ const PracticeTest = ({ history, match }) => {
           <CardBody>
               <TestProgress/>
               <Timer minutes="100"/>
-              <Question question={data.test.questions[0].text} />
-              <Answers answers={data.test.questions[0].answers}/>
-              <Button type="button" color="warning" className="mr-1 mb-1" 
-                    >
-                      <FontAwesomeIcon icon={faArrowLeft} /> Previous</Button>
-              <Button type="submit" color="primary" className="mr-1 mb-1">
-                    <FontAwesomeIcon icon={faArrowRight} /> Next</Button>
-                    
+              <Question question={data.test.questions[currentQuestionIndex].text} />
+              <Answers answers={data.test.questions[currentQuestionIndex].answers}/>
+              {
+                currentQuestionIndex == 0 ? null :
+                <Button type="button" color="warning" className="mr-1 mb-1" onClick={decrementQuestionIndex}>
+                      <FontAwesomeIcon icon={faArrowLeft} /> Previous
+                </Button>
+              }
+              <Button type="submit" color="primary" className="mr-1 mb-1" onClick={incrementQuestionIndex}>
+                Next <FontAwesomeIcon icon={faArrowRight} />
+              </Button>
           </CardBody>
         </Card>
       </Container>

@@ -9,14 +9,16 @@ import {
   
 const Answers = (props) => {
     let answersList = props.answers.map((answer, index) => (
+      <div key={answer.text}>
         <CustomInput
         type="radio"
         id={index}
-        key={answer.text}
+        
         name="answers"
         label={answer.text}
-        className="mb-2"
-      />
+        className="mb-2 h4"
+      />      
+      </div>
       ));
 
       return (
