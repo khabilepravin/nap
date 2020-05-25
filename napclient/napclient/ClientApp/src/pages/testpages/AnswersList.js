@@ -1,6 +1,6 @@
 import React from "react";
 import gql from "graphql-tag";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 
 import { Link } from "react-router-dom";
 
@@ -39,9 +39,19 @@ const getAnswers = gql`query($questionId:ID!){
 }
 `;
 
+const deleteAnswerMutation = gql`mutation($id:ID!){
+  deleteAnswerById(id:$id)
+}
+`;
+
 const AnswersList = ({ history, match }) => {
   let {questionId} = match.params;
   const { loading, error, data } = useQuery(getAnswers, { variables: { questionId:questionId  }});
+  const [deleteAnswer] = useMutation(deleteAnswerMutation);
+
+  const deleteAnswerHandler = (id)=> {
+    deleteAnswer({ variables: { id: id } });
+  };
 
   const tableColumns = [
     {
@@ -68,6 +78,19 @@ const AnswersList = ({ history, match }) => {
       dataField: "isCorrect",
       text: "Is Correct",
       sort: true,
+    },
+    {
+      text: "Actions",
+      dataField: "",
+      formatter: (cell, row, rowIndex) => (
+        <>
+          <Button
+            onClick={() => deleteAnswerHandler(row.id)}
+          >
+            Delete
+          </Button>
+        </>
+      ),
     }
   ];
 
@@ -118,7 +141,6 @@ const AnswersList = ({ history, match }) => {
               columns={tableColumns}
               bootstrap4
               bordered={false}
-              
             />
           </CardBody>
         </Card>

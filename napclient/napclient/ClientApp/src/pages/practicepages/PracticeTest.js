@@ -93,8 +93,7 @@ const PracticeTest = ({ history, match }) => {
           <CardBody>
               <TestProgress/>
               <Timer minutes="100"/>
-              <Question question={data.test.questions[currentQuestionIndex].text} />
-              <Answers answers={data.test.questions[currentQuestionIndex].answers}/>
+              <Question question={data.test.questions[currentQuestionIndex]} />
               {
                 currentQuestionIndex == 0 ? null :
                 <Button type="button" color="warning" className="mr-1 mb-1" onClick={decrementQuestionIndex}>
