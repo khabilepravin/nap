@@ -1,16 +1,16 @@
 import React,{useState, useEffect} from 'react';
 
 const Timer = (props) => {
-    const [timer, setState] = useState(props.minutes);
+  const [timeLeft, setMinutes] = useState(props.minutes);
 
-    // useEffect(() => {
-    //     const timer = setTimeout(() => {
-    //      setState(timer-1);
-    //     }, 1000);
-    //     return () => clearTimeout(timer);
-    //   }, []);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setMinutes(timeLeft => timeLeft - 1);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
       
-      return <div>{timer}</div>
+      return <div>{timeLeft}</div>
 };
 
 export default Timer;
