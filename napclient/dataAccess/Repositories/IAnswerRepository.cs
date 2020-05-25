@@ -10,6 +10,7 @@ namespace dataAccess.Repositories
         Task<Answer> AddAsync(Answer answer);
         Task<IEnumerable<Answer>> GetByQuestionIdAsync(Guid questionId);
         Task<Answer> UpdateAsync(Answer answer);
+        Task<bool> DeleteAsync(Guid answerId);
         
     }
 }

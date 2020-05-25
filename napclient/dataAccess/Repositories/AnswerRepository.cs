@@ -42,5 +42,19 @@ namespace dataAccess.Repositories
                 return answer;
             }
         }
+
+        public async Task<bool> DeleteAsync(Guid answerId)
+        {
+            using(var db = base._dbContextFactory.Create())
+            {
+                var answer = (from a in db.Answer
+                              where a.Id == answerId
+                              select a).FirstOrDefault<Answer>();
+
+                db.Remove(answer);
+                await db.SaveChangesAsync();
+                return true;
+            }
+        }
     }
 }

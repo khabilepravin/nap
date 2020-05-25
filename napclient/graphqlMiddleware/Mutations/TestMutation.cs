@@ -173,7 +173,13 @@ namespace graphqlMiddleware.Mutations
                         var userTestRecord = context.GetArgument<UserTestRecord>("userTestRecord");
                         return userTestRecordRepository.AddAsync(userTestRecord);
                     });
-                
+
+            Field<BooleanGraphType>(
+                    "deleteAnswerById",
+                    arguments: new QueryArguments(new QueryArgument<IdGraphType> { Name = "id" }),
+                    resolve: context => answerRepository.DeleteAsync(context.GetArgument<Guid>("id"))
+                );
+
         }
     }
 }
