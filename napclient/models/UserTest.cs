@@ -7,6 +7,7 @@ namespace models
         public Guid Id { get; set; }
         public Guid UserId { get; set; }
         public Guid TestId { get; set; }
+        public string Mode { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime ModifiedAt { get; set; }
         public string Status { get; set; }

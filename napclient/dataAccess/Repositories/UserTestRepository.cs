@@ -17,7 +17,7 @@ namespace dataAccess.Repositories
             using(var db = base._dbContextFactory.Create())
             {
                 userTest.CreatedAt = DateTime.UtcNow;
-                await db.AddAsync(userTest);
+                await db.UserTest.AddAsync(userTest);
                 await db.SaveChangesAsync();
                 return userTest;
             }
