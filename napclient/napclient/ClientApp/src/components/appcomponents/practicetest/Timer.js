@@ -1,16 +1,50 @@
-import React,{useState, useEffect} from 'react';
+import React, { Component } from "react";
 
-const Timer = (props) => {
-  const [timeLeft, setMinutes] = useState(props.minutes);
+export default class Timer extends Component {
+  constructor(props) {
+    super(props);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setMinutes(timeLeft => timeLeft - 1);
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
-      
-      return <div>{timeLeft}</div>
-};
+  }
+  state = {
+      minutes: this.props.minutes,
+      seconds: 0,
+  }
 
-export default Timer;
+  componentDidMount() {
+      this.myInterval = setInterval(() => {
+          const { seconds, minutes } = this.state
+
+          if (seconds > 0) {
+              this.setState(({ seconds }) => ({
+                  seconds: seconds - 1
+              }))
+          }
+          if (seconds === 0) {
+              if (minutes === 0) {
+                  clearInterval(this.myInterval)
+              } else {
+                  this.setState(({ minutes }) => ({
+                      minutes: minutes - 1,
+                      seconds: 59
+                  }))
+              }
+          } 
+      }, 1000)
+  }
+
+  componentWillUnmount() {
+      clearInterval(this.myInterval)
+  }
+
+  render() {
+      const { minutes, seconds } = this.state
+      return (
+          <div>
+              { minutes === 0 && seconds === 0
+                  ? <h4>Times up!</h4>
+                  : <h4>Time Remaining: {minutes}:{seconds < 10 ? `0${seconds}` : seconds}</h4>
+              }
+          </div>
+      )
+  }
+}

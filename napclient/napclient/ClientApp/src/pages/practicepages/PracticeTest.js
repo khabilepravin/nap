@@ -30,6 +30,7 @@ const GET_TEST = gql`query($id:ID!){
     id
     text
     description
+    durationMinutes
     questions{
       id
       text
@@ -88,11 +89,10 @@ const PracticeTest = ({ history, match }) => {
         </Header>
         <Card>
           <CardHeader>
-            <CardTitle tag="h5">{data.test.text}</CardTitle>
+            <CardTitle tag="h5">{data.test.text} <Timer minutes={data.test.durationMinutes}/></CardTitle>
           </CardHeader>
           <CardBody>
-              <TestProgress/>
-              <Timer minutes="100"/>
+              <TestProgress/>              
               <Question question={data.test.questions[currentQuestionIndex]} />
               {
                 currentQuestionIndex == 0 ? null :
