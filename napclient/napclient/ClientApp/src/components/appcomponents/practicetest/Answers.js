@@ -5,10 +5,10 @@ import {
 
 const Answers = (props) => {
     let answersList =  props.answers.map((answer, index) => (
-      <div key={index}>
+      <div key={answer.id}>
         <CustomInput
         type="radio"
-        id={index}
+        id={answer.id}
         name="answers"
         label={answer.text}
         className="mb-2 h4"
