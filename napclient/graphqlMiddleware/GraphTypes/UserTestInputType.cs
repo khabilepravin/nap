@@ -10,7 +10,7 @@ namespace graphqlMiddleware.GraphTypes
             Name = "UserTestInput";
             Field<NonNullGraphType<IdGraphType>>("testId");
             Field<NonNullGraphType<IdGraphType>>("userId");
-
+            Field<NonNullGraphType<StringGraphType>>("mode");
         }
     }
 }

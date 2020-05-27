@@ -13,6 +13,7 @@ namespace graphqlMiddleware.GraphTypes
             Field(t => t.CreatedAt);
             Field(t => t.ModifiedAt);
             Field(t => t.Status);
+            Field(t => t.Mode);
         }
     }
 }
