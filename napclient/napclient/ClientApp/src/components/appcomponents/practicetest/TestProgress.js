@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Progress } from "reactstrap";
 
-const TestProgress = () => (
-    <Progress striped value="50" className="mb-3">
+const TestProgress = (props) => (
+     <Progress striped value={props.percentage} className="mb-3">
         Test Progress
-  </Progress>   
+    </Progress>   
 );
 
 export default TestProgress;

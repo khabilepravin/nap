@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useState, useEffect} from "react";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 
@@ -47,7 +47,8 @@ const GET_TEST = gql`query($userTestId: ID!){
 
 const PracticeTest = ({ history, match }) => {
   let {userTestId} = match.params;
-  const [currentQuestionIndex, setcurrentQuestionIndex] = useState(0)
+  const [currentQuestionIndex, setcurrentQuestionIndex] = useState(0);
+  const [percentage, setPercentage] = useState(1);
   const { loading, error, data } = useQuery(GET_TEST, { variables: { userTestId:userTestId  }});
   
   const incrementQuestionIndex = () =>{
@@ -55,7 +56,18 @@ const PracticeTest = ({ history, match }) => {
   }
 
   const decrementQuestionIndex = () => {
-    setcurrentQuestionIndex(currentQuestionIndex-1);
+    setcurrentQuestionIndex(currentQuestionIndex-1); 
+  }
+
+  useEffect(() => {
+    if(data){
+    // Update the document title using the browser API
+      calculatePercentage();
+    }
+  });
+
+  const calculatePercentage = () => {
+    setPercentage((100 * (currentQuestionIndex+1)) / data.testByUserTestId.questions.length);
   }
 
   if (loading) {
@@ -91,7 +103,7 @@ const PracticeTest = ({ history, match }) => {
             <CardTitle tag="h5">{data.testByUserTestId.text} <Timer minutes={data.testByUserTestId.durationMinutes}/></CardTitle>
           </CardHeader>
           <CardBody>
-              <TestProgress/>              
+              <TestProgress percentage={percentage} />              
               <Question question={data.testByUserTestId.questions[currentQuestionIndex]} />
               {
                 currentQuestionIndex == 0 ? null :
