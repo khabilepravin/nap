@@ -103,17 +103,17 @@ const PracticeTest = ({ history, match }) => {
             <CardTitle tag="h5">{data.testByUserTestId.text} <Timer minutes={data.testByUserTestId.durationMinutes}/></CardTitle>
           </CardHeader>
           <CardBody>
-              <TestProgress percentage={percentage} />              
+              <TestProgress percentage={percentage} />             
               <Question question={data.testByUserTestId.questions[currentQuestionIndex]} />
-              {
-                currentQuestionIndex == 0 ? null :
-                <Button type="button" color="warning" className="mr-1 mb-1" onClick={decrementQuestionIndex}>
-                      <FontAwesomeIcon icon={faArrowLeft} /> Previous
-                </Button>
-              }
-              <Button type="submit" color="primary" className="mr-1 mb-1" onClick={incrementQuestionIndex}>
+              <Button type="submit" color="primary" className="mr-1 mb-1 float-right" onClick={incrementQuestionIndex}>
                 Next <FontAwesomeIcon icon={faArrowRight} />
               </Button>
+              {
+                currentQuestionIndex == 0 ? null :
+                <Button type="button" color="warning" className="mr-1 mb-1 float-right" onClick={decrementQuestionIndex}>
+                      <FontAwesomeIcon icon={faArrowLeft} /> Previous
+                </Button>
+              }              
           </CardBody>
         </Card>
       </Container>
