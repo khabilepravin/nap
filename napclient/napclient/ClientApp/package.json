@@ -72,6 +72,7 @@
     "react-transition-group": "4.3.0",
     "reactstrap": "8.1.1",
     "redux": "4.0.4",
+    "uuid": "^8.1.0",
     "yup": "^0.28.5"
   },
   "devDependencies": {}

@@ -4,11 +4,10 @@ import { useQuery } from "@apollo/react-hooks";
 
 import { Link } from "react-router-dom";
 import Question from "../../components/appcomponents/practicetest/Question";
-import Answers from "../../components/appcomponents/practicetest/Answers";
 import TestProgress from "../../components/appcomponents/practicetest/TestProgress";
 import Timer from "../../components/appcomponents/practicetest/Timer";
 
-import { faSave, faCross, faWindowClose, faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
@@ -25,8 +24,8 @@ import {
 import Header from "../../components/themecomponents/Header";
 import HeaderTitle from "../../components/themecomponents/HeaderTitle";
 
-const GET_TEST = gql`query($id:ID!){
-  test(id:$id){
+const GET_TEST = gql`query($userTestId: ID!){
+  testByUserTestId(userTestId:$userTestId){
     id
     text
     description
@@ -47,10 +46,10 @@ const GET_TEST = gql`query($id:ID!){
 }`;
 
 const PracticeTest = ({ history, match }) => {
-  let {testId} = match.params;
+  let {userTestId} = match.params;
   const [currentQuestionIndex, setcurrentQuestionIndex] = useState(0)
-  const { loading, error, data } = useQuery(GET_TEST, { variables: { id:testId  }});
-
+  const { loading, error, data } = useQuery(GET_TEST, { variables: { userTestId:userTestId  }});
+  
   const incrementQuestionIndex = () =>{
     setcurrentQuestionIndex(currentQuestionIndex+1);
   }
@@ -75,7 +74,7 @@ const PracticeTest = ({ history, match }) => {
     );
   }
 
-  if (data) {
+  if (data) { 
     return (
       <Container fluid>
         <Header>
@@ -89,11 +88,11 @@ const PracticeTest = ({ history, match }) => {
         </Header>
         <Card>
           <CardHeader>
-            <CardTitle tag="h5">{data.test.text} <Timer minutes={data.test.durationMinutes}/></CardTitle>
+            <CardTitle tag="h5">{data.testByUserTestId.text} <Timer minutes={data.testByUserTestId.durationMinutes}/></CardTitle>
           </CardHeader>
           <CardBody>
               <TestProgress/>              
-              <Question question={data.test.questions[currentQuestionIndex]} />
+              <Question question={data.testByUserTestId.questions[currentQuestionIndex]} />
               {
                 currentQuestionIndex == 0 ? null :
                 <Button type="button" color="warning" className="mr-1 mb-1" onClick={decrementQuestionIndex}>

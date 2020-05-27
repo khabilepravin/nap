@@ -1,7 +1,7 @@
 import React from "react";
 import gql from "graphql-tag";
-import { useQuery } from "@apollo/react-hooks";
-
+import { useQuery, useMutation } from "@apollo/react-hooks";
+import { v4 as uuidv4 } from 'uuid';
 import TestFilter from "../../components/appcomponents/practicetest/TestFilter";
 import { Link } from "react-router-dom";
 
@@ -36,9 +36,32 @@ const getTests = gql`
   }
 `;
 
+const CREATE_TEST = gql`mutation($userTest: UserTestInput!){
+  addUserTest(userTest: $userTest){
+    id
+    testId
+    userId
+    mode
+  }
+}`;
+
 const TestSelection = ({ history, match }) => {
   let { questionId } = match.params;
   const { loading, error, data } = useQuery(getTests);
+
+  const [createUserTestInstance] = useMutation(CREATE_TEST,{
+    onCompleted({ addUserTest }){
+      //reset();
+      //showToastr('Success', 'Answer added successfully');
+      //console.log(addUserTest);
+      history.push(`/practicepages/practicetest/${addUserTest.id}`);
+    }
+  });
+
+  const createTestInstance = (testId, mode) => {
+    const userId = uuidv4();
+    createUserTestInstance({variables: { userTest: { testId: testId, userId: userId, mode: mode } } });
+  }
 
   const tableColumns = [
     {
@@ -72,17 +95,13 @@ const TestSelection = ({ history, match }) => {
       formatter: (cell, row, rowIndex) => (
         <>
           <Button
-            onClick={() =>
-              history.push(`/practicepages/practicetest/${row.id}`)
-            }
+            onClick={() => createTestInstance(row.id, 'practice')}
           >
             Practice
           </Button>
           <span> </span>
           <Button
-            onClick={() =>
-              history.push(`/practicepages/practicetest/${row.id}`)
-            }
+            onClick={() => createTestInstance(row.id, 'exam')}
           >
             Exam
           </Button>
