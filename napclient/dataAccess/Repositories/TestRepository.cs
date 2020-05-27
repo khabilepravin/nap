@@ -62,5 +62,17 @@ namespace dataAccess.Repositories
                               select t).FirstOrDefaultAsync<Test>();
             }
         }
+
+        public async Task<Test> GetByUserTestIdAsync(Guid userTestId)
+        {
+            using (var db = base._dbContextFactory.Create())
+            {
+                return await (from t in db.Test
+                              join ut in db.UserTest 
+                              on t.Id equals ut.TestId
+                              where ut.Id == userTestId
+                              select t).FirstOrDefaultAsync<Test>();
+            }
+        }
     }
 }

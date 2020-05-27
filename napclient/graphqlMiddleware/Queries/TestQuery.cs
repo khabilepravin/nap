@@ -12,7 +12,9 @@ namespace graphqlMiddleware.Queries
         public TestQuery(ITestRepository testRepository, 
                         IQuestionRepository questionRepository,
                         ILookupRepository lookupRepository,
-                        IAnswerRepository answerRepository)
+                        IAnswerRepository answerRepository,
+                        IUserTestRepository userTestRepository,
+                        IUserTestRecordRepository userTestRecordRepository)
         {
             Field<ListGraphType<TestType>>
                 ("tests",
@@ -59,6 +61,17 @@ namespace graphqlMiddleware.Queries
                     resolve: context => answerRepository.GetByQuestionIdAsync(context.GetArgument<Guid>("questionId"))
                 );
 
+            Field<UserTestType>(
+             "userTestById",
+                arguments: new QueryArguments(new QueryArgument<IdGraphType> { Name = "id" }),
+                resolve: context => userTestRepository.GetByIdAsync(context.GetArgument<Guid>("id"))
+             );
+
+            Field<TestType>(
+                    "testByUserTestId",
+                    arguments: new QueryArguments(new QueryArgument<IdGraphType> { Name = "userTestId" }),
+                    resolve: context => testRepository.GetByUserTestIdAsync(context.GetArgument<Guid>("userTestId"))
+                );
         }
 
     }

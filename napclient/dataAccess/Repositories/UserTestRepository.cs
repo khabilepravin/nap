@@ -33,6 +33,16 @@ namespace dataAccess.Repositories
             }
         }
 
+        public async Task<UserTest> GetByIdAsync(Guid id)
+        {
+            using (var db = base._dbContextFactory.Create())
+            {
+                return await (from ut in db.UserTest
+                              where ut.Id == id
+                              select ut).FirstOrDefaultAsync<UserTest>();
+            }
+        }
+
         public async Task<UserTest> UpdateAsync(UserTest userTest)
         {
             using (var db = base._dbContextFactory.Create())
