@@ -10,6 +10,7 @@ namespace dataAccess.Repositories
     {
         Task<UserTestRecord> AddAsync(UserTestRecord userTestRecord);
         Task<IEnumerable<UserTestRecord>> GetByUserIdAsync(Guid userId);
+        Task<UserTestRecord> GetByUserTestAndQuestionId(Guid userTestId, Guid questionId);
         Task<UserTestRecord> UpdateAsync(UserTestRecord userTestRecord);
     }
 }

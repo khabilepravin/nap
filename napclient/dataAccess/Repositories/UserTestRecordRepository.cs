@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace dataAccess.Repositories
 {
@@ -31,6 +32,16 @@ namespace dataAccess.Repositories
                               on u.UserTestId equals ut.Id
                               where ut.UserId == userId
                               select u).ToListAsync<UserTestRecord>();
+            }
+        }
+
+        public async Task<UserTestRecord> GetByUserTestAndQuestionId(Guid userTestId, Guid questionId)
+        {
+            using (var db = base._dbContextFactory.Create())
+            {
+                return await (from u in db.UserTestRecord                                                          
+                              where u.UserTestId == userTestId && u.QuestionId == questionId
+                              select u).FirstOrDefaultAsync<UserTestRecord>();
             }
         }
 

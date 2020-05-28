@@ -72,6 +72,14 @@ namespace graphqlMiddleware.Queries
                     arguments: new QueryArguments(new QueryArgument<IdGraphType> { Name = "userTestId" }),
                     resolve: context => testRepository.GetByUserTestIdAsync(context.GetArgument<Guid>("userTestId"))
                 );
+
+            Field<UserTestRecordType>(
+                "userTestRecord",
+                arguments: new QueryArguments(new QueryArgument<IdGraphType> { Name = "userTestId" },
+                                               new QueryArgument<IdGraphType> { Name ="questionId" }),
+                resolve: context => userTestRecordRepository.GetByUserTestAndQuestionId(context.GetArgument<Guid>("userTestId"), 
+                context.GetArgument<Guid>("questionId"))
+            );
         }
 
     }
