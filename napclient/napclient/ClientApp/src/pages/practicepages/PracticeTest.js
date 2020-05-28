@@ -113,6 +113,7 @@ const PracticeTest = ({ history, match }) => {
             <TestProgress percentage={percentage} />
             <Question
               question={data.testByUserTestId.questions[currentQuestionIndex]}
+              userTestId={userTestId}
             />
             <TestActionButtons currentQuestionIndex={currentQuestionIndex} 
                     totalQuestions={data.testByUserTestId.questions.length}
