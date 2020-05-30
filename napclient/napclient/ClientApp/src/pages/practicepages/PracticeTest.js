@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 import { GET_TEST } from "../../apiproxy/queries";
+import { ADD_USER_TEST_RECORD } from "../../apiproxy/mutations";
 import { Link } from "react-router-dom";
 import Question from "../../components/appcomponents/practicetest/Question";
 import TestProgress from "../../components/appcomponents/practicetest/TestProgress";
@@ -28,8 +29,16 @@ const PracticeTest = ({ history, match }) => {
   const { loading, error, data } = useQuery(GET_TEST, {
     variables: { userTestId: userTestId },
   });
+  const [addUserTestRecord] = useMutation(ADD_USER_TEST_RECORD,{
+    onCompleted({ addUserTestRecord }){
+      //reset();
+      //showToastr('Success', 'Answer added successfully');
+      console.log('answer recorded successfully');
+    }
+  });
 
-  const incrementQuestionIndex = () => {
+  const submitAnswerAndMoveToNextQuestion = () => {
+    
     setcurrentQuestionIndex(currentQuestionIndex + 1);
     setCanProcced(false);
   };
@@ -52,7 +61,22 @@ const PracticeTest = ({ history, match }) => {
     );
   };
 
-  const handleOnAnswered = () => {
+  const handleOnAnswered = (answerId, isCorrect) => {
+    //console.log(`Answer selected: ${answerId}`);
+
+    addUserTestRecord(
+      { variables:
+        {
+          userTestRecord:
+          { 
+            userTestId:userTestId,
+            questionId:data.testByUserTestId.questions[currentQuestionIndex].id,
+            answerId: answerId,
+            isCorrect: isCorrect
+          } 
+        }
+      });
+
     setCanProcced(true);
   }
 
@@ -100,7 +124,7 @@ const PracticeTest = ({ history, match }) => {
             />
             <TestActionButtons currentQuestionIndex={currentQuestionIndex} 
                     totalQuestions={data.testByUserTestId.questions.length}
-                    onNextClick={incrementQuestionIndex}
+                    onNextClick={submitAnswerAndMoveToNextQuestion}
                     onPreviousClick={decrementQuestionIndex}
                     canProcced={canProcced}
             />

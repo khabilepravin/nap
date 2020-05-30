@@ -12,7 +12,7 @@ const Answers = (props) => {
         name="answers"
         label={answer.text}
         className="mb-2 h4"
-        onChange={() => props.onAnswerSelected(answer.id)}
+        onChange={() => props.onAnswerSelected(answer.id, answer.isCorrect)}
       />      
       </div>
       ));

@@ -46,6 +46,15 @@ const ADD_ANSWER = gql`mutation($answer:AnswerInput!){
   }
 `
 
+const ADD_USER_TEST_RECORD = gql`mutation($userTestRecord: UserTestRecordInput!){
+  addUserTestRecord(userTestRecord: $userTestRecord){
+    userTestId
+    questionId
+    answerId
+    isCorrect
+  }
+}`  
+
 export 
 { 
       CREATE_TEST, 
@@ -53,4 +62,5 @@ export
       ADD_QUESTION,
       DELETE_ANSWER,
       ADD_ANSWER,
+      ADD_USER_TEST_RECORD,
 }

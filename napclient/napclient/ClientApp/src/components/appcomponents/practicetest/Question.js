@@ -11,10 +11,10 @@ const Question = (props) => {
 
   const[selectedAnswer, setSelectedAnswer]= useState();
 
-  const answerSelected = (answerId) => {
-      console.log(answerId);
+  const answerSelected = (answerId, isCorrect) => {
+     // console.log(answerId);
       setSelectedAnswer(answerId);
-      props.onAnswered(true);
+      props.onAnswered(answerId, isCorrect);
   }
 
   return (
