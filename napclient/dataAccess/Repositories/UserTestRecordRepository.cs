@@ -17,9 +17,23 @@ namespace dataAccess.Repositories
         {
             using (var db = base._dbContextFactory.Create())
             {
-                await db.UserTestRecord.AddAsync(userTestRecord);
-                await db.SaveChangesAsync();
-                return userTestRecord;
+                var recordInstance = await (from u in db.UserTestRecord
+                                      where u.UserTestId == userTestRecord.UserTestId &&
+                                      u.QuestionId == userTestRecord.QuestionId 
+                                    select u).FirstOrDefaultAsync<UserTestRecord>();
+
+                if (recordInstance == null)
+                {
+                    await db.UserTestRecord.AddAsync(userTestRecord);
+                    await db.SaveChangesAsync();
+                    return userTestRecord;
+                }
+                else
+                {
+                    recordInstance.AnswerId = userTestRecord.AnswerId;
+                    recordInstance.IsCorrect = userTestRecord.IsCorrect;
+                    return await UpdateAsync(recordInstance);
+                }
             }
         }
 
