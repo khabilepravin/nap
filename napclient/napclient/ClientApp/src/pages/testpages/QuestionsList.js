@@ -1,5 +1,4 @@
 import React from "react";
-import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 
 import { Link } from "react-router-dom";
@@ -22,21 +21,11 @@ import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-const getQuestions = gql`
-  query questions($testId: ID!) {
-    questions(testId: $testId) {
-      id
-      text
-      description
-      sequence
-    }
-  }
-`;
+import { GET_QUESTIONS } from "../../apiproxy/queries";
 
 const QuestionsList = ({ history, match }) => {
   let { testId } = match.params;
-  const { loading, error, data } = useQuery(getQuestions, {
+  const { loading, error, data } = useQuery(GET_QUESTIONS, {
     variables: { testId: testId },
   });
 

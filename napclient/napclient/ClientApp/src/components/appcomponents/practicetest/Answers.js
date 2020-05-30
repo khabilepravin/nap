@@ -12,6 +12,7 @@ const Answers = (props) => {
         name="answers"
         label={answer.text}
         className="mb-2 h4"
+        onChange={() => props.onAnswerSelected(answer.id)}
       />      
       </div>
       ));

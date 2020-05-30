@@ -1,5 +1,7 @@
 import React from "react";
-import gql from "graphql-tag";
+import { GET_ANSWERS } from "../../apiproxy/queries";
+import { DELETE_ANSWER } from "../../apiproxy/mutations";
+
 import { useQuery, useMutation } from "@apollo/react-hooks";
 
 import { Link } from "react-router-dom";
@@ -23,31 +25,10 @@ import paginationFactory from "react-bootstrap-table2-paginator";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const getAnswers = gql`query($questionId:ID!){
-  question(questionId:$questionId){
-    id
-    text
-    description
-    answers{
-      id
-      text
-      description
-      sequence
-      isCorrect
-    }
-  }
-}
-`;
-
-const deleteAnswerMutation = gql`mutation($id:ID!){
-  deleteAnswerById(id:$id)
-}
-`;
-
 const AnswersList = ({ history, match }) => {
   let {questionId} = match.params;
-  const { loading, error, data } = useQuery(getAnswers, { variables: { questionId:questionId  }});
-  const [deleteAnswer] = useMutation(deleteAnswerMutation);
+  const { loading, error, data } = useQuery(GET_ANSWERS, { variables: { questionId:questionId  }});
+  const [deleteAnswer] = useMutation(DELETE_ANSWER);
 
   const deleteAnswerHandler = (id)=> {
     deleteAnswer({ variables: { id: id } });

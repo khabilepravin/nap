@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
-
+import { GET_TEST } from "../../apiproxy/queries";
 import { Link } from "react-router-dom";
 import Question from "../../components/appcomponents/practicetest/Question";
 import TestProgress from "../../components/appcomponents/practicetest/TestProgress";
@@ -21,39 +20,18 @@ import {
 import Header from "../../components/themecomponents/Header";
 import HeaderTitle from "../../components/themecomponents/HeaderTitle";
 
-const GET_TEST = gql`
-  query($userTestId: ID!) {
-    testByUserTestId(userTestId: $userTestId) {
-      id
-      text
-      description
-      durationMinutes
-      questions {
-        id
-        text
-        description
-        questionType
-        answers {
-          id
-          text
-          isCorrect
-          description
-        }
-      }
-    }
-  }
-`;
-
 const PracticeTest = ({ history, match }) => {
   let { userTestId } = match.params;
   const [currentQuestionIndex, setcurrentQuestionIndex] = useState(0);
   const [percentage, setPercentage] = useState(1);
+  const [canProcced, setCanProcced] = useState(false);
   const { loading, error, data } = useQuery(GET_TEST, {
     variables: { userTestId: userTestId },
   });
 
   const incrementQuestionIndex = () => {
     setcurrentQuestionIndex(currentQuestionIndex + 1);
+    setCanProcced(false);
   };
 
   const decrementQuestionIndex = () => {
@@ -73,6 +51,10 @@ const PracticeTest = ({ history, match }) => {
         data.testByUserTestId.questions.length
     );
   };
+
+  const handleOnAnswered = () => {
+    setCanProcced(true);
+  }
 
   if (loading) {
     return (
@@ -114,11 +96,13 @@ const PracticeTest = ({ history, match }) => {
             <Question
               question={data.testByUserTestId.questions[currentQuestionIndex]}
               userTestId={userTestId}
+              onAnswered={handleOnAnswered}
             />
             <TestActionButtons currentQuestionIndex={currentQuestionIndex} 
                     totalQuestions={data.testByUserTestId.questions.length}
                     onNextClick={incrementQuestionIndex}
                     onPreviousClick={decrementQuestionIndex}
+                    canProcced={canProcced}
             />
           </CardBody>
         </Card>

@@ -14,6 +14,7 @@ const TestActionButtons = (props) => {
         color={nextQuestionClass}
         className="mr-1 mb-1 float-right"
         onClick={props.onNextClick}
+        disabled={props.canProcced ? false : true}
       >
         {questionText}{"  "}
         <FontAwesomeIcon
@@ -25,7 +26,7 @@ const TestActionButtons = (props) => {
           type="button"
           color="warning"
           className="mr-1 mb-1 float-right"
-          onClick={props.onPreviousClick}
+          onClick={props.onPreviousClick}          
         >
           <FontAwesomeIcon icon={faArrowLeft} />  Previous
         </Button>

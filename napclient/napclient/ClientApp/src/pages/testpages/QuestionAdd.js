@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import * as Yup from 'yup';
-import gql from "graphql-tag";
+import { ADD_QUESTION } from "../../apiproxy/mutations";
 import { useMutation } from "@apollo/react-hooks";
 import ReactQuill from "react-quill";
 import {
@@ -27,17 +27,6 @@ import HeaderTitle from "../../components/themecomponents/HeaderTitle";
 import { faSave, faCross, faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { toastr } from "react-redux-toastr";
-
-const ADD_QUESTION = gql`mutation($question:QuestionInput!){
-    addQuestion(question: $question){
-      testId
-      text
-      sequence
-      questionType
-      description    
-    }
-  }
-`;
 
 const schema = Yup.object().shape({
   testId: Yup.string().required('TestId is required'),

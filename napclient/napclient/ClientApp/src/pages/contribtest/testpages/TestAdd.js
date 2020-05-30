@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import * as Yup from 'yup';
-import gql from "graphql-tag";
+import ADD_TEST from "../../../apiproxy/mutations";
 import { useMutation } from "@apollo/react-hooks";
 import {
   Breadcrumb,
@@ -26,16 +26,7 @@ import HeaderTitle from "../../components/themecomponents/HeaderTitle";
 import { faSave, faCross, faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const ADD_TEST = gql`
-  mutation($test: TestInput!) {
-    createTest(test: $test) {
-      text
-      description
-      year
-      subject
-    }
-  }
-`;
+
 
 const schema = Yup.object().shape({
   text: Yup.string().required('Name is required'),

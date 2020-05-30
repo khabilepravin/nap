@@ -1,7 +1,6 @@
 import React from "react";
-import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
-
+import { GET_TESTS } from "../../apiproxy/queries";
 import { Link } from "react-router-dom";
 
 import {
@@ -23,20 +22,8 @@ import paginationFactory from "react-bootstrap-table2-paginator";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const getTests = gql`
-  query {
-    tests {
-      id
-      text
-      description
-      subject
-      year
-    }
-  }
-`;
-
 const TestList = ({ history }) => {
-  const { loading, error, data } = useQuery(getTests);
+  const { loading, error, data } = useQuery(GET_TESTS);
 
   const tableColumns = [
     {

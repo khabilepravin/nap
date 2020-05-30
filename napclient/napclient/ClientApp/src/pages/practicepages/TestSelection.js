@@ -1,9 +1,10 @@
 import React from "react";
-import gql from "graphql-tag";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { v4 as uuidv4 } from 'uuid';
 import TestFilter from "../../components/appcomponents/practicetest/TestFilter";
 import { Link } from "react-router-dom";
+import { CREATE_TEST } from "../../apiproxy/mutations";
+import { GET_TESTS } from "../../apiproxy/queries";
 
 import {
   Breadcrumb,
@@ -24,30 +25,10 @@ import paginationFactory from "react-bootstrap-table2-paginator";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const getTests = gql`
-  query {
-    tests {
-      id
-      text
-      description
-      subject
-      year
-    }
-  }
-`;
-
-const CREATE_TEST = gql`mutation($userTest: UserTestInput!){
-  addUserTest(userTest: $userTest){
-    id
-    testId
-    userId
-    mode
-  }
-}`;
 
 const TestSelection = ({ history, match }) => {
   let { questionId } = match.params;
-  const { loading, error, data } = useQuery(getTests);
+  const { loading, error, data } = useQuery(GET_TESTS);
 
   const [createUserTestInstance] = useMutation(CREATE_TEST,{
     onCompleted({ addUserTest }){
