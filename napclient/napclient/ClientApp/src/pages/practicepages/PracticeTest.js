@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useQuery, useMutation } from "@apollo/react-hooks";
-import { GET_TEST } from "../../apiproxy/queries";
+import { useQuery, useMutation, useLazyQuery } from "@apollo/react-hooks";
+import { GET_TEST, GET_USERTEST_RECORD } from "../../apiproxy/queries";
 import { ADD_USER_TEST_RECORD } from "../../apiproxy/mutations";
 import { Link } from "react-router-dom";
 import Question from "../../components/appcomponents/practicetest/Question";
@@ -22,23 +22,29 @@ import Header from "../../components/themecomponents/Header";
 import HeaderTitle from "../../components/themecomponents/HeaderTitle";
 
 const PracticeTest = ({ history, match }) => {
-  let { userTestId } = match.params;
+  const { userTestId } = match.params;
   const [currentQuestionIndex, setcurrentQuestionIndex] = useState(0);
   const [percentage, setPercentage] = useState(1);
   const [canProcced, setCanProcced] = useState(false);
+  const [userAnswer, setUserAnswer] = useState(null);
   const { loading, error, data } = useQuery(GET_TEST, {
     variables: { userTestId: userTestId },
   });
-  const [addUserTestRecord] = useMutation(ADD_USER_TEST_RECORD,{
-    onCompleted({ addUserTestRecord }){
-      //reset();
-      //showToastr('Success', 'Answer added successfully');
-      console.log('answer recorded successfully');
-    }
+  const [getUserTestRecord] = useLazyQuery(GET_USERTEST_RECORD, {
+    fetchPolicy: "network-only",
+    onCompleted: (data) => {
+      if(data.userTestRecord){
+        setCanProcced(true);
+        setUserAnswer(data.userTestRecord.answerId);
+      }
+    },
   });
 
-  const submitAnswerAndMoveToNextQuestion = () => {
-    
+  const [addUserTestRecord] = useMutation(ADD_USER_TEST_RECORD, {
+    onCompleted({ addUserTestRecord }) {},
+  });
+
+  const incrementQuestionIndex = () => {
     setcurrentQuestionIndex(currentQuestionIndex + 1);
     setCanProcced(false);
   };
@@ -49,10 +55,15 @@ const PracticeTest = ({ history, match }) => {
 
   useEffect(() => {
     if (data) {
-      // Update the document title using the browser API
       calculatePercentage();
+      getUserTestRecord({
+        variables: {
+          userTestId: userTestId,
+          questionId: data.testByUserTestId.questions[currentQuestionIndex].id,
+        },
+      });
     }
-  });
+  }, [currentQuestionIndex]);
 
   const calculatePercentage = () => {
     setPercentage(
@@ -62,23 +73,20 @@ const PracticeTest = ({ history, match }) => {
   };
 
   const handleOnAnswered = (answerId, isCorrect) => {
-    //console.log(`Answer selected: ${answerId}`);
-
-    addUserTestRecord(
-      { variables:
-        {
-          userTestRecord:
-          { 
-            userTestId:userTestId,
-            questionId:data.testByUserTestId.questions[currentQuestionIndex].id,
-            answerId: answerId,
-            isCorrect: isCorrect
-          } 
-        }
-      });
+    setUserAnswer(answerId);
+    addUserTestRecord({
+      variables: {
+        userTestRecord: {
+          userTestId: userTestId,
+          questionId: data.testByUserTestId.questions[currentQuestionIndex].id,
+          answerId: answerId,
+          isCorrect: isCorrect,
+        },
+      },
+    });
 
     setCanProcced(true);
-  }
+  };
 
   if (loading) {
     return (
@@ -119,14 +127,15 @@ const PracticeTest = ({ history, match }) => {
             <TestProgress percentage={percentage} />
             <Question
               question={data.testByUserTestId.questions[currentQuestionIndex]}
-              userTestId={userTestId}
+              selectedAnswer={userAnswer}
               onAnswered={handleOnAnswered}
             />
-            <TestActionButtons currentQuestionIndex={currentQuestionIndex} 
-                    totalQuestions={data.testByUserTestId.questions.length}
-                    onNextClick={submitAnswerAndMoveToNextQuestion}
-                    onPreviousClick={decrementQuestionIndex}
-                    canProcced={canProcced}
+            <TestActionButtons
+              currentQuestionIndex={currentQuestionIndex}
+              totalQuestions={data.testByUserTestId.questions.length}
+              onNextClick={incrementQuestionIndex}
+              onPreviousClick={decrementQuestionIndex}
+              canProcced={canProcced}
             />
           </CardBody>
         </Card>
