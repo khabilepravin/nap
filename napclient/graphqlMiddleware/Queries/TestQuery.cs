@@ -80,6 +80,7 @@ namespace graphqlMiddleware.Queries
                 resolve: context => userTestRecordRepository.GetByUserTestAndQuestionId(context.GetArgument<Guid>("userTestId"), 
                 context.GetArgument<Guid>("questionId"))
             );
+           
         }
 
     }

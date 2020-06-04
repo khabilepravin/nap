@@ -7,6 +7,7 @@ namespace logic
         public static void Bootstrap(ContainerBuilder containerBuilder)
         {
             containerBuilder.RegisterType<UserTestLogic>().As<IUserTestLogic>().SingleInstance();
+            containerBuilder.RegisterType<TestResultLogic>().As<ITestResultLogic>().SingleInstance();
         }
     }
 }

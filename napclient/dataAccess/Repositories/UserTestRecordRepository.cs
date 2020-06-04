@@ -58,6 +58,16 @@ namespace dataAccess.Repositories
                               select u).FirstOrDefaultAsync<UserTestRecord>();
             }
         }
+        
+        public async Task<IEnumerable<UserTestRecord>> GetByUserTestId(Guid userTestId)
+        {
+            using(var db = base._dbContextFactory.Create())
+            {
+                return await (from u in db.UserTestRecord
+                              where u.UserTestId == userTestId
+                              select u).ToListAsync<UserTestRecord>();
+            }
+        }
 
         public async Task<UserTestRecord> UpdateAsync(UserTestRecord userTestRecord)
         {

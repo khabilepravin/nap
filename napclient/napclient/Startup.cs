@@ -9,6 +9,7 @@ using graphqlMiddleware.GraphTypes;
 using graphqlMiddleware.Mutations;
 using graphqlMiddleware.NapSchema;
 using graphqlMiddleware.Queries;
+using logic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -83,10 +84,12 @@ namespace napclient
                 configuration.RootPath = "ClientApp/build";
             });
 
+            services.AddControllers();
             var containerBuilder = new ContainerBuilder();
             containerBuilder.Populate(services);
             dataAccess.DataBootstrapper.Boostrap(containerBuilder);
             graphqlMiddleware.GraphqlBootstrapper.Bootstrap(containerBuilder);
+            LogicBootstrapper.Bootstrap(containerBuilder);
             this.Container = containerBuilder.Build();
 
             
@@ -120,6 +123,11 @@ namespace napclient
                 Path = "/ui/playground"
             });
 
+            app.UseRouting();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
             //app.UseMvc(routes =>
             //{
             //    routes.MapRoute(
