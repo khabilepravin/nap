@@ -102,6 +102,7 @@ const AnswersList = async(() => import("../pages/testpages/AnswersList"));
 // Practice Test
 const PracticeTest = async(() => import("../pages/practicepages/PracticeTest"));
 const TestSelection =  async(() => import("../pages/practicepages/TestSelection"));
+const TestResult = async(() => import("../pages/practicepages/TestResult"));
 
 const LookupGroupList = async(() => import("../pages/lookup/LookupGroupList"));
 const LookupValuesList = async(() => import("../pages/lookup/LookupValuesList"));
@@ -403,6 +404,12 @@ const practiceTestRoutes = {
       path: "/practicepages/testselection",
       name: "Select Test",
       component: TestSelection
+    },
+    {
+      path: "/practicepages/testresult/:userTestId",
+      name: "Test Result",
+      hiddenInSideBar:true,
+      component: TestResult
     }
   ]
 };

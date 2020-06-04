@@ -24,7 +24,7 @@ import HeaderTitle from "../../components/themecomponents/HeaderTitle";
 const PracticeTest = ({ history, match }) => {
   const { userTestId } = match.params;
   const [currentQuestionIndex, setcurrentQuestionIndex] = useState(0);
-  const [percentage, setPercentage] = useState(1);
+  // const [percentage, setPercentage] = useState(1);
   const [canProcced, setCanProcced] = useState(false);
   const [userAnswer, setUserAnswer] = useState(null);
   const { loading, error, data } = useQuery(GET_TEST, {
@@ -45,8 +45,13 @@ const PracticeTest = ({ history, match }) => {
   });
 
   const incrementQuestionIndex = () => {
-    setcurrentQuestionIndex(currentQuestionIndex + 1);
-    setCanProcced(false);
+    if(currentQuestionIndex === (data.testByUserTestId.questions.length -1)) {
+      history.push(`/practicepages/testresult/${userTestId}`);
+    }
+    else {
+      setcurrentQuestionIndex(currentQuestionIndex + 1);
+      setCanProcced(false);
+    }
   };
 
   const decrementQuestionIndex = () => {
@@ -55,7 +60,7 @@ const PracticeTest = ({ history, match }) => {
 
   useEffect(() => {
     if (data) {
-      calculatePercentage();
+      //calculatePercentage();
       getUserTestRecord({
         variables: {
           userTestId: userTestId,
@@ -65,12 +70,12 @@ const PracticeTest = ({ history, match }) => {
     }
   }, [currentQuestionIndex]);
 
-  const calculatePercentage = () => {
-    setPercentage(
-      (100 * (currentQuestionIndex + 1)) /
-        data.testByUserTestId.questions.length
-    );
-  };
+  // const calculatePercentage = () => {
+  //   setPercentage(
+  //     (100 * (currentQuestionIndex + 1)) /
+  //       data.testByUserTestId.questions.length
+  //   );
+  // };
 
   const handleOnAnswered = (answerId, isCorrect) => {
     setUserAnswer(answerId);
@@ -124,7 +129,8 @@ const PracticeTest = ({ history, match }) => {
             </CardTitle>
           </CardHeader>
           <CardBody>
-            <TestProgress percentage={percentage} />
+            <TestProgress currentQuestionIndex={currentQuestionIndex}
+                          totalQuestions={data ? data.testByUserTestId.questions.length : 0} />
             <Question
               question={data.testByUserTestId.questions[currentQuestionIndex]}
               selectedAnswer={userAnswer}
