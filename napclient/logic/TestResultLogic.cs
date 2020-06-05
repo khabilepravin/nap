@@ -2,8 +2,6 @@
 using logic.ResponseModels;
 using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Text;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -30,6 +28,9 @@ namespace logic
                 var rightAnswer = testResults.Count(t => t.IsCorrect);
                 var wrongAnswer = testResults.Count(t => t.IsCorrect == false);
                 testResultChartModel.DataPoints = new List<int>() { rightAnswer, wrongAnswer };
+
+                var totalQuestions = testResults.Count();
+                testResultChartModel.ResultText = $"You answered {rightAnswer} right out of {totalQuestions}"; 
             }
 
             return testResultChartModel;

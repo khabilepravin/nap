@@ -6,5 +6,6 @@ namespace logic.ResponseModels
     {
         public List<string> Labels { get; set; }
         public List<int> DataPoints { get; set; }
+        public string ResultText { get; set; }
     }
 }
