@@ -30,7 +30,7 @@ const TestResult = ({ history, match, theme }) => {
 
   const { userTestId } = match.params;
     useEffect(() => {
-      axios.get(`https://localhost:44331/api/testresult/${userTestId}`)
+      axios.get( `${process.env.REACT_APP_REST_API_ENDPOINT}/testresult/${userTestId}`)
       .then(res => {
         //console.log(res.data);
         const data = {

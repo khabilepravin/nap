@@ -9,7 +9,7 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import ApolloClient from 'apollo-boost';
 
 const client = new ApolloClient({
-    uri: 'https://localhost:44331/graphql'
+    uri: process.env.REACT_APP_GRAPHQL_ENDPOINT
 });
 
 
