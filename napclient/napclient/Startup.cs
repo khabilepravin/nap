@@ -35,7 +35,7 @@ namespace napclient
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(o => o.AddPolicy("Nap_Policy", builder =>
+            services.AddCors(o => o.AddDefaultPolicy(builder =>
             {
                 builder.AllowAnyOrigin()
                        .AllowAnyMethod()
@@ -100,7 +100,9 @@ namespace napclient
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseCors("Nap_Policy");
+            app.UseCors();
+
+            //app.UseCors("Nap_Policy");
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -134,7 +136,7 @@ namespace napclient
             //        name: "default",
             //        template: "{controller}/{action=Index}/{id?}");
             //});
-
+            
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "ClientApp";
