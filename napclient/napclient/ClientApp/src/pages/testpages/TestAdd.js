@@ -30,6 +30,7 @@ const schema = Yup.object().shape({
   text: Yup.string().required('Name is required'),
   description: Yup.string().required('Description is required'),
   subject: Yup.string().required('Subject is required'),
+  durationMinutes: Yup.number().required('Duration minutes'),
   year: Yup.string().required('Year is required'),
 });
 
@@ -87,6 +88,16 @@ const TestAdd = ({history}) => {
                         innerRef={register}
                       />
                        {errors.description && <p className="text-danger">{errors.description.message}</p>}
+                    </FormGroup>
+                    <FormGroup>
+                      <Label>Duration Minutes</Label>
+                      <Input
+                        type="number"
+                        name="durationMinutes"
+                        placeholder="Duration Minutes"
+                        innerRef={register}
+                      />
+                       {errors.durationMinutes && <p className="text-danger">{errors.durationMinutes.message}</p>}
                     </FormGroup>
                     <FormGroup>
                       <Label>Subject</Label>
