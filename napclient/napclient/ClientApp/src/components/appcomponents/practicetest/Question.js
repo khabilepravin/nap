@@ -24,7 +24,7 @@ const Question = (props) => {
   //console.log(props.userTestRecord);
   return (
      <>
-      <h3>{props.question.text}</h3>
+      <h3 dangerouslySetInnerHTML={{__html: props.question.text}}></h3>
 
       <Answers
         answers={props.question.answers}
