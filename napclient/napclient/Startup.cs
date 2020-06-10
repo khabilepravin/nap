@@ -79,10 +79,10 @@ namespace napclient
             //services.AddMvc(option => option.EnableEndpointRouting = false);
 
             // In production, the React files will be served from this directory
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp/build";
-            });
+            //services.AddSpaStaticFiles(configuration =>
+            //{
+            //    configuration.RootPath = "ClientApp/build";
+            //});
 
             services.AddControllers();
             var containerBuilder = new ContainerBuilder();
@@ -91,8 +91,6 @@ namespace napclient
             graphqlMiddleware.GraphqlBootstrapper.Bootstrap(containerBuilder);
             LogicBootstrapper.Bootstrap(containerBuilder);
             this.Container = containerBuilder.Build();
-
-            
 
             return new AutofacServiceProvider(this.Container);
         }
@@ -114,8 +112,8 @@ namespace napclient
             }
 
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
-            app.UseSpaStaticFiles();
+            //app.UseStaticFiles();
+            //app.UseSpaStaticFiles();
 
             // add http for Schema at default url /graphql
             app.UseGraphQL<ISchema>("/graphql");
@@ -137,15 +135,15 @@ namespace napclient
             //        template: "{controller}/{action=Index}/{id?}");
             //});
             
-            app.UseSpa(spa =>
-            {
-                spa.Options.SourcePath = "ClientApp";
+            //app.UseSpa(spa =>
+            //{
+            //    spa.Options.SourcePath = "ClientApp";
 
-                if (env.IsDevelopment())
-                {
-                    spa.UseReactDevelopmentServer(npmScript: "start");
-                }
-            });
+            //    if (env.IsDevelopment())
+            //    {
+            //        spa.UseReactDevelopmentServer(npmScript: "start");
+            //    }
+            //});
         }
     }
 }
