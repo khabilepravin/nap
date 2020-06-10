@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { CustomInput } from "reactstrap";
 
-const Answers = (props) => {
+const Answers = React.memo((props) => {
   let answersList = props.answers.map((answer) => {
     return (<div key={answer.id}>
       <CustomInput      
@@ -17,6 +17,6 @@ const Answers = (props) => {
   });
 
   return <>{answersList}</>;
-};
+});
 
 export default Answers;

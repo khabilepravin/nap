@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Pie } from "react-chartjs-2";
+import Chart from "react-apexcharts";
 import axios from "axios";
+import {connect} from "react-redux";
 
 import {
   Breadcrumb,
@@ -10,22 +11,25 @@ import {
   CardBody,
   CardHeader,
   CardTitle,
-  Container,
-  Button,
+  Container
 } from "reactstrap";
 
 import Header from "../../components/themecomponents/Header";
 import HeaderTitle from "../../components/themecomponents/HeaderTitle";
 
-const TestResult = ({ history, match, theme }) => {
-  const [chartData, setChartData] = useState({});
+const TestResult = ({ match, theme }) => {
+  const [chartData, setChartData] = useState([]);
   const [resultText, setResultText] = useState();
-
+ 
   const options = {
-    maintainAspectRatio: false,
-    legend: {
-      display: false
-    }
+    dataLabels: {
+      enabled: true
+    },
+    labels: ['Right', 'Wrong'],
+    colors: [
+      theme.success,
+      theme.danger
+    ]
   };
 
   const { userTestId } = match.params;
@@ -33,19 +37,22 @@ const TestResult = ({ history, match, theme }) => {
       axios.get( `${process.env.REACT_APP_REST_API_ENDPOINT}/testresult/${userTestId}`)
       .then(res => {
         //console.log(res.data);
-        const data = {
-          labels: res.data.labels,
-          datasets: [
-            {
-              data: res.data.dataPoints,
-              backgroundColor: [
-                "#2F910C",
-                "#E81F12"
-              ],
-              borderColor: "transparent"
-            }
-          ]
-        };
+        const data = res.data.dataPoints;
+        
+        
+        //  {
+        //   labels: res.data.labels,
+        //   datasets: [
+        //     {
+        //       data: res.data.dataPoints,
+        //       backgroundColor: [
+        //         "#2F910C",
+        //         "#E81F12"
+        //       ],
+        //       borderColor: "transparent"
+        //     }
+        //   ]
+        // };
         setResultText(res.data.resultText);
         setChartData(data);
       });
@@ -69,7 +76,10 @@ const TestResult = ({ history, match, theme }) => {
           <CardBody>
             <h3>{resultText}</h3>
             <div className="chart chart-xs">
-              <Pie data={chartData} options={options} />
+            <Chart options={options} 
+              series={chartData}
+              type="donut" 
+              height="350" />
             </div>
           </CardBody>
         </Card>
@@ -77,4 +87,8 @@ const TestResult = ({ history, match, theme }) => {
     );
 };
 
-export default TestResult;
+//export default TestResult;
+
+export default connect(store => ({
+  theme: store.theme.currentTheme
+}))(TestResult);

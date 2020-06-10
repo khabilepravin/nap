@@ -391,7 +391,7 @@ const contribtestRoutes = {
 
 const practiceTestRoutes = {
   path: "/practicepages",
-  name: "Practice Pages",
+  name: "Practice Tests",
   icon: faFile,
   children: [
     {
