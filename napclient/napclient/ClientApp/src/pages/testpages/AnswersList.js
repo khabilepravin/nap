@@ -1,6 +1,7 @@
 import React from "react";
 import { GET_ANSWERS } from "../../apiproxy/queries";
 import { DELETE_ANSWER } from "../../apiproxy/mutations";
+import  AnswerAdd  from "../../components/appcomponents/AnswerAdd";
 
 import { useQuery, useMutation } from "@apollo/react-hooks";
 
@@ -21,12 +22,9 @@ import Header from "../../components/themecomponents/Header";
 import HeaderTitle from "../../components/themecomponents/HeaderTitle";
 
 import BootstrapTable from "react-bootstrap-table-next";
-import paginationFactory from "react-bootstrap-table2-paginator";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const AnswersList = ({ history, match }) => {
-  let {questionId} = match.params;
+  const {questionId} = match.params;
   const { loading, error, data } = useQuery(GET_ANSWERS, { variables: { questionId:questionId  }});
   const [deleteAnswer] = useMutation(DELETE_ANSWER);
 
@@ -105,17 +103,11 @@ const AnswersList = ({ history, match }) => {
         </Header>
         <Card>
           <CardHeader>
-            <CardTitle tag="h2">Answers List</CardTitle>
+            <CardTitle tag="h2">Answers</CardTitle>
           </CardHeader>
           <CardBody>
-            <h4>Answers for: {data.question.text}</h4>
-            <Button
-              color="secondary"
-              className="mr-1 mb-1"
-              onClick={() => history.push(`/testpages/answeradd/${questionId}`)}
-            >
-              <FontAwesomeIcon icon={faPlus} /> Add New
-            </Button>
+            <h4>Add/Edit answers for: {data.question.text}</h4>
+            <AnswerAdd questionId={questionId}/>
             <BootstrapTable
               keyField="id"
               data={data.question.answers}

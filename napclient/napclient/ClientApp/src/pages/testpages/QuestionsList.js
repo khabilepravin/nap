@@ -19,9 +19,8 @@ import HeaderTitle from "../../components/themecomponents/HeaderTitle";
 
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { GET_QUESTIONS } from "../../apiproxy/queries";
+import QuestionAdd from "../../components/appcomponents/QuestionAdd";
 
 const QuestionsList = ({ history, match }) => {
   let { testId } = match.params;
@@ -90,26 +89,21 @@ const QuestionsList = ({ history, match }) => {
     return (
       <Container fluid>
         <Header>
-          <HeaderTitle>Questions List</HeaderTitle>
+          <HeaderTitle>Questions</HeaderTitle>
           <Breadcrumb>
             <BreadcrumbItem>
               <Link to="/dashboard">Dashboard</Link>
             </BreadcrumbItem>
-            <BreadcrumbItem active>Questions List</BreadcrumbItem>
+            <BreadcrumbItem active>Questions</BreadcrumbItem>
           </Breadcrumb>
         </Header>
         <Card>
           <CardHeader>
-            <CardTitle tag="h5">Questions List</CardTitle>
+            <CardTitle tag="h5">Add/Edit Question</CardTitle>
           </CardHeader>
           <CardBody>
-            <Button
-              color="secondary"
-              className="mr-1 mb-1"
-              onClick={() => history.push(`/testpages/questionadd/${testId}`)}
-            >
-              <FontAwesomeIcon icon={faPlus} /> Add New
-            </Button>
+            <QuestionAdd testId={testId} />
+            <h5>Questions List</h5>
             <BootstrapTable
               keyField="id"
               data={data.questions}
