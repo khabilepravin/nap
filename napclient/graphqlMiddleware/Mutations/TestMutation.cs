@@ -2,6 +2,7 @@
 using GraphQL;
 using GraphQL.Types;
 using graphqlMiddleware.GraphTypes;
+using logic;
 using Microsoft.AspNetCore.Http;
 using models;
 using System;
@@ -20,7 +21,8 @@ namespace graphqlMiddleware.Mutations
                             ILookupRepository lookupRepository,
                             IFileStorageRepository fileStorageRepository,
                             IUserTestRecordRepository userTestRecordRepository,
-                            IUserTestRepository userTestRepository)
+                            IUserTestRepository userTestRepository,
+                            IQuestionLogic questionLogic)
         {
             Field<TestType>(
                 "createTest",
@@ -67,7 +69,7 @@ namespace graphqlMiddleware.Mutations
                                 fileStorage.FileType = files[0].ContentType;
                             }
                         }
-                        return questionRepository.AddAsync(question);
+                        return questionLogic.AddQuestion(question);
                     });
 
 
