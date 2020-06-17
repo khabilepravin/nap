@@ -37,7 +37,6 @@ const QuestionsList = ({ history, match }) => {
   );
 
   const handleQuestionAdded = () => {
-    console.log("at least this shit is getting called");
     getTestQuestionsQuery({ variables: { testId: testId } });
   };
 

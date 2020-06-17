@@ -26,6 +26,7 @@ const AnswerAdd = (props) => {
     onCompleted({ answer }) {
       reset();
       showToastr("Success", "Answer added successfully");
+      props.onAnswerAdded();
     },
   });
   const { register, handleSubmit, reset, errors } = useForm({
