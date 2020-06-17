@@ -26,6 +26,7 @@ const QuestionAdd = (props) => {
     onCompleted({ question }) {
       reset();
       showToastr("Success", "Question added successful");
+      props.questionAdded();
     },
   });
 
@@ -34,13 +35,10 @@ const QuestionAdd = (props) => {
   });
 
   const onSubmit = (data) => {
-    if (!description) {
-      showToastr("Danger", "Description is required");
-    }
     if (!questionText) {
       showToastr("Danger", "Question Text is required");
     }
-    data.description = description;
+   
     data.text = questionText;
     addQuestion({ variables: { question: data } });
   };

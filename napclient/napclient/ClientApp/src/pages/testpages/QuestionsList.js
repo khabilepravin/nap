@@ -1,5 +1,5 @@
-import React from "react";
-import { useQuery } from "@apollo/react-hooks";
+import React, { useEffect, useState } from "react";
+import { useQuery, useLazyQuery } from "@apollo/react-hooks";
 
 import { Link } from "react-router-dom";
 
@@ -24,9 +24,26 @@ import QuestionAdd from "../../components/appcomponents/QuestionAdd";
 
 const QuestionsList = ({ history, match }) => {
   let { testId } = match.params;
-  const { loading, error, data } = useQuery(GET_QUESTIONS, {
-    variables: { testId: testId },
-  });
+  const [questions, setQuestions] = useState([]);
+
+  const [getTestQuestionsQuery, { called, loading }] = useLazyQuery(
+    GET_QUESTIONS,
+    {
+      onCompleted: (data) => {
+        setQuestions(data.questions);
+      },
+      fetchPolicy: "no-cache",
+    }
+  );
+
+  const handleQuestionAdded = () => {
+    console.log("at least this shit is getting called");
+    getTestQuestionsQuery({ variables: { testId: testId } });
+  };
+
+  useEffect(() => {
+    getTestQuestionsQuery({ variables: { testId: testId } });
+  }, []);
 
   const tableColumns = [
     {
@@ -77,49 +94,46 @@ const QuestionsList = ({ history, match }) => {
     );
   }
 
-  if (error) {
+  if (!called) {
     return (
       <div>
-        <p>There was an error</p>
+        <p>Was never called</p>
       </div>
     );
   }
-
-  if (data) {
-    return (
-      <Container fluid>
-        <Header>
-          <HeaderTitle>Questions</HeaderTitle>
-          <Breadcrumb>
-            <BreadcrumbItem>
-              <Link to="/dashboard">Dashboard</Link>
-            </BreadcrumbItem>
-            <BreadcrumbItem active>Questions</BreadcrumbItem>
-          </Breadcrumb>
-        </Header>
-        <Card>
-          <CardHeader>
-            <CardTitle tag="h5">Add/Edit Question</CardTitle>
-          </CardHeader>
-          <CardBody>
-            <QuestionAdd testId={testId} />
-            <h5>Questions List</h5>
-            <BootstrapTable
-              keyField="id"
-              data={data.questions}
-              columns={tableColumns}
-              bootstrap4
-              bordered={false}
-              pagination={paginationFactory({
-                sizePerPage: 10,
-                sizePerPageList: [5, 10, 25, 50],
-              })}
-            />
-          </CardBody>
-        </Card>
-      </Container>
-    );
-  }
+  return (
+    <Container fluid>
+      <Header>
+        <HeaderTitle>Questions</HeaderTitle>
+        <Breadcrumb>
+          <BreadcrumbItem>
+            <Link to="/dashboard">Dashboard</Link>
+          </BreadcrumbItem>
+          <BreadcrumbItem active>Questions</BreadcrumbItem>
+        </Breadcrumb>
+      </Header>
+      <Card>
+        <CardHeader>
+          <CardTitle tag="h5">Add/Edit Question</CardTitle>
+        </CardHeader>
+        <CardBody>
+          <QuestionAdd testId={testId} questionAdded={handleQuestionAdded} />
+          <h5>Questions List</h5>
+          <BootstrapTable
+            keyField="id"
+            data={questions}
+            columns={tableColumns}
+            bootstrap4
+            bordered={false}
+            pagination={paginationFactory({
+              sizePerPage: 10,
+              sizePerPageList: [5, 10, 25, 50],
+            })}
+          />
+        </CardBody>
+      </Card>
+    </Container>
+  );
 };
 
 export default QuestionsList;
