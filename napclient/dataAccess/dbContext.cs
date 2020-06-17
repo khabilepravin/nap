@@ -119,6 +119,8 @@ namespace dataAccess
                         .HasColumnType("varchar(100)");
                 entity.Property(e => e.FileId)
                         .HasColumnType("char(36)");
+                entity.Property(e => e.PlainText)
+                    .HasColumnType("varchar(3000)");
 
             });
             modelBuilder.Entity<Question>().Property(e => e.Id).ValueGeneratedOnAdd();

@@ -18,5 +18,6 @@ namespace models
         public string Status { get; set; }
         public string DifficultyLevel { get; set; }
         public Guid FileId { get; set; }
+        public string PlainText { get; set; }
     }
 }
