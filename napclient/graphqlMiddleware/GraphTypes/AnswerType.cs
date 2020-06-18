@@ -16,6 +16,7 @@ namespace graphqlMiddleware.GraphTypes
             Field(t => t.IsCorrect, type: typeof(BooleanGraphType));
             Field(t => t.Status);
             Field(t => t.Sequence);
+            Field(t => t.PlainText);
         }
     }
 }

@@ -13,5 +13,6 @@ namespace models
         public bool IsCorrect { get; set; }
         public string Status { get; set; }
         public int Sequence { get; set; }
+        public string PlainText { get; set; }
     }
 }

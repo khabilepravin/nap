@@ -14,6 +14,7 @@ namespace logic
 
         public async Task<Answer> AddAnswer(Answer answer)
         {
+            answer.PlainText = HtmlHelper.RemoveHtmlTags(answer.Text);
             return await this.answerRepository.AddAsync(answer);
         }
     }

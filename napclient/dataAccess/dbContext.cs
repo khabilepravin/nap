@@ -142,6 +142,8 @@ namespace dataAccess
                 entity.Property(e => e.Sequence);
                 entity.Property(e => e.Status)
                         .HasColumnType("char(1)");
+                entity.Property(e => e.PlainText)
+                  .HasColumnType("varchar(3000)");
             });
             modelBuilder.Entity<Answer>().Property(e => e.Id).ValueGeneratedOnAdd();
 
