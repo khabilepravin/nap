@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Http;
 using models;
 using System;
 using System.IO;
-using System.Linq;
 
 namespace graphqlMiddleware.Mutations
 {
