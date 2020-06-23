@@ -9,6 +9,7 @@ import { Form, FormGroup, Input, Label, Button } from "reactstrap";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { toastr } from "react-redux-toastr";
+import axios from "axios";
 
 const schema = Yup.object().shape({
   testId: Yup.string().required("TestId is required"),
@@ -20,15 +21,17 @@ const schema = Yup.object().shape({
 
 const QuestionAdd = (props) => {
   const [testId, setTestId] = useState(props.testId);
-  const [description, setDescription] = useState();
+  //const [description, setDescription] = useState();
   const [questionText, setQuestionText] = useState();
-  const [addQuestion] = useMutation(ADD_QUESTION, {
-    onCompleted({ question }) {
-      reset();
-      showToastr("Success", "Question added successful");
-      props.questionAdded();
-    },
-  });
+  const [imageFile, setImageFile] = useState();
+  const [questionObj, setQuestionObj] = useState();
+  // const [addQuestion] = useMutation(ADD_QUESTION, {
+  //   onCompleted({ question }) {
+  //     reset();
+  //     showToastr("Success", "Question added successful");
+  //     props.questionAdded();
+  //   },
+  //});
 
   const { register, handleSubmit, reset, errors } = useForm({
     validationSchema: schema,
@@ -38,9 +41,35 @@ const QuestionAdd = (props) => {
     if (!questionText) {
       showToastr("Danger", "Question Text is required");
     }
-   
+
     data.text = questionText;
-    addQuestion({ variables: { question: data } });
+    //addQuestion({ variables: { question: data } });
+    submitQuestionForm(data);
+  };
+
+  const submitQuestionForm = (data) => {
+    console.log(JSON.stringify(data));
+    let formData = new FormData();
+
+    formData.set("question", JSON.stringify(data));
+    formData.append("imageFile", imageFile);
+
+    axios
+      .post(`${process.env.REACT_APP_REST_API_ENDPOINT}/question`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        if (response.status !== 500) {
+          reset();
+          props.questionAdded();
+        }
+      });
+  };
+
+  const onImageAttached = (e) => {
+    setImageFile(e.target.files[0]);
   };
 
   const showToastr = (title, message) => {
@@ -56,6 +85,7 @@ const QuestionAdd = (props) => {
   };
 
   const handleQuestionTextChange = (content) => {
+    setQuestionObj({ ...questionObj }, { questionText: content });
     setQuestionText(content);
   };
 
@@ -64,7 +94,7 @@ const QuestionAdd = (props) => {
       <FormGroup>
         <Label>Question Text</Label>
         <ReactQuill
-          placeholder="Question Text"
+          placeholder="Questquestion Text"
           id="text"
           name="text"
           innerRef={register}
@@ -112,6 +142,15 @@ const QuestionAdd = (props) => {
           className="mb-3"
           innerRef={register}
         ></Input>
+      </FormGroup>
+      <FormGroup>
+        <Label>Image</Label>
+        <Input
+          type="file"
+          id="imageFile"
+          onChange={onImageAttached}
+          name="imageFile"
+        />
       </FormGroup>
       <Input
         type="hidden"
