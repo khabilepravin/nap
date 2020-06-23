@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
-import { ADD_QUESTION } from "../../apiproxy/mutations";
-import { useMutation } from "@apollo/react-hooks";
 import ReactQuill from "react-quill";
 import { Form, FormGroup, Input, Label, Button } from "reactstrap";
 
@@ -13,7 +11,6 @@ import axios from "axios";
 
 const schema = Yup.object().shape({
   testId: Yup.string().required("TestId is required"),
-  //text: Yup.string().required('Name is required'),
   description: Yup.string().required("Description is required"),
   sequence: Yup.string().required("Sequence is required"),
   questionType: Yup.string().required("Question Type is required"),
@@ -21,17 +18,9 @@ const schema = Yup.object().shape({
 
 const QuestionAdd = (props) => {
   const [testId, setTestId] = useState(props.testId);
-  //const [description, setDescription] = useState();
   const [questionText, setQuestionText] = useState();
   const [imageFile, setImageFile] = useState();
   const [questionObj, setQuestionObj] = useState();
-  // const [addQuestion] = useMutation(ADD_QUESTION, {
-  //   onCompleted({ question }) {
-  //     reset();
-  //     showToastr("Success", "Question added successful");
-  //     props.questionAdded();
-  //   },
-  //});
 
   const { register, handleSubmit, reset, errors } = useForm({
     validationSchema: schema,
@@ -43,7 +32,6 @@ const QuestionAdd = (props) => {
     }
 
     data.text = questionText;
-    //addQuestion({ variables: { question: data } });
     submitQuestionForm(data);
   };
 
@@ -63,6 +51,7 @@ const QuestionAdd = (props) => {
       .then((response) => {
         if (response.status !== 500) {
           reset();
+          showToastr("Success", "Question added successful");
           props.questionAdded();
         }
       });
