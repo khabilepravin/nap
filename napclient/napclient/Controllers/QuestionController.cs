@@ -1,9 +1,8 @@
 ﻿using BrunoZell.ModelBinding;
 using logic;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using models;
-using System.IO;
+using napclient.Utility;
 using System.Threading.Tasks;
 
 namespace napclient.Controllers
@@ -28,29 +27,11 @@ namespace napclient.Controllers
             }
             else
             {
-                var fileData = BuildFileStorage(imageFile);
+                var fileData = FileUtility.BuildFileStorage(imageFile);
                 await questionLogic.AddQuestionImageFile(fileData, questionRecord.Id);
             }
 
             return Ok(questionRecord);
         } 
-
-        private FileStorage BuildFileStorage(IFormFile formFile)
-        {
-            byte[] fileBytes;
-            using (var ms = new MemoryStream())
-            {
-                formFile.CopyTo(ms);
-                fileBytes = ms.ToArray();
-
-            }
-
-            return new FileStorage
-            {
-                Data = fileBytes,
-                FileType = formFile.ContentType,
-                Name = formFile.FileName
-            };
-        }
     }
 }
