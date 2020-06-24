@@ -35,7 +35,7 @@ const Header = () => (
   <Navbar dark expand="xs" className="absolute-top w-100 py-2">
     <Container>
       <NavbarBrand className="font-weight-bold" href="/">
-        <IosTrendingUp /> Prac Test
+        <img src="assets/favicon.png" height="20" width="20" /> Prac Test
       </NavbarBrand>      
     </Container>
   </Navbar>
