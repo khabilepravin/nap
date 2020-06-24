@@ -1,8 +1,9 @@
-import React from "react";
+import React, {useState} from "react";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { ADD_ANSWER } from "../../apiproxy/mutations";
 import { useMutation } from "@apollo/react-hooks";
+import axios from "axios";
 
 import { Form, FormGroup, Input, Label, Button, CustomInput } from "reactstrap";
 
@@ -22,18 +23,45 @@ const schema = Yup.object().shape({
 
 const AnswerAdd = (props) => {
   const questionId = props.questionId;
-  const [addAnswer] = useMutation(ADD_ANSWER, {
-    onCompleted({ answer }) {
-      reset();
-      showToastr("Success", "Answer added successfully");
-      props.onAnswerAdded();
-    },
-  });
+  const [imageFile, setImageFile] = useState();
+  // const [addAnswer] = useMutation(ADD_ANSWER, {
+  //   onCompleted({ answer }) {
+  //     reset();
+  //     showToastr("Success", "Answer added successfully");
+  //     props.onAnswerAdded();
+  //   },
+  // });
   const { register, handleSubmit, reset, errors } = useForm({
     validationSchema: schema,
   });
   const onSubmit = (data) => {
-    addAnswer({ variables: { answer: data } });
+    //addAnswer({ variables: { answer: data } });
+    submitAnswerForm(data);
+  };
+  
+  const onImageAttached = (e) => {
+    setImageFile(e.target.files[0]);
+  };
+
+  const submitAnswerForm = (data) => {   
+    let formData = new FormData();
+
+    formData.set("answer", JSON.stringify(data));
+    formData.append("imageFile", imageFile);
+
+    axios
+      .post(`${process.env.REACT_APP_REST_API_ENDPOINT}/answer`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        if (response.status !== 500) {
+          reset();
+          showToastr("Success", "Answer added successfully");
+          props.onAnswerAdded();
+        }
+      });
   };
 
   const showToastr = (title, message) => {
@@ -108,6 +136,15 @@ const AnswerAdd = (props) => {
           label="Is The Right Answer"
           innerRef={register}
           className="mb-2"
+        />
+      </FormGroup>
+      <FormGroup>
+      <Label>Image</Label>
+        <Input
+          type="file"
+          id="imageFile"
+          onChange={onImageAttached}
+          name="imageFile"
         />
       </FormGroup>
       <Input

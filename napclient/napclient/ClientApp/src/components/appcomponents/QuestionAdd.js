@@ -35,8 +35,7 @@ const QuestionAdd = (props) => {
     submitQuestionForm(data);
   };
 
-  const submitQuestionForm = (data) => {
-    console.log(JSON.stringify(data));
+  const submitQuestionForm = (data) => {   
     let formData = new FormData();
 
     formData.set("question", JSON.stringify(data));
