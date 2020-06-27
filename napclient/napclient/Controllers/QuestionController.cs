@@ -3,6 +3,7 @@ using logic;
 using Microsoft.AspNetCore.Mvc;
 using models;
 using napclient.Utility;
+using System;
 using System.Threading.Tasks;
 
 namespace napclient.Controllers
@@ -33,5 +34,20 @@ namespace napclient.Controllers
 
             return Ok(questionRecord);
         } 
+
+        [HttpGet]
+        public async Task<IActionResult> GetQuestionImage(Guid questionId)
+        {
+            var base64EncodedData = await this.questionLogic.GetBase64QuestionImage(questionId);
+
+            if (string.IsNullOrWhiteSpace(base64EncodedData))
+            {
+                return NoContent();
+            }
+            else
+            {
+                return Ok(base64EncodedData);
+            }
+        }
     }
 }

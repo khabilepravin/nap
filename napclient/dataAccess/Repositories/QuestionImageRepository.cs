@@ -2,6 +2,9 @@
 using models;
 using System;
 using System.Threading.Tasks;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace dataAccess.Repositories
 {
@@ -15,6 +18,17 @@ namespace dataAccess.Repositories
                 await db.QuestionImage.AddAsync(questionImage);
                 await db.SaveChangesAsync();
                 return questionImage;
+            }
+        }
+
+        public async Task<IEnumerable<QuestionImage>> GetQuestionImage(Guid questionId)
+        {
+            using(var db = base._dbContextFactory.Create())
+            {
+                return await (from q in db.QuestionImage 
+                       where q.QuestionId == questionId
+                       select q).ToListAsync<QuestionImage>();
+
             }
         }
     }

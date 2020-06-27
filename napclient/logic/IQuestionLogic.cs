@@ -8,5 +8,6 @@ namespace logic
     {
         Task<Question> AddQuestion(Question question);
         Task<QuestionImage> AddQuestionImageFile(FileStorage fileStorage, Guid questionId);
+        Task<string> GetBase64QuestionImage(Guid questionId); 
     }
 }

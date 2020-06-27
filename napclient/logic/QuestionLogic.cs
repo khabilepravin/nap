@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 
 namespace logic
 {
-    public class QuestionLogic : IQuestionLogic 
+    public class QuestionLogic : IQuestionLogic
     {
         private readonly IQuestionRepository questionRepository;
         private readonly IFileStorageRepository fileStorageRepository;
         private readonly IQuestionImageRepository questionImageRepository;
-        public QuestionLogic(IQuestionRepository questionRepository, 
+        public QuestionLogic(IQuestionRepository questionRepository,
                             IFileStorageRepository fileStorageRepository,
                             IQuestionImageRepository questionImageRepository)
         {
@@ -44,6 +44,20 @@ namespace logic
             }
 
             return questionImage;
+        }
+
+        public async Task<string> GetBase64QuestionImage(Guid questionId)
+        {
+            var fileStorage = await this.fileStorageRepository.GetByQuestionAsync(questionId);
+
+            if (fileStorage == null)
+            {
+                return string.Empty;
+            }
+            else
+            {
+                return Convert.ToBase64String(fileStorage.Data);
+            }
         }
     }
 }

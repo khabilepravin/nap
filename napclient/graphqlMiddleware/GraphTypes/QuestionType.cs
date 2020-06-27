@@ -7,7 +7,8 @@ namespace graphqlMiddleware.GraphTypes
     public class QuestionType : ObjectGraphType<Question>
     {
         public QuestionType(IAnswerRepository answerRepository,
-                            IExplanationRepository explanationRepository)
+                            IExplanationRepository explanationRepository,
+                            IQuestionImageRepository questionImageRepository)
         {
             Field(t => t.Id, type: typeof(IdGraphType));
             Field(t => t.TestId, type: typeof(IdGraphType));
@@ -27,6 +28,8 @@ namespace graphqlMiddleware.GraphTypes
                 resolve: context => answerRepository.GetByQuestionIdAsync(context.Source.Id));
             Field<ListGraphType<ExplanationType>>("explanations",
                 resolve: context => explanationRepository.GetByQuestionId(context.Source.Id));
+            Field<ListGraphType<QuestionImageType>>("images",
+                resolve: context => questionImageRepository.GetQuestionImage(context.Source.Id));
             
         }
     }
