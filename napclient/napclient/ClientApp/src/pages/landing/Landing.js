@@ -14,28 +14,17 @@ import {
   NavbarBrand
 } from "reactstrap";
 
-import screenshotThemeModern from "../../assets/img/screenshots/modern.png";
-import screenshotThemeDark from "../../assets/img/screenshots/dark.png";
-import screenshotThemeLight from "../../assets/img/screenshots/light.png";
-
-import brandBootstrap from "../../assets/img/brands/bootstrap.svg";
 import brandBootstrapB from "../../assets/img/brands/b.svg";
-import brandSass from "../../assets/img/brands/sass.svg";
-import brandWebpack from "../../assets/img/brands/webpack.svg";
-import brandNpm from "../../assets/img/brands/npm.svg";
-import brandReact from "../../assets/img/brands/react.svg";
-import brandRedux from "../../assets/img/brands/redux.svg";
-
-import IosTrendingUp from "react-ionicons/lib/IosTrendingUp";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
+import AppLogo from "../../components/appcomponents/AppLogo";
 
 const Header = () => (
   <Navbar dark expand="xs" className="absolute-top w-100 py-2">
     <Container>
       <NavbarBrand className="font-weight-bold" href="/">
-        <img src="assets/favicon.png" height="20" width="20" /> Prac Test
+      <AppLogo/> Prac Test
       </NavbarBrand>      
     </Container>
   </Navbar>

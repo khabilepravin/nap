@@ -6,8 +6,9 @@ import classNames from "classnames";
 import { Badge, Collapse } from "reactstrap";
 
 
-import IosTrendingUp from "react-ionicons/lib/IosTrendingUp";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import AppLogo from "../appcomponents/AppLogo";
 
 import routes from "../../routes/index";
 
@@ -150,9 +151,9 @@ class Sidebar extends React.Component {
             )}
             href="/"
           >
-            {sidebar.isOnRight || <IosTrendingUp />}{" "}
+            {sidebar.isOnRight || <AppLogo/>}{" "}
             <span className="align-middle">Prac Test</span>{" "}
-            {!sidebar.isOnRight || <IosTrendingUp />}
+            {!sidebar.isOnRight || <AppLogo/>}
           </a>
 
           <div className="sidebar-user">
