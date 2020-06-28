@@ -20,6 +20,7 @@ import {
 
 import Header from "../../components/themecomponents/Header";
 import HeaderTitle from "../../components/themecomponents/HeaderTitle";
+import QuestionService from "../../apiproxy/questionService";
 
 const PracticeTest = ({ history, match }) => {
   const { userTestId } = match.params;
@@ -27,6 +28,7 @@ const PracticeTest = ({ history, match }) => {
   const [percentage, setPercentage] = useState(1);
   const [canProcced, setCanProcced] = useState(false);
   const [userAnswer, setUserAnswer] = useState(null);
+  const [questionImage, setQuestionImage] = useState();
   const { loading, error, data } = useQuery(GET_TEST, {
     variables: { userTestId: userTestId },
   });
@@ -67,14 +69,28 @@ const PracticeTest = ({ history, match }) => {
           questionId: data.testByUserTestId.questions[currentQuestionIndex].id,
         },
       });
+      loadQuestionImage(data.testByUserTestId.questions[currentQuestionIndex].id);
     }
   }, [currentQuestionIndex]);
+
+  useEffect(() => {
+    if (data) {
+      calculatePercentage();
+      loadQuestionImage(data.testByUserTestId.questions[0].id);
+    }
+  }, [data]);
 
   const calculatePercentage = () => {
     setPercentage(
       (100 * (currentQuestionIndex + 1)) /
         data.testByUserTestId.questions.length
     );
+  };
+
+  const loadQuestionImage = (questionId) => {
+    QuestionService.getQuestionImage(questionId).then((res) =>{
+      setQuestionImage(`data:${res.data.imageFileType};base64, ${res.data.base64ImageData}`);
+    });
   };
 
   const handleOnAnswered = (answerId, isCorrect) => {
@@ -134,6 +150,7 @@ const PracticeTest = ({ history, match }) => {
               question={data.testByUserTestId.questions[currentQuestionIndex]}
               selectedAnswer={userAnswer}
               onAnswered={handleOnAnswered}
+              questionImage={questionImage}
             />
             <TestActionButtons
               currentQuestionIndex={currentQuestionIndex}

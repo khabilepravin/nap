@@ -17,6 +17,9 @@ const GET_TEST = gql`query($userTestId: ID!) {
           isCorrect
           description
         }
+        images {
+            id
+        }
       }
     }
   }

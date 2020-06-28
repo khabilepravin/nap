@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Chart from "react-apexcharts";
-import axios from "axios";
 import {connect} from "react-redux";
+import QuestionService from "../../apiproxy/questionService";
 
 import {
   Breadcrumb,
@@ -34,27 +34,10 @@ const TestResult = ({ match, theme }) => {
 
   const { userTestId } = match.params;
     useEffect(() => {
-      axios.get( `${process.env.REACT_APP_REST_API_ENDPOINT}/testresult/${userTestId}`)
-      .then(res => {
-        //console.log(res.data);
-        const data = res.data.dataPoints;
-        
-        
-        //  {
-        //   labels: res.data.labels,
-        //   datasets: [
-        //     {
-        //       data: res.data.dataPoints,
-        //       backgroundColor: [
-        //         "#2F910C",
-        //         "#E81F12"
-        //       ],
-        //       borderColor: "transparent"
-        //     }
-        //   ]
-        // };
-        setResultText(res.data.resultText);
-        setChartData(data);
+      QuestionService.getTestResult(userTestId).then(res =>{
+          const data = res.data.dataPoints;
+          setResultText(res.data.resultText);
+          setChartData(data);
       });
     }, []);
 
@@ -86,8 +69,6 @@ const TestResult = ({ match, theme }) => {
       </Container>
     );
 };
-
-//export default TestResult;
 
 export default connect(store => ({
   theme: store.theme.currentTheme
