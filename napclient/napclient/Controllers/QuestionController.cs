@@ -38,15 +38,15 @@ namespace napclient.Controllers
         [HttpGet("{questionId}/images")]
         public async Task<IActionResult> GetQuestionImage([FromRoute]Guid questionId)
         {
-            var base64EncodedData = await this.questionLogic.GetBase64QuestionImage(questionId);
+            var imageData = await this.questionLogic.GetBase64QuestionImage(questionId);
 
-            if (string.IsNullOrWhiteSpace(base64EncodedData))
+            if (imageData == null)
             {
                 return NoContent();
             }
             else
             {
-                return Ok(base64EncodedData);
+                return Ok(imageData);
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using models;
+﻿using logic.ResponseModels;
+using models;
 using System;
 using System.Threading.Tasks;
 
@@ -8,6 +9,6 @@ namespace logic
     {
         Task<Question> AddQuestion(Question question);
         Task<QuestionImage> AddQuestionImageFile(FileStorage fileStorage, Guid questionId);
-        Task<string> GetBase64QuestionImage(Guid questionId); 
+        Task<ImageResponse> GetBase64QuestionImage(Guid questionId); 
     }
 }

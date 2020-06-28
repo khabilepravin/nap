@@ -1,4 +1,5 @@
 ﻿using dataAccess.Repositories;
+using logic.ResponseModels;
 using models;
 using System;
 using System.Threading.Tasks;
@@ -46,17 +47,17 @@ namespace logic
             return questionImage;
         }
 
-        public async Task<string> GetBase64QuestionImage(Guid questionId)
+        public async Task<ImageResponse> GetBase64QuestionImage(Guid questionId)
         {
             var fileStorage = await this.fileStorageRepository.GetByQuestionAsync(questionId);
 
             if (fileStorage == null)
             {
-                return string.Empty;
+                return null;
             }
             else
             {
-                return Convert.ToBase64String(fileStorage.Data);
+                return new ImageResponse { ImageFileType = fileStorage.FileType, Base64ImageData = Convert.ToBase64String(fileStorage.Data) };
             }
         }
     }
