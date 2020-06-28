@@ -27,9 +27,9 @@ namespace dataAccess.Repositories
             using (var db = base._dbContextFactory.Create())
             {
                 return await (from f in db.FileStorage
-                              join q in db.Question
+                              join q in db.QuestionImage
                               on f.Id equals q.FileId
-                              where q.Id == questionId
+                              where q.QuestionId == questionId
                               select f).FirstOrDefaultAsync<FileStorage>();
             }
         }

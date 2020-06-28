@@ -66,7 +66,6 @@ namespace napclient.Controllers
             {
                 formFile.CopyTo(ms);
                 fileBytes = ms.ToArray();
-
             }
 
             return new FileStorage

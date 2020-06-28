@@ -1,12 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using models;
-using System;
-using Microsoft.EntityFrameworkCore.SqlServer;
 
 namespace dataAccess
 {
     public class dataContext : DbContext
     {
+        public static readonly Microsoft.Extensions.Logging.LoggerFactory _myLoggerFactory =
+         new LoggerFactory(new[] {
+         new Microsoft.Extensions.Logging.Debug.DebugLoggerProvider()
+            });
         public dataContext() { }
         public dataContext(DbContextOptions<dataContext> options)
             : base(options)
@@ -29,6 +32,8 @@ namespace dataAccess
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            optionsBuilder.UseLoggerFactory(_myLoggerFactory);
+
             #region Comment this region-code for database migration and update
             if (!optionsBuilder.IsConfigured)
             {
