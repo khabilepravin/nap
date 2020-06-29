@@ -88,7 +88,7 @@ const PracticeTest = ({ history, match }) => {
   };
 
   const loadQuestionImage = (questionId) => {
-    QuestionService.getQuestionImage(questionId).then((res) =>{
+    QuestionService.getQuestionImage(questionId).then((res) => {
       setQuestionImage(`data:${res.data.imageFileType};base64, ${res.data.base64ImageData}`);
     });
   };
@@ -120,7 +120,7 @@ const PracticeTest = ({ history, match }) => {
   if (error) {
     return (
       <div>
-        <p>There was an error</p>
+        <p>Error loading test: {error}</p>
       </div>
     );
   }

@@ -1,5 +1,6 @@
 import React from "react";
 import { CustomInput } from "reactstrap";
+import Image from "./Image";
 
 const Answers = React.memo((props) => {
   let answersList = props.answers.map((answer) => {
@@ -13,6 +14,7 @@ const Answers = React.memo((props) => {
         value={props.answerId}     
         checked={props.selectedAnswer === answer.id}
       />
+      <Image imageSource={props.answerImage}/>
     </div>);
   });
 
