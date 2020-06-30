@@ -51,7 +51,7 @@ const QuestionsList = ({ history, match }) => {
       hidden: true,
     },
     {
-      dataField: "text",
+      dataField: "plainText",
       text: "Text",
       sort: true,
     },
@@ -117,7 +117,13 @@ const QuestionsList = ({ history, match }) => {
         </CardHeader>
         <CardBody>
           <QuestionAdd testId={testId} questionAdded={handleQuestionAdded} />
-          <h5>Questions List</h5>
+        </CardBody>
+      </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle tag="h5">List of Questions</CardTitle>
+        </CardHeader>
+        <CardBody>
           <BootstrapTable
             keyField="id"
             data={questions}

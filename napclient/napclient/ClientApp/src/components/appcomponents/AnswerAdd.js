@@ -1,8 +1,6 @@
 import React, {useState} from "react";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
-import { ADD_ANSWER } from "../../apiproxy/mutations";
-import { useMutation } from "@apollo/react-hooks";
 import axios from "axios";
 
 import { Form, FormGroup, Input, Label, Button, CustomInput } from "reactstrap";
@@ -18,24 +16,15 @@ const schema = Yup.object().shape({
   text: Yup.string().required("Name is required"),
   description: Yup.string().required("Description is required"),
   sequence: Yup.string().required("Sequence is required"),
-  type: Yup.string().required("Answer Type is required"),
 });
 
 const AnswerAdd = (props) => {
   const questionId = props.questionId;
   const [imageFile, setImageFile] = useState();
-  // const [addAnswer] = useMutation(ADD_ANSWER, {
-  //   onCompleted({ answer }) {
-  //     reset();
-  //     showToastr("Success", "Answer added successfully");
-  //     props.onAnswerAdded();
-  //   },
-  // });
   const { register, handleSubmit, reset, errors } = useForm({
     validationSchema: schema,
   });
   const onSubmit = (data) => {
-    //addAnswer({ variables: { answer: data } });
     submitAnswerForm(data);
   };
   
@@ -56,6 +45,7 @@ const AnswerAdd = (props) => {
         },
       })
       .then((response) => {
+        console.log(response);
         if (response.status !== 500) {
           reset();
           showToastr("Success", "Answer added successfully");
@@ -94,25 +84,6 @@ const AnswerAdd = (props) => {
         />
         {errors.sequence && (
           <p className="text-danger">{errors.sequence.message}</p>
-        )}
-      </FormGroup>
-      <FormGroup>
-        <Label>Answer Type</Label>
-        <Input
-          type="select"
-          id="type"
-          name="type"
-          className="mb-3"
-          innerRef={register}
-        >
-          <option value="">Answer Type</option>
-          <option value="image">Image</option>
-          <option value="single">Single</option>
-          <option value="multi">Multi</option>
-          <option value="text">Text</option>
-        </Input>
-        {errors.questionType && (
-          <p className="text-danger">{errors.questionType.message}</p>
         )}
       </FormGroup>
       <FormGroup>
@@ -155,7 +126,7 @@ const AnswerAdd = (props) => {
         innerRef={register}
       ></Input>
       <Button type="submit" color="primary" className="mr-1 mb-1">
-        <FontAwesomeIcon icon={faSave} /> Add
+        <FontAwesomeIcon icon={faSave} /> Save and Reset
       </Button>
     </Form>
   );

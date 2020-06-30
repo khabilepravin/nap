@@ -23,7 +23,7 @@ import HeaderTitle from "../../components/themecomponents/HeaderTitle";
 
 import BootstrapTable from "react-bootstrap-table-next";
 
-const AnswersList = ({ history, match }) => {
+const AnswersList = ({ match }) => {
   const { questionId } = match.params;
   const [question, setQuestion] = useState();
 
@@ -110,14 +110,22 @@ const AnswersList = ({ history, match }) => {
       </Header>
       <Card>
         <CardHeader>
-          <CardTitle tag="h2">Answers</CardTitle>
+          <CardTitle tag="h5">
+            Add/Edit answers for: {question && question.plainText}
+          </CardTitle>
         </CardHeader>
         <CardBody>
-          <h4>Add/Edit answers for: {question && question.text}</h4>
           <AnswerAdd
             questionId={questionId}
             onAnswerAdded={handleAnswerAdded}
           />
+        </CardBody>
+      </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle tag="h5">List of Answers</CardTitle>
+        </CardHeader>
+        <CardBody>
           <BootstrapTable
             keyField="id"
             data={question ? question.answers : []}

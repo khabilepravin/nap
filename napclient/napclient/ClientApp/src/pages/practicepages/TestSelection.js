@@ -22,9 +22,6 @@ import HeaderTitle from "../../components/themecomponents/HeaderTitle";
 
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 
 const TestSelection = ({ history, match }) => {
   let { questionId } = match.params;
@@ -32,9 +29,6 @@ const TestSelection = ({ history, match }) => {
 
   const [createUserTestInstance] = useMutation(CREATE_TEST,{
     onCompleted({ addUserTest }){
-      //reset();
-      //showToastr('Success', 'Answer added successfully');
-      //console.log(addUserTest);
       history.push(`/practicepages/practicetest/${addUserTest.id}`);
     }
   });
@@ -74,19 +68,11 @@ const TestSelection = ({ history, match }) => {
       text: "Actions",
       dataField: "",
       formatter: (cell, row, rowIndex) => (
-        <>
           <Button
             onClick={() => createTestInstance(row.id, 'practice')}
           >
             Practice
           </Button>
-          <span> </span>
-          <Button
-            onClick={() => createTestInstance(row.id, 'exam')}
-          >
-            Exam
-          </Button>
-        </>
       ),
     },
   ];

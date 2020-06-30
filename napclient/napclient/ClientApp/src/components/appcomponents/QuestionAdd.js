@@ -12,7 +12,6 @@ import axios from "axios";
 const schema = Yup.object().shape({
   testId: Yup.string().required("TestId is required"),
   description: Yup.string().required("Description is required"),
-  sequence: Yup.string().required("Sequence is required"),
   questionType: Yup.string().required("Question Type is required"),
 });
 
@@ -82,25 +81,12 @@ const QuestionAdd = (props) => {
       <FormGroup>
         <Label>Question Text</Label>
         <ReactQuill
-          placeholder="Questquestion Text"
+          placeholder="Question Text"
           id="text"
           name="text"
           innerRef={register}
           onChange={handleQuestionTextChange}
         />
-      </FormGroup>
-      <FormGroup>
-        <Label>Sequence</Label>
-        <Input
-          type="number"
-          name="sequence"
-          placeholder="Sequence"
-          rows="1"
-          innerRef={register}
-        />
-        {errors.sequence && (
-          <p className="text-danger">{errors.sequence.message}</p>
-        )}
       </FormGroup>
       <FormGroup>
         <Label>Question Type</Label>
@@ -112,10 +98,8 @@ const QuestionAdd = (props) => {
           innerRef={register}
         >
           <option value="">Question Type</option>
-          <option value="multi">Multi Select</option>
           <option value="single">Single Select</option>
           <option value="text">Text</option>
-          <option value="image">Image</option>
         </Input>
         {errors.questionType && (
           <p className="text-danger">{errors.questionType.message}</p>
@@ -148,7 +132,7 @@ const QuestionAdd = (props) => {
         innerRef={register}
       ></Input>
       <Button type="submit" color="primary" className="mr-1 mb-1">
-        <FontAwesomeIcon icon={faSave} /> Add
+        <FontAwesomeIcon icon={faSave} /> Save and Reset
       </Button>
     </Form>
   );

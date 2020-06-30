@@ -55,6 +55,7 @@ const GET_QUESTIONS = gql`
       text
       description
       sequence
+      plainText
     }
   }
 `
@@ -63,6 +64,7 @@ const GET_ANSWERS = gql`query($questionId:ID!){
     question(questionId:$questionId){
       id
       text
+      plainText
       description
       answers{
         id
