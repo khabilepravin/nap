@@ -75,6 +75,7 @@ const QuestionsList = ({ history, match }) => {
           >
             Edit
           </Button>
+          <span> </span>
           <Button
             onClick={() => history.push(`/testpages/answerslist/${row.id}`)}
           >
