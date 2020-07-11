@@ -36,8 +36,13 @@ const schema = Yup.object().shape({
 
 
 const TestAdd = ({history}) => {
-  const [addTest] = useMutation(ADD_TEST);
-  const { register, handleSubmit, errors } = useForm({
+  const [addTest] = useMutation(ADD_TEST, {
+    onCompleted(){
+      reset();
+      history.push('/testpages/testlist');
+    }
+  });
+  const { register, handleSubmit, reset, errors } = useForm({
     validationSchema: schema
   });
   const onSubmit = (data) => {   

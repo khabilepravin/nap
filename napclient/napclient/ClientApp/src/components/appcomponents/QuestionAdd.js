@@ -11,7 +11,6 @@ import axios from "axios";
 
 const schema = Yup.object().shape({
   testId: Yup.string().required("TestId is required"),
-  description: Yup.string().required("Description is required"),
   questionType: Yup.string().required("Question Type is required"),
 });
 
@@ -38,7 +37,9 @@ const QuestionAdd = (props) => {
     let formData = new FormData();
 
     formData.set("question", JSON.stringify(data));
-    formData.append("imageFile", imageFile);
+    if(imageFile) {
+      formData.append("imageFile", imageFile);
+    }
 
     axios
       .post(`${process.env.REACT_APP_REST_API_ENDPOINT}/question`, formData, {

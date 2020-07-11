@@ -153,7 +153,7 @@ const NavbarSearch = connect(store => ({
     <Form inline>
       <Input
         type="text"
-        placeholder="Search projects..."
+        placeholder="Search tests..."
         aria-label="Search"
         className={classNames(
           "form-control-lite",

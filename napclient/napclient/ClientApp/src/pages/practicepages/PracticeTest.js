@@ -7,6 +7,7 @@ import Question from "../../components/appcomponents/practicetest/Question";
 import TestProgress from "../../components/appcomponents/practicetest/TestProgress";
 import Timer from "../../components/appcomponents/practicetest/Timer";
 import TestActionButtons from "../../components/appcomponents/practicetest/TestActionButtons";
+import PracticeTestService from "../../apiproxy/practiceTestService";
 
 import {
   Breadcrumb,
@@ -32,6 +33,7 @@ const PracticeTest = ({ history, match }) => {
   const { loading, error, data } = useQuery(GET_TEST, {
     variables: { userTestId: userTestId },
   });
+
   const [getUserTestRecord] = useLazyQuery(GET_USERTEST_RECORD, {
     fetchPolicy: "network-only",
     onCompleted: (data) => {
@@ -89,24 +91,47 @@ const PracticeTest = ({ history, match }) => {
 
   const loadQuestionImage = (questionId) => {
     QuestionService.getQuestionImage(questionId).then((res) => {
-      setQuestionImage(`data:${res.data.imageFileType};base64, ${res.data.base64ImageData}`);
+      if (res.data) {
+        setQuestionImage(
+          `data:${res.data.imageFileType};base64, ${res.data.base64ImageData}`
+        );
+      } else {
+        setQuestionImage(null);
+      }
     });
   };
 
-  const handleOnAnswered = (answerId, isCorrect) => {
-    setUserAnswer(answerId);
-    addUserTestRecord({
-      variables: {
-        userTestRecord: {
-          userTestId: userTestId,
-          questionId: data.testByUserTestId.questions[currentQuestionIndex].id,
-          answerId: answerId,
-          isCorrect: isCorrect,
+  const handleOnAnswered = (answer) => {
+    if(answer.answerId)
+    {
+      setUserAnswer(answer.answerId);
+      addUserTestRecord({
+        variables: {
+          userTestRecord: {
+            userTestId: userTestId,
+            questionId: data.testByUserTestId.questions[currentQuestionIndex].id,
+            answerId: answer.answerId,
+            isCorrect: answer.isCorrect,
+          },
         },
-      },
-    });
+      });   
+      setCanProcced(true); 
+    }
+    else if(answer.answerText){
+      PracticeTestService.postUserTestTextRecord(
+        {
+          "userTestId":userTestId,
+          "questionId":data.testByUserTestId.questions[currentQuestionIndex].id,
+          "userAnswerText":answer.answerText
+        }
+      ).then((result) => {
 
-    setCanProcced(true);
+      });
+      setCanProcced(true); 
+    }
+    else{
+      setCanProcced(false); 
+    }    
   };
 
   if (loading) {

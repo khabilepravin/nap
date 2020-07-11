@@ -25,7 +25,7 @@ const TestResult = ({ match, theme }) => {
     dataLabels: {
       enabled: true
     },
-    labels: ['Right', 'Wrong'],
+    labels: ['Correct', 'Incorrect'],
     colors: [
       theme.success,
       theme.danger
@@ -57,7 +57,7 @@ const TestResult = ({ match, theme }) => {
             <CardTitle tag="h2">Results</CardTitle>
           </CardHeader>
           <CardBody>
-            <h3>{resultText}</h3>
+            <h6>{resultText}</h6>
             <div className="chart chart-xs">
             <Chart options={options} 
               series={chartData}

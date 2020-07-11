@@ -1,6 +1,6 @@
 import React from "react";
 import { faArrowRight, faCheckSquare, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import {  Button } from "reactstrap";
+import {  Button, Row, Col } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const TestActionButtons = (props) => {
@@ -9,6 +9,9 @@ const TestActionButtons = (props) => {
   let nextQuestionClass = questionText === "Next" ? "primary" : "success";
   return (
     <>
+    <br/>
+    <Row>
+      <Col md="12">
       <Button
         type="submit"
         color={nextQuestionClass}
@@ -31,6 +34,8 @@ const TestActionButtons = (props) => {
           <FontAwesomeIcon icon={faArrowLeft} />  Previous
         </Button>
       )}
+      </Col>
+    </Row>
     </>
   );
 };
