@@ -1,5 +1,6 @@
 ﻿using BrunoZell.ModelBinding;
 using logic;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using models;
 using napclient.Utility;
@@ -20,11 +21,14 @@ namespace napclient.Controllers
         public async Task<IActionResult> PostQuestion([ModelBinder(BinderType = typeof(JsonModelBinder))] Question question)
         {
             var questionRecord = await this.questionLogic.AddQuestion(question);
-
-            var imageFile = Request.Form.Files != null ? Request.Form.Files[0] : null;
+            IFormFile imageFile = null;
+            if (Request.Form.Files?.Count > 0)
+            {
+                imageFile = Request.Form.Files[0];
+            }
             if (imageFile == null)
             {
-                return BadRequest(ModelState);
+                //return BadRequest(ModelState);
             }
             else
             {

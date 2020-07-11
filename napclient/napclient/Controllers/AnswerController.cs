@@ -28,7 +28,7 @@ namespace napclient.Controllers
             
             if (imageFile == null)
             {
-                return BadRequest(ModelState);
+                //return BadRequest(ModelState);
             }
             else
             {
