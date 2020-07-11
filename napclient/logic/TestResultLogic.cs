@@ -30,7 +30,7 @@ namespace logic
                 testResultChartModel.DataPoints = new List<int>() { rightAnswer, wrongAnswer };
 
                 var totalQuestions = testResults.Count();
-                testResultChartModel.ResultText = $"You answered {rightAnswer} right out of {totalQuestions}"; 
+                testResultChartModel.ResultText = $"You answered {rightAnswer} correct, out of {totalQuestions}"; 
             }
 
             return testResultChartModel;

@@ -10,6 +10,7 @@ namespace logic
             containerBuilder.RegisterType<TestResultLogic>().As<ITestResultLogic>().SingleInstance();
             containerBuilder.RegisterType<QuestionLogic>().As<IQuestionLogic>().SingleInstance();
             containerBuilder.RegisterType<AnswerLogic>().As<IAnswerLogic>().SingleInstance();
+            containerBuilder.RegisterType<PracticeTestLogic>().As<IPracticeTestLogic>().SingleInstance();
         }
     }
 }
