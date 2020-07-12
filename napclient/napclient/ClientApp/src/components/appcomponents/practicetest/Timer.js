@@ -39,7 +39,7 @@ export default class Timer extends Component {
   render() {
       const { minutes, seconds } = this.state
       return (
-          <div>
+          <div className="float-right">
               { minutes === 0 && seconds === 0
                   ? <h4>Times up!</h4>
                   : <h4>Time Remaining: {minutes}:{seconds < 10 ? `0${seconds}` : seconds}</h4>
