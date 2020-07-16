@@ -2,6 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { enableLightTheme } from "../../redux/actions/themeActions";
+import  LoginButton  from "../../components/appcomponents/LoginButton";
+import LogoutButton from "../../components/appcomponents/LogoutButton";
+import { useAuth0 } from "@auth0/auth0-react";
 
 import {
   Button,
@@ -25,8 +28,11 @@ const Header = () => (
     <Container>
       <NavbarBrand className="font-weight-bold" href="/">
       <AppLogo/> Prac Test
-      </NavbarBrand>      
-    </Container>
+      </NavbarBrand>   
+     
+      <LoginButton/>
+      <LogoutButton/>
+    </Container>  
   </Navbar>
 );
 
@@ -101,20 +107,24 @@ const Navigation = () => (
   </div>
 );
 
-const Styles = () => (
-  <section className="py-6">
+const Styles = () => {
+  const { user, isAuthenticated } = useAuth0();
+ return (<section className="py-6">
     <Container>
       <div className="mb-4 text-center">
         <h2>Quick links to try the samples</h2>
         <p className="text-muted">
           Multiple numeracy tests to try from.
         </p>
+      
+      <span>{user ? user.name : ''}</span>
+      {/* <img src={user ? user.picture : ''} alt={user ? user.name : ''}/> */}
       </div>
 
       
     </Container>
-  </section>
-);
+  </section>)
+};
 
 const Testimonials = () => (
   <section className="py-6 bg-white">

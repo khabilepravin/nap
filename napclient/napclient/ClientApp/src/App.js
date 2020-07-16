@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Provider } from "react-redux";
 import ReduxToastr from "react-redux-toastr";
 
 import store from "./redux/store/index";
 import Routes from "./routes/Routes";
+//import { useAuth0 } from "./react-auth0-spa";
 
 import { ApolloProvider } from '@apollo/react-hooks';
 import ApolloClient from 'apollo-boost';
@@ -13,14 +14,20 @@ const client = new ApolloClient({
 });
 
 
-class App extends React.Component {
-  componentDidMount() {
-    // Remove `active` className from `.splash` element in `public/index.html`
-    !document.querySelector(".splash") ||
-      document.querySelector(".splash").classList.remove("active");
-  }
+const App = () => {
+  //const { loading } =  useAuth0();
 
-  render() {
+  useEffect(()=>{
+    !document.querySelector(".splash") ||
+    document.querySelector(".splash").classList.remove("active");
+  },[]);
+  // componentDidMount() {
+  //   // Remove `active` className from `.splash` element in `public/index.html`
+  //   !document.querySelector(".splash") ||
+  //     document.querySelector(".splash").classList.remove("active");
+  // }
+
+  
     return (
       <ApolloProvider client={client}>
       <Provider store={store}>
@@ -37,7 +44,7 @@ class App extends React.Component {
       </Provider>
       </ApolloProvider>
     );
-  }
-}
+  
+};
 
 export default App;

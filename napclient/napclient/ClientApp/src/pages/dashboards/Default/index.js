@@ -8,15 +8,18 @@ import PieChart from "./PieChart";
 import Statistics from "./Statistics";
 import Table from "./Table";
 import WorldMap from "./WorldMap";
+import { useAuth0 } from "@auth0/auth0-react";
 
 import Header from "../../../components/themecomponents/Header";
 import HeaderTitle from "../../../components/themecomponents/HeaderTitle";
 import HeaderSubtitle from "../../../components/themecomponents/HeaderSubtitle";
 
-const Default = () => (
-  <Container fluid>
+const Default = () => {
+const {user, isAuthenticated } = useAuth0();
+ return (<Container fluid>
     <Header>
-      <HeaderTitle>Welcome back, Linda!</HeaderTitle>
+
+      <HeaderTitle>Welcome back, {user ? user.name : ''}!</HeaderTitle>
       <HeaderSubtitle>
         You have 24 new messages and 5 new notifications.
       </HeaderSubtitle>
@@ -49,7 +52,7 @@ const Default = () => (
         <BarChart />
       </Col>
     </Row>
-  </Container>
-);
+  </Container>)
+};
 
 export default Default;
