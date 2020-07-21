@@ -8,6 +8,7 @@ import TestProgress from "../../components/appcomponents/practicetest/TestProgre
 import Timer from "../../components/appcomponents/practicetest/Timer";
 import TestActionButtons from "../../components/appcomponents/practicetest/TestActionButtons";
 import PracticeTestService from "../../apiproxy/practiceTestService";
+import UserTestService from "../../apiproxy/userTestService";
 
 import {
   Breadcrumb,
@@ -26,7 +27,7 @@ import QuestionService from "../../apiproxy/questionService";
 const PracticeTest = ({ history, match }) => {
   const { userTestId } = match.params;
   const [currentQuestionIndex, setcurrentQuestionIndex] = useState(0);
-  const [percentage, setPercentage] = useState(1);
+  const [percentage, setPercentage] = useState(0);
   const [canProcced, setCanProcced] = useState(false);
   const [userAnswer, setUserAnswer] = useState(null);
   const [questionImage, setQuestionImage] = useState();
@@ -45,7 +46,9 @@ const PracticeTest = ({ history, match }) => {
   });
 
   const [addUserTestRecord] = useMutation(ADD_USER_TEST_RECORD, {
-    onCompleted({ addUserTestRecord }) {},
+    onCompleted({ addUserTestRecord }) {
+      getTestProgressInPercentage(userTestId);
+    },
   });
 
   const incrementQuestionIndex = () => {
@@ -63,8 +66,7 @@ const PracticeTest = ({ history, match }) => {
   };
 
   useEffect(() => {
-    if (data) {
-      calculatePercentage();
+    if (data) {      
       getUserTestRecord({
         variables: {
           userTestId: userTestId,
@@ -76,17 +78,15 @@ const PracticeTest = ({ history, match }) => {
   }, [currentQuestionIndex]);
 
   useEffect(() => {
-    if (data) {
-      calculatePercentage();
+    if (data) {      
       loadQuestionImage(data.testByUserTestId.questions[0].id);
     }
   }, [data]);
 
-  const calculatePercentage = () => {
-    setPercentage(
-      (100 * (currentQuestionIndex + 1)) /
-        data.testByUserTestId.questions.length
-    );
+  const getTestProgressInPercentage = (userTestIdInput) => {
+    UserTestService.getTestProgressPercentage(userTestIdInput).then((response) => {
+      setPercentage(response.data);      
+    });    
   };
 
   const loadQuestionImage = (questionId) => {
@@ -116,6 +116,7 @@ const PracticeTest = ({ history, match }) => {
         },
       });   
       setCanProcced(true); 
+     
     }
     else if(answer.answerText){
       PracticeTestService.postUserTestTextRecord(
@@ -125,13 +126,14 @@ const PracticeTest = ({ history, match }) => {
           "userAnswerText":answer.answerText
         }
       ).then((result) => {
-
+        getTestProgressInPercentage(userTestId);
       });
       setCanProcced(true); 
     }
-    else{
+    else {
       setCanProcced(false); 
-    }    
+    }   
+    
   };
 
   if (loading) {
