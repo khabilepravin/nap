@@ -1,7 +1,6 @@
 ﻿using models;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace dataAccess.Repositories
@@ -13,5 +12,6 @@ namespace dataAccess.Repositories
         Task<UserTestRecord> GetByUserTestAndQuestionId(Guid userTestId, Guid questionId);
         Task<UserTestRecord> UpdateAsync(UserTestRecord userTestRecord);
         Task<IEnumerable<UserTestRecord>> GetByUserTestId(Guid userTestId);
+        Task<int> GetNumberOfAnsweredQuestions(Guid userTestId);
     }
 }

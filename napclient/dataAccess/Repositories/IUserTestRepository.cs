@@ -11,5 +11,6 @@ namespace dataAccess.Repositories
         Task<IEnumerable<UserTest>> GetByUserIdAsync(Guid userId);
         Task<UserTest> UpdateAsync(UserTest userTest);
         Task<UserTest> GetByIdAsync(Guid id);
+        Task<int> GetTotalNumberOfQuestions(Guid userTestId);
     }
 }

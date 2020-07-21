@@ -78,5 +78,15 @@ namespace dataAccess.Repositories
                 return userTestRecord;
             }
         }
+
+        public async Task<int> GetNumberOfAnsweredQuestions(Guid userTestId)
+        {
+            using (var db = base._dbContextFactory.Create())
+            {
+                return await (from userTestRec in db.UserTestRecord
+                              where userTestRec.UserTestId == userTestId
+                              select userTestRec).CountAsync();
+            }
+        }
     }
 }

@@ -4,6 +4,8 @@ using models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace dataAccess.Repositories
@@ -51,6 +53,28 @@ namespace dataAccess.Repositories
                 db.Update(userTest);
                 await db.SaveChangesAsync();
                 return userTest;
+            }
+        }
+
+        public async Task<int> GetTotalNumberOfQuestions(Guid userTestId)
+        {
+            using (var db = base._dbContextFactory.Create())
+            {
+                var userTestInstace = await (from userTest in db.UserTest
+                         where userTest.Id == userTestId
+                         select userTest).FirstOrDefaultAsync<UserTest>();
+
+                if(userTestInstace != null)
+                {
+                    return (from t in db.Question
+                             where t.TestId == userTestInstace.TestId
+                             select t).Count();
+                }
+                else
+                {
+                    throw new Exception($"Couldn't find any questions for the test {userTestId}");
+                }
+
             }
         }
     }
