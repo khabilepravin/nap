@@ -3,7 +3,7 @@ import { faArrowRight, faCheckSquare, faArrowLeft } from "@fortawesome/free-soli
 import {  Button, Row, Col } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const TestActionButtons = (props) => {
+const TestActionButtons = React.memo((props) => {
   let questionText = props.currentQuestionIndex === (props.totalQuestions-1) ? "Done" : "Next";
   let nextQuestionIcon = questionText === "Next" ? faArrowRight : faCheckSquare;
   let nextQuestionClass = questionText === "Next" ? "primary" : "success";
@@ -38,6 +38,6 @@ const TestActionButtons = (props) => {
     </Row>
     </>
   );
-};
+});
 
 export default TestActionButtons;
