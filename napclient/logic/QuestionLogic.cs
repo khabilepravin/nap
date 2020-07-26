@@ -1,4 +1,5 @@
 ﻿using dataAccess.Repositories;
+using externalServices;
 using logic.ResponseModels;
 using models;
 using System;
@@ -10,14 +11,17 @@ namespace logic
     {
         private readonly IQuestionRepository questionRepository;
         private readonly IFileStorageRepository fileStorageRepository;
-        private readonly IQuestionImageRepository questionImageRepository;
+        private readonly IQuestionFileRepository questionImageRepository;
+        private readonly ITextToSpeech textToSpeech;
         public QuestionLogic(IQuestionRepository questionRepository,
                             IFileStorageRepository fileStorageRepository,
-                            IQuestionImageRepository questionImageRepository)
+                            IQuestionFileRepository questionImageRepository,
+                            ITextToSpeech textToSpeech)
         {
             this.questionRepository = questionRepository;
             this.fileStorageRepository = fileStorageRepository;
             this.questionImageRepository = questionImageRepository;
+            this.textToSpeech = textToSpeech;
         }
 
         public async Task<Question> AddQuestion(Question question)
@@ -26,14 +30,14 @@ namespace logic
             return await this.questionRepository.AddAsync(question);
         }
 
-        public async Task<QuestionImage> AddQuestionImageFile(FileStorage fileStorage, Guid questionId)
+        public async Task<QuestionFile> AddQuestionImageFile(FileStorage fileStorage, Guid questionId)
         {
             var fileStorageRecord = await this.fileStorageRepository.AddAsync(fileStorage);
 
-            QuestionImage questionImage = null;
+            QuestionFile questionImage = null;
             if (fileStorageRecord != null)
             {
-                questionImage = await this.questionImageRepository.AddAsync(new QuestionImage
+                questionImage = await this.questionImageRepository.AddAsync(new QuestionFile
                 {
                     QuestionId = questionId,
                     FileId = fileStorageRecord.Id
@@ -58,6 +62,30 @@ namespace logic
             else
             {
                 return new ImageResponse { ImageFileType = fileStorage.FileType, Base64ImageData = Convert.ToBase64String(fileStorage.Data) };
+            }
+        }
+        public async Task AddQuestionAudioFile(Guid questionId, string questionPlainText)
+        {
+            var audioFileData = this.textToSpeech.ConvertTextToSpeech(questionPlainText);
+
+            if (audioFileData != null)
+            {
+                var fileStorage = await this.fileStorageRepository.AddAsync(new FileStorage
+                {
+                    Data = audioFileData,
+                    Extension = ".mp3",
+                    FileType = "audio/mpeg",
+                    Name = $"question_{questionId}"
+                });
+
+                if (fileStorage != null)
+                {
+                    await this.questionImageRepository.AddAsync(new QuestionFile
+                    {
+                        FileId = fileStorage.Id,
+                        QuestionId = questionId
+                    });
+                }
             }
         }
     }

@@ -4,7 +4,7 @@ using models;
 
 namespace graphqlMiddleware.GraphTypes
 {
-    public class QuestionImageType : ObjectGraphType<QuestionImage>
+    public class QuestionImageType : ObjectGraphType<QuestionFile>
     {
         public QuestionImageType()
         {

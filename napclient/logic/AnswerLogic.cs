@@ -1,4 +1,5 @@
 ﻿using dataAccess.Repositories;
+using externalServices;
 using models;
 using System;
 using System.Threading.Tasks;
@@ -9,14 +10,17 @@ namespace logic
     {
         private readonly IAnswerRepository answerRepository;
         private readonly IFileStorageRepository fileStorageRepository;
-        private readonly IAnswerImageRepository answerImageRepository;
+        private readonly IAnswerFileRepository answerImageRepository;
+        private readonly ITextToSpeech textToSpeech;
         public AnswerLogic(IAnswerRepository answerRepository,
                             IFileStorageRepository fileStorageRepository,
-                            IAnswerImageRepository answerImageRepository)
+                            IAnswerFileRepository answerImageRepository,
+                            ITextToSpeech textToSpeech)
         {
             this.answerRepository = answerRepository;
             this.fileStorageRepository = fileStorageRepository;
             this.answerImageRepository = answerImageRepository;
+            this.textToSpeech = textToSpeech;
         }
 
         public async Task<Answer> AddAnswer(Answer answer)
@@ -25,13 +29,13 @@ namespace logic
             return await this.answerRepository.AddAsync(answer);
         }
 
-        public async Task<AnswerImage> AddImageAnswer(FileStorage fileStorage, Guid answerId)
+        public async Task<AnswerFile> AddImageAnswer(FileStorage fileStorage, Guid answerId)
         {
             var fileStorageRecord = await this.fileStorageRepository.AddAsync(fileStorage);
-            AnswerImage answerImageRecord = null;
+            AnswerFile answerImageRecord = null;
             if (fileStorageRecord != null)
             {
-                answerImageRecord = await this.answerImageRepository.AddAsync(new AnswerImage
+                answerImageRecord = await this.answerImageRepository.AddAsync(new AnswerFile
                 {
                     AnswerId = answerId,
                     FileId = fileStorageRecord.Id
@@ -43,6 +47,31 @@ namespace logic
             }
 
             return answerImageRecord;
+        }
+
+        public async Task AddAnswerAudioFile(Guid answerId, string answerPlainText)
+        {
+            var audioFileData = this.textToSpeech.ConvertTextToSpeech(answerPlainText);
+
+            if (audioFileData != null)
+            {
+                var fileStorage = await this.fileStorageRepository.AddAsync(new FileStorage
+                {
+                    Data = audioFileData,
+                    Extension = ".mp3",
+                    FileType = "audio/mpeg",
+                    Name = $"question_{answerId}"
+                });
+
+                if (fileStorage != null)
+                {
+                    await this.answerImageRepository.AddAsync(new AnswerFile
+                    {
+                        FileId = fileStorage.Id,
+                        AnswerId = answerId
+                    });
+                }
+            }
         }
     }
 }

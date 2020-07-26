@@ -8,7 +8,7 @@ namespace graphqlMiddleware.GraphTypes
     {
         public QuestionType(IAnswerRepository answerRepository,
                             IExplanationRepository explanationRepository,
-                            IQuestionImageRepository questionImageRepository)
+                            IQuestionFileRepository questionImageRepository)
         {
             Field(t => t.Id, type: typeof(IdGraphType));
             Field(t => t.TestId, type: typeof(IdGraphType));

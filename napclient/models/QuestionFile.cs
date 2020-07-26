@@ -2,7 +2,7 @@
 
 namespace models
 {
-    public class QuestionImage
+    public class QuestionFile
     {
         public Guid Id { get; set; }
         public Guid QuestionId { get; set; }

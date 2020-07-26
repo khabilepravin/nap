@@ -1,4 +1,5 @@
 ﻿using logic;
+using logic.RequestModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using models;
@@ -23,7 +24,7 @@ namespace napclient.Controllers
         public async Task<IActionResult> AddQuestionImage([FromRoute]Guid questionId)
         {
             var file = Request.Form.Files[0];
-            QuestionImage questionImage = null;
+            QuestionFile questionImage = null;
             if(file.Length > 0)
             {
                 var fileStorage = BuildFileStorage(file);
@@ -42,7 +43,7 @@ namespace napclient.Controllers
         public async Task<IActionResult> AddAnswerImage([FromRoute]Guid answerId)
         {
             
-            AnswerImage answerImage = null;
+            AnswerFile answerImage = null;
             if(Request.Form.Files.Count > 0 && Request.Form.Files[0].Length > 0)
             {
                 var file = Request.Form.Files[0];
@@ -57,6 +58,22 @@ namespace napclient.Controllers
             }
 
             return Ok(answerImage);
+        }
+
+        [HttpPost("answer/audio/{answerId}")]
+        public async Task<IActionResult> AddAnswerImage([FromRoute] Guid answerId, [FromBody]ConvertToAudioRequest convertToAudioRequest)
+        {
+            await this.answerLogic.AddAnswerAudioFile(answerId, convertToAudioRequest.PlainText);
+
+            return Ok();
+        }
+
+        [HttpPost("question/audio/{questionId}")]
+        public async Task<IActionResult> AddQuestionImage([FromRoute] Guid questionId, [FromBody] ConvertToAudioRequest convertToAudioRequest)
+        {
+            await this.questionLogic.AddQuestionAudioFile(questionId, convertToAudioRequest.PlainText);
+
+            return Ok();
         }
 
         private FileStorage BuildFileStorage(IFormFile formFile)

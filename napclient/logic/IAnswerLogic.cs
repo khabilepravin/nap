@@ -7,6 +7,7 @@ namespace logic
     public interface IAnswerLogic
     {
         Task<Answer> AddAnswer(Answer answer);
-        Task<AnswerImage> AddImageAnswer(FileStorage fileStorage, Guid answerId);
+        Task<AnswerFile> AddImageAnswer(FileStorage fileStorage, Guid answerId);
+        Task AddAnswerAudioFile(Guid answerId, string answerPlainText);
     }
 }

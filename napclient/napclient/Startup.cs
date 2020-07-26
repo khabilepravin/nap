@@ -90,6 +90,7 @@ namespace napclient
             dataAccess.DataBootstrapper.Boostrap(containerBuilder);
             graphqlMiddleware.GraphqlBootstrapper.Bootstrap(containerBuilder);
             LogicBootstrapper.Bootstrap(containerBuilder);
+            externalServices.ExternalServicesBootstrapper.Bootstrap(containerBuilder);
             this.Container = containerBuilder.Build();
 
             return new AutofacServiceProvider(this.Container);
