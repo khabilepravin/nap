@@ -8,26 +8,26 @@ using System.Collections.Generic;
 
 namespace dataAccess.Repositories
 {
-    public class QuestionImageRepository : BaseRepository, IQuestionImageRepository
+    public class QuestionFileRepository : BaseRepository, IQuestionFileRepository
     {
-        public QuestionImageRepository(IDbContextFactory dbContextFactory) : base(dbContextFactory) { }
-        public async Task<QuestionImage> AddAsync(QuestionImage questionImage)
+        public QuestionFileRepository(IDbContextFactory dbContextFactory) : base(dbContextFactory) { }
+        public async Task<QuestionFile> AddAsync(QuestionFile questionImage)
         {
             using (var db = base._dbContextFactory.Create())
             {
-                await db.QuestionImage.AddAsync(questionImage);
+                await db.QuestionFile.AddAsync(questionImage);
                 await db.SaveChangesAsync();
                 return questionImage;
             }
         }
 
-        public async Task<IEnumerable<QuestionImage>> GetQuestionImage(Guid questionId)
+        public async Task<IEnumerable<QuestionFile>> GetQuestionImage(Guid questionId)
         {
             using(var db = base._dbContextFactory.Create())
             {
-                return await (from q in db.QuestionImage 
+                return await (from q in db.QuestionFile 
                        where q.QuestionId == questionId
-                       select q).ToListAsync<QuestionImage>();
+                       select q).ToListAsync<QuestionFile>();
 
             }
         }

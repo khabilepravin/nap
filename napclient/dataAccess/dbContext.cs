@@ -26,8 +26,8 @@ namespace dataAccess
         public DbSet<LookupGroup> LookupGroup { get; set; }
         public DbSet<LookupValue> LookupValue { get; set; }
         public DbSet<FileStorage> FileStorage { get; set; }
-        public DbSet<QuestionImage> QuestionImage { get; set; }
-        public DbSet<AnswerImage> AnswerImage { get; set; }
+        public DbSet<QuestionFile> QuestionFile { get; set; }
+        public DbSet<AnswerFile> AnswerFile { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -249,23 +249,23 @@ namespace dataAccess
 
             modelBuilder.Entity<FileStorage>().Property(e => e.Id).ValueGeneratedOnAdd();
 
-            modelBuilder.Entity<QuestionImage>(entity =>
+            modelBuilder.Entity<QuestionFile>(entity =>
             {
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.QuestionId);
                 entity.Property(e => e.FileId);
             });
 
-            modelBuilder.Entity<QuestionImage>().Property(e => e.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<QuestionFile>().Property(e => e.Id).ValueGeneratedOnAdd();
 
-            modelBuilder.Entity<AnswerImage>(entity =>
+            modelBuilder.Entity<AnswerFile>(entity =>
             {
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.AnswerId);
                 entity.Property(e => e.FileId);
             });
 
-            modelBuilder.Entity<AnswerImage>().Property(e => e.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<AnswerFile>().Property(e => e.Id).ValueGeneratedOnAdd();
         }
     }
 }

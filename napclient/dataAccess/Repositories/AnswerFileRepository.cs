@@ -4,15 +4,15 @@ using System.Threading.Tasks;
 
 namespace dataAccess.Repositories
 {
-    public class AnswerImageRepository : BaseRepository, IAnswerImageRepository
+    public class AnswerFileRepository : BaseRepository, IAnswerFileRepository
     {
-        public AnswerImageRepository(IDbContextFactory dbContextFactory) : base(dbContextFactory) { }
+        public AnswerFileRepository(IDbContextFactory dbContextFactory) : base(dbContextFactory) { }
 
-        public async Task<AnswerImage> AddAsync(AnswerImage answerImage)
+        public async Task<AnswerFile> AddAsync(AnswerFile answerImage)
         {
             using (var db = base._dbContextFactory.Create())
             {
-                await db.AnswerImage.AddAsync(answerImage);
+                await db.AnswerFile.AddAsync(answerImage);
                 await db.SaveChangesAsync();
                 return answerImage;
             }
