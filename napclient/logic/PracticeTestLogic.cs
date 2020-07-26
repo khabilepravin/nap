@@ -41,7 +41,8 @@ namespace logic
                 AnswerId = selectedAnswer == null ? Guid.Empty :  selectedAnswer.Id,
                 IsCorrect = selectedAnswer == null ? false : selectedAnswer.IsCorrect,
                 QuestionId = textAnswerRecord.QuestionId,
-                UserTestId = textAnswerRecord.UserTestId
+                UserTestId = textAnswerRecord.UserTestId,
+                AnswerText = textAnswerRecord.UserAnswerText
             });
         }
     }
