@@ -180,6 +180,7 @@ namespace dataAccess
                         .HasColumnType("char(36)");
                 entity.Property(e => e.AnswerId)
                         .HasColumnType("char(36)");
+                entity.Property(e => e.AnswerText);
             });
             modelBuilder.Entity<UserTestRecord>().Property(e => e.Id).ValueGeneratedOnAdd();
 

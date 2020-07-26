@@ -9,5 +9,6 @@ namespace models
         public Guid QuestionId { get; set; }
         public Guid AnswerId { get; set; }
         public bool IsCorrect { get; set; }
+        public string AnswerText { get; set; }
     }
 }
