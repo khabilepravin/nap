@@ -7,6 +7,6 @@ namespace dataAccess.Repositories
     public interface IFileStorageRepository
     {
         Task<FileStorage> AddAsync(FileStorage test);
-        Task<FileStorage> GetByQuestionAsync(Guid questionId);
+        Task<FileStorage> GetByQuestionAsync(Guid questionId, string fileExtension=null);
     }
 }

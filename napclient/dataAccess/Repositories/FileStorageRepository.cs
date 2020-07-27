@@ -22,14 +22,14 @@ namespace dataAccess.Repositories
             }
         }
 
-        public async Task<FileStorage> GetByQuestionAsync(Guid questionId)
+        public async Task<FileStorage> GetByQuestionAsync(Guid questionId, string fileExtension = null)
         {
             using (var db = base._dbContextFactory.Create())
             {
                 return await (from f in db.FileStorage
                               join q in db.QuestionFile
                               on f.Id equals q.FileId
-                              where q.QuestionId == questionId
+                              where q.QuestionId == questionId && (fileExtension == null || f.Extension == fileExtension)
                               select f).FirstOrDefaultAsync<FileStorage>();
             }
         }

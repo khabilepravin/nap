@@ -53,5 +53,21 @@ namespace napclient.Controllers
                 return Ok(imageData);
             }
         }
+
+        [HttpGet("{questionId}/audio")]
+        public async Task<IActionResult> GetQuestionAudio([FromRoute] Guid questionId)
+        {
+            var audioData = await this.questionLogic.GetAudioByQuestionId(questionId);
+
+           
+            if (audioData == null)
+            {
+                return NoContent();
+            }
+            else
+            {
+                return File(audioData.Data, "audio/mpeg");
+            }
+        }
     }
 }

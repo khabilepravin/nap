@@ -64,6 +64,12 @@ namespace logic
                 return new ImageResponse { ImageFileType = fileStorage.FileType, Base64ImageData = Convert.ToBase64String(fileStorage.Data) };
             }
         }
+
+        public async Task<FileStorage> GetAudioByQuestionId(Guid questionId)
+        {
+            return await this.fileStorageRepository.GetByQuestionAsync(questionId, ".mp3");
+        }
+
         public async Task AddQuestionAudioFile(Guid questionId, string questionPlainText)
         {
             var audioFileData = this.textToSpeech.ConvertTextToSpeech(questionPlainText);
