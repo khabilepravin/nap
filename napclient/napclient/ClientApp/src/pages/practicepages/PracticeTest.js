@@ -30,6 +30,7 @@ const PracticeTest = ({ history, match }) => {
   const [percentage, setPercentage] = useState(0);
   const [canProcced, setCanProcced] = useState(false);
   const [userAnswer, setUserAnswer] = useState(null);
+  const [userAnswerText, setUserAnswerText] = useState('');
   const [questionImage, setQuestionImage] = useState();
   const { loading, error, data } = useQuery(GET_TEST, {
     variables: { userTestId: userTestId },
@@ -41,6 +42,7 @@ const PracticeTest = ({ history, match }) => {
       if(data.userTestRecord){
         setCanProcced(true);
         setUserAnswer(data.userTestRecord.answerId);
+        setUserAnswerText(data.userTestRecord.answerText);
       }
     },
   });
@@ -176,6 +178,7 @@ const PracticeTest = ({ history, match }) => {
             <Question
               question={data.testByUserTestId.questions[currentQuestionIndex]}
               selectedAnswer={userAnswer}
+              selectedAnswerText={userAnswerText}
               onAnswered={handleOnAnswered}
               questionImage={questionImage}
             />

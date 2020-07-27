@@ -14,6 +14,7 @@ const Question = React.memo((props) => {
       <Answers
         answerContext={props.question}
         selectedAnswer={props.selectedAnswer}
+        selectedAnswerText={props.selectedAnswerText}
         onAnswerSelected={answerSelected}
       />
     </>

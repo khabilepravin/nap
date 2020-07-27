@@ -32,6 +32,7 @@ const GET_USERTEST_RECORD = gql`
       userTestId
       answerId
       isCorrect
+      answerText
     }
   }
 `

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { CustomInput } from "reactstrap";
 import Image from "./Image";
 import {
@@ -6,6 +6,7 @@ import {
 } from "reactstrap";
 
 const Answers = React.memo((props) => {
+  //const[userAnswerText, setUserAnswerText] = useState(props.selectedAnswerText);
   // Returns a function, that, as long as it continues to be invoked, will not
   // be triggered. The function will be called after it stops being called for
   // `wait` milliseconds.
@@ -29,10 +30,12 @@ const Answers = React.memo((props) => {
   }, 1000);
 
   const handleInputEntered = (e) => {    
+    //setUserAnswerText(e.target.value);
     answerEnteredDebounce(e.target.value);    
   }  
 
   if (props.answerContext.questionType === "single") {
+    
     let answersList = props.answerContext.answers.map((answer) => {
       return (
         <div key={answer.id}>
@@ -51,8 +54,8 @@ const Answers = React.memo((props) => {
 
     return <>{answersList}</>;
   } else if (props.answerContext.questionType === "text") {
-    return <Input type="text" placeholder="Answer here" onKeyUp={handleInputEntered}/>;
+    return <Input type="text" placeholder="Answer here" onKeyUp={handleInputEntered} defaultValue={props.selectedAnswerText}/>;
   }
 });
 
-export default Answers;
+export default Answers; 
