@@ -13,7 +13,7 @@ namespace graphqlMiddleware.GraphTypes
             Field(t => t.QuestionId, type: typeof(IdGraphType));
             Field(t => t.AnswerId, type: typeof(IdGraphType));
             Field(t => t.IsCorrect);
-            Field(t => t.AnswerText);
+            Field(t => t.AnswerText, nullable: true);
         }
     }
 }

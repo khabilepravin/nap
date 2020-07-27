@@ -11,6 +11,7 @@ namespace graphqlMiddleware.GraphTypes
             Field<NonNullGraphType<IdGraphType>>("questionId");
             Field<NonNullGraphType<IdGraphType>>("answerId");
             Field<NonNullGraphType<BooleanGraphType>>("isCorrect");
+            Field<StringGraphType>("answerText");
         }
     }
 }
