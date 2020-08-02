@@ -32,6 +32,7 @@ const PracticeTest = ({ history, match }) => {
   const [userAnswer, setUserAnswer] = useState(null);
   const [userAnswerText, setUserAnswerText] = useState('');
   const [questionImage, setQuestionImage] = useState();
+  const [questionAudio, setQuestionAudio] = useState();
   const { loading, error, data } = useQuery(GET_TEST, {
     variables: { userTestId: userTestId },
   });
@@ -76,12 +77,14 @@ const PracticeTest = ({ history, match }) => {
         },
       });
       loadQuestionImage(data.testByUserTestId.questions[currentQuestionIndex].id);
+      loadQuestionAudio(data.testByUserTestId.questions[currentQuestionIndex].id);
     }
   }, [currentQuestionIndex]);
 
   useEffect(() => {
     if (data) {      
       loadQuestionImage(data.testByUserTestId.questions[0].id);
+      loadQuestionAudio(data.testByUserTestId.questions[0].id);
     }
   }, [data]);
 
@@ -95,11 +98,24 @@ const PracticeTest = ({ history, match }) => {
     QuestionService.getQuestionImage(questionId).then((res) => {
       if (res.data) {
         setQuestionImage(
-          `data:${res.data.imageFileType};base64, ${res.data.base64ImageData}`
+          `data:${res.data.fileType};base64, ${res.data.base64Data}`
         );
       } else {
         setQuestionImage(null);
       }
+    });
+  };
+
+  const loadQuestionAudio = (questionId) => {
+    QuestionService.getQuestionAudio(questionId).then((res) => {
+       if(res.data){
+        setQuestionAudio(
+          `data:${res.data.fileType};base64, ${res.data.base64Data}`
+        );
+       }
+       else{
+         setQuestionAudio(null);
+       } 
     });
   };
 
@@ -181,6 +197,7 @@ const PracticeTest = ({ history, match }) => {
               selectedAnswerText={userAnswerText}
               onAnswered={handleOnAnswered}
               questionImage={questionImage}
+              questionAudio={questionAudio}
             />
             <TestActionButtons
               currentQuestionIndex={currentQuestionIndex}

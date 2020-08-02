@@ -10,6 +10,10 @@ class QuestionService {
     static async getQuestionImage(questionId) {
         return await axios.get(`${baseRestUrl}/question/${questionId}/images`);
     }
+
+    static async getQuestionAudio(questionId){
+        return await axios.get(`${baseRestUrl}/question/${questionId}/audio`);
+    }
 }
 
 export default QuestionService;
