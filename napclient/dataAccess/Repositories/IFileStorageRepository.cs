@@ -8,5 +8,6 @@ namespace dataAccess.Repositories
     {
         Task<FileStorage> AddAsync(FileStorage test);
         Task<FileStorage> GetByQuestionAsync(Guid questionId, string fileExtension=null);
+        Task<FileStorage> GetByAnswerAsync(Guid answerId, string fileExtension = null);
     }
 }

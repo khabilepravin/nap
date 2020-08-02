@@ -51,7 +51,7 @@ namespace logic
             return questionImage;
         }
 
-        public async Task<ImageResponse> GetBase64QuestionImage(Guid questionId)
+        public async Task<FileResponse> GetBase64QuestionImage(Guid questionId)
         {
             var fileStorage = await this.fileStorageRepository.GetByQuestionAsync(questionId);
 
@@ -61,13 +61,22 @@ namespace logic
             }
             else
             {
-                return new ImageResponse { ImageFileType = fileStorage.FileType, Base64ImageData = Convert.ToBase64String(fileStorage.Data) };
+                return new FileResponse { FileType = fileStorage.FileType, Base64Data = Convert.ToBase64String(fileStorage.Data) };
             }
         }
 
-        public async Task<FileStorage> GetAudioByQuestionId(Guid questionId)
+        public async Task<FileResponse> GetBase64QuestionAudio(Guid questionId)
         {
-            return await this.fileStorageRepository.GetByQuestionAsync(questionId, ".mp3");
+            var fileStorage = await this.fileStorageRepository.GetByQuestionAsync(questionId, ".mp3");
+
+            if(fileStorage == null)
+            {
+                return null;
+            }
+            else
+            {
+                return new FileResponse { FileType = fileStorage.FileType, Base64Data = Convert.ToBase64String(fileStorage.Data) };
+            }
         }
 
         public async Task AddQuestionAudioFile(Guid questionId, string questionPlainText)

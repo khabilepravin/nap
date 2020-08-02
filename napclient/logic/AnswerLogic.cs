@@ -1,5 +1,6 @@
 ﻿using dataAccess.Repositories;
 using externalServices;
+using logic.ResponseModels;
 using models;
 using System;
 using System.Threading.Tasks;
@@ -71,6 +72,34 @@ namespace logic
                         AnswerId = answerId
                     });
                 }
+            }
+        }
+
+        public async Task<FileResponse> GetBase64AnswerAudio(Guid answerId)
+        {
+            var fileStorage = await fileStorageRepository.GetByAnswerAsync(answerId, ".mp3");
+
+            if (fileStorage == null)
+            {
+                return null;
+            }
+            else
+            {
+                return new FileResponse { FileType = fileStorage.FileType, Base64Data = Convert.ToBase64String(fileStorage.Data) };
+            }
+        }
+
+        public async Task<FileResponse> GetBase64AnswerImage(Guid answerId)
+        {
+            var fileStorage = await this.fileStorageRepository.GetByAnswerAsync(answerId);
+
+            if (fileStorage == null)
+            {
+                return null;
+            }
+            else
+            {
+                return new FileResponse { FileType = fileStorage.FileType, Base64Data = Convert.ToBase64String(fileStorage.Data) };
             }
         }
     }

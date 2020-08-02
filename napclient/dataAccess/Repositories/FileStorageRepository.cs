@@ -33,5 +33,17 @@ namespace dataAccess.Repositories
                               select f).FirstOrDefaultAsync<FileStorage>();
             }
         }
+
+        public async Task<FileStorage> GetByAnswerAsync(Guid answerId, string fileExtension= null)
+        {
+            using(var db = base._dbContextFactory.Create())
+            {
+                return await (from f in db.FileStorage
+                              join a in db.AnswerFile
+                              on f.Id equals a.FileId
+                              where a.AnswerId == answerId && (fileExtension == null || f.Extension == fileExtension)
+                              select f).FirstOrDefaultAsync<FileStorage>();
+            }
+        }
     }
 }
