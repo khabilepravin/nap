@@ -21,6 +21,7 @@ const schema = Yup.object().shape({
 const AnswerAdd = (props) => {
   const questionId = props.questionId;
   const [imageFile, setImageFile] = useState();
+  const [isInProgress, setIsInProgress] = useState(false);
   const { register, handleSubmit, reset, errors } = useForm({
     validationSchema: schema,
   });
@@ -33,6 +34,7 @@ const AnswerAdd = (props) => {
   };
 
   const submitAnswerForm = (data) => {   
+    setIsInProgress(true);
     let formData = new FormData();
 
     formData.set("answer", JSON.stringify(data));
@@ -50,6 +52,7 @@ const AnswerAdd = (props) => {
           reset();
           showToastr("Success", "Answer added successfully");
           props.onAnswerAdded();
+          setIsInProgress(false);
         }
       });
   };
@@ -125,7 +128,7 @@ const AnswerAdd = (props) => {
         value={questionId}
         innerRef={register}
       ></Input>
-      <Button type="submit" color="primary" className="mr-1 mb-1">
+      <Button type="submit" color="primary" className="mr-1 mb-1" disabled={isInProgress}>
         <FontAwesomeIcon icon={faSave} /> Save and Reset
       </Button>
     </Form>

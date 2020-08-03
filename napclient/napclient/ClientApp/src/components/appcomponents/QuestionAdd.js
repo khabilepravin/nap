@@ -19,6 +19,7 @@ const QuestionAdd = (props) => {
   const [questionText, setQuestionText] = useState();
   const [imageFile, setImageFile] = useState();
   const [questionObj, setQuestionObj] = useState();
+  const [isInProgress, setIsInprogress] = useState(false);
 
   const { register, handleSubmit, reset, errors } = useForm({
     validationSchema: schema,
@@ -33,7 +34,8 @@ const QuestionAdd = (props) => {
     submitQuestionForm(data);
   };
 
-  const submitQuestionForm = (data) => {   
+  const submitQuestionForm = (data) => { 
+    setIsInprogress(true);  
     let formData = new FormData();
 
     formData.set("question", JSON.stringify(data));
@@ -52,6 +54,7 @@ const QuestionAdd = (props) => {
           reset();
           showToastr("Success", "Question added successful");
           props.questionAdded();
+          setIsInprogress(false);
         }
       });
   };
@@ -132,7 +135,7 @@ const QuestionAdd = (props) => {
         value={testId}
         innerRef={register}
       ></Input>
-      <Button type="submit" color="primary" className="mr-1 mb-1">
+      <Button type="submit" color="primary" className="mr-1 mb-1" disabled={isInProgress}>
         <FontAwesomeIcon icon={faSave} /> Save and Reset
       </Button>
     </Form>
