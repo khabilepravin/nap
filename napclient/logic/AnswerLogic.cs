@@ -27,7 +27,12 @@ namespace logic
         public async Task<Answer> AddAnswer(Answer answer)
         {
             answer.PlainText = HtmlHelper.RemoveHtmlTags(answer.Text);
-            return await this.answerRepository.AddAsync(answer);
+            var answerRecord = await this.answerRepository.AddAsync(answer);
+            if(answerRecord != null)
+            {
+                await this.AddAnswerAudioFile(answerRecord.Id, answerRecord.PlainText);
+            }
+            return answerRecord;
         }
 
         public async Task<AnswerFile> AddImageAnswer(FileStorage fileStorage, Guid answerId)
