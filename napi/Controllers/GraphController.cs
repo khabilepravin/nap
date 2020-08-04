@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace napclient.Controllers
+namespace napiControllers
 {
     [Route("api/[controller]")]
     [ApiController]

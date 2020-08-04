@@ -7,7 +7,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace napclient.Controllers
+namespace napiControllers
 {
     public class FilesController : BaseController
     {

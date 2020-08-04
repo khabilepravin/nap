@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 
-namespace napclient.Controllers
+namespace napiControllers
 {
     public class TestResultController : BaseController
     {

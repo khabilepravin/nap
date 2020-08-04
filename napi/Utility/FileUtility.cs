@@ -2,7 +2,7 @@
 using models;
 using System.IO;
 
-namespace napclient.Utility
+namespace napiUtility
 {
     internal static class FileUtility
     {

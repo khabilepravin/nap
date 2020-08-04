@@ -3,11 +3,11 @@ using logic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using models;
-using napclient.Utility;
+using napiUtility;
 using System;
 using System.Threading.Tasks;
 
-namespace napclient.Controllers
+namespace napiControllers
 {
     public class QuestionController : BaseController
     {

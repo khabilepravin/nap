@@ -3,7 +3,7 @@ using logic.RequestModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace napclient.Controllers
+namespace napiControllers
 {
     public class PracticeTestController : BaseController
     {
