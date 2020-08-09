@@ -12,5 +12,7 @@ namespace logic
         Task AddAnswerAudioFile(Guid answerId, string answerPlainText);
         Task<FileResponse> GetBase64AnswerAudio(Guid answerId);
         Task<FileResponse> GetBase64AnswerImage(Guid answerId);
+        Task<Answer> UpdateAnswer(Answer answer, FileStorage imageData);
+        
     }
 }

@@ -22,6 +22,17 @@ namespace dataAccess.Repositories
             }
         }
 
+        public async Task<FileStorage> UpdateAsync(FileStorage fileStorage)
+        {
+            using (var db = base._dbContextFactory.Create())
+            {
+                fileStorage.ModifiedAt = DateTime.UtcNow;
+                db.FileStorage.Update(fileStorage);
+                await db.SaveChangesAsync();
+                return fileStorage;
+            }
+        }
+
         public async Task<FileStorage> GetByQuestionAsync(Guid questionId, string fileExtension = null)
         {
             using (var db = base._dbContextFactory.Create())

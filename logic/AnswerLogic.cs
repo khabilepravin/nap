@@ -11,7 +11,7 @@ namespace logic
     {
         private readonly IAnswerRepository answerRepository;
         private readonly IFileStorageRepository fileStorageRepository;
-        private readonly IAnswerFileRepository answerImageRepository;
+        private readonly IAnswerFileRepository answerFileRepository;
         private readonly ITextToSpeech textToSpeech;
         public AnswerLogic(IAnswerRepository answerRepository,
                             IFileStorageRepository fileStorageRepository,
@@ -20,7 +20,7 @@ namespace logic
         {
             this.answerRepository = answerRepository;
             this.fileStorageRepository = fileStorageRepository;
-            this.answerImageRepository = answerImageRepository;
+            this.answerFileRepository = answerImageRepository;
             this.textToSpeech = textToSpeech;
         }
 
@@ -35,13 +35,49 @@ namespace logic
             return answerRecord;
         }
 
+        public async Task<Answer> UpdateAnswer(Answer answer, FileStorage imageData)
+        {
+            answer.PlainText = HtmlHelper.RemoveHtmlTags(answer.Text);
+            var answerRecord = await this.answerRepository.UpdateAsync(answer);
+
+            // Update answer audio file
+            var answerAudio = await this.fileStorageRepository.GetByAnswerAsync(answer.Id, "audio/mpeg");
+            var answerImage = await this.fileStorageRepository.GetByAnswerAsync(answer.Id, "image/png");
+
+            if(answerAudio == null)
+            {
+                // Add it
+                await AddAnswerAudioFile(answer.Id, answer.PlainText);
+            }
+            else
+            {
+                // Update it
+                await UpdateAnswerAudioFile(answer.Id, answer.PlainText, answerAudio);
+            }
+
+            if (imageData != null)
+            {
+                if (answerImage == null)
+                {
+                    await this.fileStorageRepository.AddAsync(imageData);
+                }
+                else
+                {
+                    imageData.Id = answerImage.Id;
+                    await this.fileStorageRepository.UpdateAsync(imageData);
+                }
+            }
+
+            return answer;            
+        }
+
         public async Task<AnswerFile> AddImageAnswer(FileStorage fileStorage, Guid answerId)
         {
             var fileStorageRecord = await this.fileStorageRepository.AddAsync(fileStorage);
             AnswerFile answerImageRecord = null;
             if (fileStorageRecord != null)
             {
-                answerImageRecord = await this.answerImageRepository.AddAsync(new AnswerFile
+                answerImageRecord = await this.answerFileRepository.AddAsync(new AnswerFile
                 {
                     AnswerId = answerId,
                     FileId = fileStorageRecord.Id
@@ -71,12 +107,26 @@ namespace logic
 
                 if (fileStorage != null)
                 {
-                    await this.answerImageRepository.AddAsync(new AnswerFile
+                    await this.answerFileRepository.AddAsync(new AnswerFile
                     {
                         FileId = fileStorage.Id,
                         AnswerId = answerId
                     });
                 }
+            }
+        }
+
+        public async Task UpdateAnswerAudioFile(Guid answerId, string answerPlainText, FileStorage answerAudio)
+        {
+            var audioFileData = this.textToSpeech.ConvertTextToSpeech(answerPlainText);
+            if (audioFileData == null)
+            {
+                throw new Exception("Failed to convert using speech to text external service");
+            }
+            else
+            {
+                answerAudio.Data = audioFileData;
+                await this.fileStorageRepository.UpdateAsync(answerAudio);
             }
         }
 

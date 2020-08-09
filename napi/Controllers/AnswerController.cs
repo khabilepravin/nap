@@ -38,5 +38,21 @@ namespace napiControllers
 
             return Ok(answerRecord);
         }
+
+        [HttpPut]
+        public async Task<IActionResult> PutAnswer([ModelBinder(BinderType = typeof(JsonModelBinder))]Answer answer)
+        {
+            IFormFile imageFile = null;
+            if (Request.Form.Files?.Count > 0)
+            {
+                imageFile = Request.Form.Files[0];
+            }
+
+            var imageData = imageFile == null ? null : FileUtility.BuildFileStorage(imageFile);
+         
+            var answerRecord = await this.answerLogic.UpdateAnswer(answer, imageData);
+
+            return Ok(answer);
+        }
     }
 }

@@ -1,6 +1,9 @@
 ﻿using dataModel.Repositories;
 using models;
 using System.Threading.Tasks;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace dataAccess.Repositories
 {
@@ -16,6 +19,6 @@ namespace dataAccess.Repositories
                 await db.SaveChangesAsync();
                 return answerImage;
             }
-        }
+        }     
     }
 }
