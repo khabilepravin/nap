@@ -52,7 +52,7 @@ namespace napiControllers
          
             var answerRecord = await this.answerLogic.UpdateAnswer(answer, imageData);
 
-            return Ok(answer);
+            return Ok(answerRecord);
         }
     }
 }

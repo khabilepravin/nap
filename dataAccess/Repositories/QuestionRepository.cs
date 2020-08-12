@@ -25,19 +25,19 @@ namespace dataAccess.Repositories
 
         public async Task<IEnumerable<Question>> GetQuestionsByTestIdAsync(Guid testId)
         {
-            using(var db = base._dbContextFactory.Create())
+            using (var db = base._dbContextFactory.Create())
             {
-                
+
                 return await (from q in db.Question
-                        where q.TestId == testId
-                        select q).ToListAsync<Question>();
+                              where q.TestId == testId
+                              select q).ToListAsync<Question>();
             }
         }
 
 
         public async Task<Question> GetQuestionById(Guid questionId)
         {
-            using(var db = base._dbContextFactory.Create())
+            using (var db = base._dbContextFactory.Create())
             {
                 return await (from q in db.Question
                               where q.Id == questionId
@@ -53,6 +53,27 @@ namespace dataAccess.Repositories
                 db.Question.Update(question);
                 await db.SaveChangesAsync();
                 return question;
+            }
+        }
+
+        public async Task<bool> DeleteAsync(Guid questionId)
+        {
+            using (var db = base._dbContextFactory.Create())
+            {
+                var question = (from q in db.Question
+                                where q.Id == questionId
+                                select q).FirstOrDefault<Question>();
+
+                if (question != null)
+                {
+                    db.Question.Remove(question);
+                    await db.SaveChangesAsync();
+                    return true;
+                }
+                else
+                {
+                    throw new Exception($"No question found with id {questionId}");
+                }
             }
         }
     }

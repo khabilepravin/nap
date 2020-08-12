@@ -3,6 +3,7 @@ using externalServices;
 using logic.ResponseModels;
 using models;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace logic
@@ -41,8 +42,8 @@ namespace logic
             var answerRecord = await this.answerRepository.UpdateAsync(answer);
 
             // Update answer audio file
-            var answerAudio = await this.fileStorageRepository.GetByAnswerAsync(answer.Id, "audio/mpeg");
-            var answerImage = await this.fileStorageRepository.GetByAnswerAsync(answer.Id, "image/png");
+            var answerAudio = await this.fileStorageRepository.GetByAnswerAsync(answer.Id, new List<string>() { "audio/mpeg" });
+            var answerImage = await this.fileStorageRepository.GetByAnswerAsync(answer.Id, new List<string>() { "image/png", "image/jpeg" });
 
             if(answerAudio == null)
             {
@@ -132,7 +133,7 @@ namespace logic
 
         public async Task<FileResponse> GetBase64AnswerAudio(Guid answerId)
         {
-            var fileStorage = await fileStorageRepository.GetByAnswerAsync(answerId, ".mp3");
+            var fileStorage = await fileStorageRepository.GetByAnswerAsync(answerId, new List<string> { "audio/mpeg" });
 
             if (fileStorage == null)
             {
@@ -146,7 +147,7 @@ namespace logic
 
         public async Task<FileResponse> GetBase64AnswerImage(Guid answerId)
         {
-            var fileStorage = await this.fileStorageRepository.GetByAnswerAsync(answerId);
+            var fileStorage = await this.fileStorageRepository.GetByAnswerAsync(answerId, new List<string>() { "image/png", "image/jpeg" });
 
             if (fileStorage == null)
             {

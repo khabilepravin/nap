@@ -13,7 +13,7 @@ namespace graphqlMiddleware.Mutations
     public class TestMutation : ObjectGraphType<Test>
     {
 
-        public TestMutation(ITestRepository testRepository, 
+        public TestMutation(ITestRepository testRepository,
                             IQuestionRepository questionRepository,
                             IAnswerRepository answerRepository,
                             IExplanationRepository explanationRepository,
@@ -55,7 +55,7 @@ namespace graphqlMiddleware.Mutations
                     {
                         var question = context.GetArgument<Question>("question");
                         var files = context.UserContext.As<IFormFileCollection>();
-                        if(files?.Count > 0)
+                        if (files?.Count > 0)
                         {
                             FileStorage fileStorage = new FileStorage();
                             if (files[0].Length > 0)
@@ -76,7 +76,7 @@ namespace graphqlMiddleware.Mutations
             Field<QuestionType>(
                 "updateQuestion",
                 arguments: new QueryArguments(
-                    new QueryArgument<NonNullGraphType<QuestionInputType>> { Name="question"}
+                    new QueryArgument<NonNullGraphType<QuestionInputType>> { Name = "question" }
                     ),
                     resolve: context =>
                     {
@@ -163,12 +163,12 @@ namespace graphqlMiddleware.Mutations
                             var userTest = context.GetArgument<UserTest>("userTest");
                             return userTestRepository.AddAsync(userTest);
                         });
-                    
+
 
             Field<UserTestRecordType>(
                     "addUserTestRecord",
                     arguments: new QueryArguments(
-                            new QueryArgument<NonNullGraphType<UserTestRecordInputType>> { Name="userTestRecord" }
+                            new QueryArgument<NonNullGraphType<UserTestRecordInputType>> { Name = "userTestRecord" }
                         ),
                     resolve: context =>
                     {
@@ -180,6 +180,12 @@ namespace graphqlMiddleware.Mutations
                     "deleteAnswerById",
                     arguments: new QueryArguments(new QueryArgument<IdGraphType> { Name = "id" }),
                     resolve: context => answerRepository.DeleteAsync(context.GetArgument<Guid>("id"))
+                );
+
+            Field<BooleanGraphType>(
+                    "deleteQuestionById",
+                    arguments: new QueryArguments(new QueryArgument<IdGraphType> { Name = "id" }),
+                    resolve: context => questionRepository.DeleteAsync(context.GetArgument<Guid>("id"))
                 );
 
         }

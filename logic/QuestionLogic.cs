@@ -3,6 +3,7 @@ using externalServices;
 using logic.ResponseModels;
 using models;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace logic
@@ -35,6 +36,40 @@ namespace logic
             return questionRecord;
         }
 
+        public async Task<Question> UpdateQuestion(Question question, FileStorage imageData)
+        {
+            // Do implementation
+            question.PlainText = HtmlHelper.RemoveHtmlTags(question.Text);
+            var questionRecord = await this.questionRepository.UpdateAsync(question);
+
+            var questionAudio = await this.fileStorageRepository.GetByQuestionAsync(question.Id, new List<string> { "audio/mpeg" });
+            var questionImage = await this.fileStorageRepository.GetByAnswerAsync(question.Id, new List<string> { "image/png", "image/jpeg" });
+
+            if(questionAudio == null)
+            {
+                await AddQuestionAudioFile(question.Id, question.PlainText);
+            }
+            else
+            {
+                await UpdateQuestionAudioFile(question.Id, question.PlainText, questionAudio);
+            }
+
+            if(imageData != null)
+            {
+                if(questionImage == null)
+                {
+                    await this.fileStorageRepository.AddAsync(questionImage);
+                }
+                else
+                {
+                    imageData.Id = questionImage.Id;
+                    await this.fileStorageRepository.UpdateAsync(imageData);
+                }
+            }
+
+            return question;
+        }
+
         public async Task<QuestionFile> AddQuestionImageFile(FileStorage fileStorage, Guid questionId)
         {
             var fileStorageRecord = await this.fileStorageRepository.AddAsync(fileStorage);
@@ -58,7 +93,7 @@ namespace logic
 
         public async Task<FileResponse> GetBase64QuestionImage(Guid questionId)
         {
-            var fileStorage = await this.fileStorageRepository.GetByQuestionAsync(questionId);
+            var fileStorage = await this.fileStorageRepository.GetByQuestionAsync(questionId, new List<string> { "image/png", "image/jpeg" });
 
             if (fileStorage == null)
             {
@@ -72,7 +107,7 @@ namespace logic
 
         public async Task<FileResponse> GetBase64QuestionAudio(Guid questionId)
         {
-            var fileStorage = await this.fileStorageRepository.GetByQuestionAsync(questionId, ".mp3");
+            var fileStorage = await this.fileStorageRepository.GetByQuestionAsync(questionId, new List<string> { "audio/mpeg" });
 
             if(fileStorage == null)
             {
@@ -106,6 +141,21 @@ namespace logic
                         QuestionId = questionId
                     });
                 }
+            }
+        }
+
+        public async Task UpdateQuestionAudioFile(Guid questionId, string questionPlainText, FileStorage questionAudio)
+        {
+            var audioFileData = this.textToSpeech.ConvertTextToSpeech(questionPlainText);
+
+            if(audioFileData != null)
+            {
+                throw new Exception("Failed to convert using speech to text external service");
+            }
+            else
+            {
+                questionAudio.Data = audioFileData;
+                await this.fileStorageRepository.UpdateAsync(questionAudio);
             }
         }
     }

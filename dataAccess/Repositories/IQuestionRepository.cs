@@ -11,5 +11,6 @@ namespace dataAccess.Repositories
         Task<IEnumerable<Question>> GetQuestionsByTestIdAsync(Guid testId);
         Task<Question> UpdateAsync(Question question);
         Task<Question> GetQuestionById(Guid questionId);
+        Task<bool> DeleteAsync(Guid questionId);
     }
 }

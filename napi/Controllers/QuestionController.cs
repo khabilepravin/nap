@@ -39,6 +39,21 @@ namespace napiControllers
             return Ok(questionRecord);
         } 
 
+        [HttpPut]
+        public async Task<IActionResult> PutQuestion([ModelBinder(BinderType = typeof(JsonModelBinder))] Question question)
+        {
+            IFormFile imageFile = null;
+            if (Request.Form.Files?.Count > 0)
+            {
+                imageFile = Request.Form.Files[0];
+            }
+
+            var imageData = imageFile == null ? null : FileUtility.BuildFileStorage(imageFile);
+            var questionRecord = await questionLogic.UpdateQuestion(question, imageData);
+
+            return Ok(questionRecord);
+        }
+
         [HttpGet("{questionId}/images")]
         public async Task<IActionResult> GetQuestionImage([FromRoute]Guid questionId)
         {

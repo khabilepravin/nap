@@ -1,5 +1,6 @@
 ﻿using models;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace dataAccess.Repositories
@@ -7,8 +8,8 @@ namespace dataAccess.Repositories
     public interface IFileStorageRepository
     {
         Task<FileStorage> AddAsync(FileStorage fileStorage);
-        Task<FileStorage> GetByQuestionAsync(Guid questionId, string fileExtension=null);
-        Task<FileStorage> GetByAnswerAsync(Guid answerId, string fileExtension = null);
+        Task<FileStorage> GetByQuestionAsync(Guid questionId, List<string> fileTypes);
+        Task<FileStorage> GetByAnswerAsync(Guid answerId, List<string> fileTypes);
         Task<FileStorage> UpdateAsync(FileStorage fileStorage);
     }
 }
