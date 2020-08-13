@@ -2,8 +2,10 @@
 using externalServices;
 using logic.ResponseModels;
 using models;
+using models.Custom;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace logic
@@ -157,6 +159,24 @@ namespace logic
             {
                 return new FileResponse { FileType = fileStorage.FileType, Base64Data = Convert.ToBase64String(fileStorage.Data) };
             }
+        }
+        public async Task<IEnumerable<AnswerFileStorage>> GetBase64AnswersImages(string comaSeperatedAnswerIds)
+        {
+            var stringAnswerIds = comaSeperatedAnswerIds.Split(',').ToList<string>();
+            var answerGuids = (from i in stringAnswerIds
+                               select new Guid(i)).ToList<Guid>();
+
+            var imageFiles = await this.fileStorageRepository.GetByAnswerListAsync(answerGuids, new List<string> { "image/png", "image/jpeg" });
+
+            if(imageFiles != null)
+            {
+               foreach(var answerFile in imageFiles)
+                {
+                    answerFile.Base64Data = Convert.ToBase64String(answerFile.Data);
+                }   
+            }
+
+            return imageFiles;
         }
     }
 }

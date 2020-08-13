@@ -1,6 +1,7 @@
 ﻿using dataModel.Repositories;
 using Microsoft.EntityFrameworkCore;
 using models;
+using models.Custom;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,6 +55,24 @@ namespace dataAccess.Repositories
                               on f.Id equals a.FileId
                               where a.AnswerId == answerId && fileTypes.Contains(f.FileType)
                               select f).FirstOrDefaultAsync<FileStorage>();
+            }
+        }
+
+        public async Task<IEnumerable<AnswerFileStorage>> GetByAnswerListAsync(List<Guid> answersList, List<string> fileTypes)
+        {
+            using (var db = base._dbContextFactory.Create())
+            {
+                return await (from f in db.FileStorage
+                              join a in db.AnswerFile
+                              on f.Id equals a.FileId
+                              where answersList.Contains(a.AnswerId) && fileTypes.Contains(f.FileType)
+                              select new AnswerFileStorage
+                              {
+                                  AnswerId = a.AnswerId,
+                                  Data = f.Data,
+                                  FileType = f.FileType,
+                                  Name = f.Name
+                              }).ToListAsync<AnswerFileStorage>();
             }
         }
     }

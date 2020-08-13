@@ -54,5 +54,17 @@ namespace napiControllers
 
             return Ok(answerRecord);
         }
+
+        [HttpGet("images")]
+        public async Task<IActionResult> GetImages([FromQuery]string answerIds)
+        {
+            if (string.IsNullOrWhiteSpace(answerIds))
+            {
+                return BadRequest("AnswerIds are missing");
+            }
+            var images = await this.answerLogic.GetBase64AnswersImages(answerIds);
+
+            return Ok(images);
+        }
     }
 }
