@@ -8,6 +8,6 @@ namespace dataAccess.Repositories
     public interface IQuestionFileRepository
     {
         Task<QuestionFile> AddAsync(QuestionFile questionImage);
-        Task<IEnumerable<QuestionFile>> GetQuestionImage(Guid questionId);
+        Task<IEnumerable<QuestionFile>> GetQuestionFiles(Guid questionId, IEnumerable<string> fileTypes);
     }
 }

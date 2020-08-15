@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 
 namespace dataAccess.Repositories
 {
@@ -20,5 +21,17 @@ namespace dataAccess.Repositories
                 return answerImage;
             }
         }     
+
+        public async Task<IEnumerable<AnswerFile>> GetAnswerFiles(Guid answerId, IEnumerable<string> fileTypes)
+        {
+            using(var db = base._dbContextFactory.Create())
+            {
+                return await (from a in db.AnswerFile
+                                  join fl in db.FileStorage
+                                  on a.FileId equals fl.Id
+                                  where a.AnswerId == answerId && fileTypes.Contains(fl.FileType)
+                                  select a).ToListAsync<AnswerFile>();
+            }
+        }
     }
 }

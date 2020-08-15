@@ -64,7 +64,8 @@ namespace napclient
             services.AddSingleton<UserTestRecordInputType>();
             services.AddSingleton<UserTestType>();
             services.AddSingleton<UserTestRecordType>();
-            services.AddSingleton<QuestionImageType>();
+            services.AddSingleton<QuestionFileType>();
+            services.AddSingleton<AnswerFileType>();
 
             services.AddGraphQL();
 

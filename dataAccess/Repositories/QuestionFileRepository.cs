@@ -21,13 +21,15 @@ namespace dataAccess.Repositories
             }
         }
 
-        public async Task<IEnumerable<QuestionFile>> GetQuestionImage(Guid questionId)
+        public async Task<IEnumerable<QuestionFile>> GetQuestionFiles(Guid questionId, IEnumerable<string> fileTypes)
         {
             using(var db = base._dbContextFactory.Create())
             {
                 return await (from q in db.QuestionFile 
-                       where q.QuestionId == questionId
-                       select q).ToListAsync<QuestionFile>();
+                              join fs in db.FileStorage
+                              on q.FileId equals fs.Id
+                            where q.QuestionId == questionId && fileTypes.Contains(fs.FileType)
+                        select q).ToListAsync<QuestionFile>();
 
             }
         }

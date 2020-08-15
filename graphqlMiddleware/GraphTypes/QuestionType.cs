@@ -1,6 +1,7 @@
 ﻿using dataAccess.Repositories;
 using GraphQL.Types;
 using models;
+using models.Custom;
 
 namespace graphqlMiddleware.GraphTypes
 {
@@ -28,9 +29,11 @@ namespace graphqlMiddleware.GraphTypes
                 resolve: context => answerRepository.GetByQuestionIdAsync(context.Source.Id));
             Field<ListGraphType<ExplanationType>>("explanations",
                 resolve: context => explanationRepository.GetByQuestionId(context.Source.Id));
-            Field<ListGraphType<QuestionImageType>>("images",
-                resolve: context => questionImageRepository.GetQuestionImage(context.Source.Id));
-            
+            Field<ListGraphType<QuestionFileType>>("images",
+                resolve: context => questionImageRepository.GetQuestionFiles(context.Source.Id, Constants.ImageFileTypes));
+            Field<ListGraphType<QuestionFileType>>("audio",
+                resolve: context => questionImageRepository.GetQuestionFiles(context.Source.Id, Constants.AudioFileTypes));
+
         }
     }
 }
