@@ -68,13 +68,13 @@ namespace napiControllers
             return Ok();
         }
 
-        [HttpPost("question/audio/{questionId}")]
-        public async Task<IActionResult> AddQuestionImage([FromRoute] Guid questionId, [FromBody] ConvertToAudioRequest convertToAudioRequest)
-        {
-            await this.questionLogic.AddQuestionAudioFile(questionId, convertToAudioRequest.PlainText);
+        //[HttpPost("question/audio/{questionId}")]
+        //public async Task<IActionResult> AddQuestionImage([FromRoute] Guid questionId, [FromBody] ConvertToAudioRequest convertToAudioRequest)
+        //{
+        //    await this.questionLogic.AddQuestionAudioFile(questionId, convertToAudioRequest.PlainText);
 
-            return Ok();
-        }
+        //    return Ok();
+        //}
 
         private FileStorage BuildFileStorage(IFormFile formFile)
         {

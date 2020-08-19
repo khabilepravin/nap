@@ -8,7 +8,8 @@ namespace logic
         {
             HtmlDocument htmlDoc = new HtmlDocument();
             htmlDoc.LoadHtml(inputHtml);
-            return htmlDoc.DocumentNode.InnerText;
+            var plainText = htmlDoc.DocumentNode.InnerText;
+            return plainText.Replace("&nbsp", string.Empty);
         }
     }
 }

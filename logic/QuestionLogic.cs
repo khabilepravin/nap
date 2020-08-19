@@ -31,7 +31,7 @@ namespace logic
             var questionRecord = await this.questionRepository.AddAsync(question);
             if (questionRecord != null)
             {
-                await this.AddQuestionAudioFile(questionRecord.Id, questionRecord.PlainText);
+                await this.AddQuestionAudioFile(questionRecord.Id, questionRecord.PlainText, questionRecord.Description);
             }
             return questionRecord;
         }
@@ -47,11 +47,11 @@ namespace logic
 
             if(questionAudio == null)
             {
-                await AddQuestionAudioFile(question.Id, question.PlainText);
+                await AddQuestionAudioFile(question.Id, question.PlainText, question.Description);
             }
             else
             {
-                await UpdateQuestionAudioFile(question.Id, question.PlainText, questionAudio);
+                await UpdateQuestionAudioFile(question.Id, question.PlainText, question.Description, questionAudio);
             }
 
             if(imageData != null)
@@ -119,9 +119,10 @@ namespace logic
             }
         }
 
-        public async Task AddQuestionAudioFile(Guid questionId, string questionPlainText)
+        public async Task AddQuestionAudioFile(Guid questionId, string questionPlainText, string questionDescription)
         {
-            var audioFileData = this.textToSpeech.ConvertTextToSpeech(questionPlainText);
+            var textToConvertToAudio = questionPlainText + questionDescription;
+            var audioFileData = this.textToSpeech.ConvertTextToSpeech(textToConvertToAudio);
 
             if (audioFileData != null)
             {
@@ -144,11 +145,12 @@ namespace logic
             }
         }
 
-        public async Task UpdateQuestionAudioFile(Guid questionId, string questionPlainText, FileStorage questionAudio)
+        public async Task UpdateQuestionAudioFile(Guid questionId, string questionPlainText, string questionDescription, FileStorage questionAudio)
         {
-            var audioFileData = this.textToSpeech.ConvertTextToSpeech(questionPlainText);
+            var textToConvertToAudio = questionPlainText + questionDescription;
+            var audioFileData = this.textToSpeech.ConvertTextToSpeech(textToConvertToAudio);
 
-            if(audioFileData != null)
+            if(audioFileData == null)
             {
                 throw new Exception("Failed to convert using speech to text external service");
             }

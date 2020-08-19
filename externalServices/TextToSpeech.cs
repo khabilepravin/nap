@@ -27,7 +27,8 @@ namespace externalServices
             // Select the type of audio file you want returned.
             AudioConfig config = new AudioConfig
             {
-                AudioEncoding = AudioEncoding.Mp3
+                AudioEncoding = AudioEncoding.Mp3,
+                SpeakingRate = 0.9
             };
 
             // Perform the Text-to-Speech request, passing the text input
