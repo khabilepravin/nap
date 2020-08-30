@@ -44,8 +44,7 @@ namespace dataAccess
             #endregion
 
             #region Uncomment this region-code for database migration and update
-            //Note: Put the connection string of your db
-            //optionsBuilder.UseMySql("server=localhost;database=naplanpractice_dev;user=root;password=p0k5PgOzmgkF");
+            //Note: Put the connection string of your db            
             //optionsBuilder.UseSqlServer("Data Source=(local);Initial Catalog=nap;Integrated Security=true;");
             #endregion
         }
@@ -168,6 +167,7 @@ namespace dataAccess
                         .HasColumnType("char(36)");
                 entity.Property(e => e.CreatedAt);
                 entity.Property(e => e.ModifiedAt);
+                entity.Property(e => e.ShuffleSeed);
             });
             modelBuilder.Entity<UserTest>().Property(e => e.Id).ValueGeneratedOnAdd();
 
