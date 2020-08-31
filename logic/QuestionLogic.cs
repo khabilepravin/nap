@@ -4,6 +4,7 @@ using logic.ResponseModels;
 using models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace logic
@@ -159,6 +160,13 @@ namespace logic
                 questionAudio.Data = audioFileData;
                 await this.fileStorageRepository.UpdateAsync(questionAudio);
             }
+        }
+
+        public async Task<IEnumerable<Question>> GetShuffledQuestionsByTestIdAsync(Guid testId, int shuffleSeed)
+        {
+            var questions = await this.questionRepository.GetQuestionsByTestIdAsync(testId);
+
+            return Shuffler.Shuffle<Question>(questions.ToList(), shuffleSeed);
         }
     }
 }

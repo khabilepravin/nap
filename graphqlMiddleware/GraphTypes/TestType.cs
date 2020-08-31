@@ -5,7 +5,7 @@ using models;
 namespace graphqlMiddleware.GraphTypes
 {
     public class TestType : ObjectGraphType<Test>
-    {   
+    {
         public TestType(IQuestionRepository questionRepository)
         {
             Field(t => t.Id, type: typeof(IdGraphType));

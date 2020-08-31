@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "externalServices", "externa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "napi", "napi\napi.csproj", "{B9521CB4-85B9-461B-A79A-275195D6E208}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tests", "tests\tests.csproj", "{4DEDDA4D-0B96-4962-ABCB-CB41D4D637FF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{B9521CB4-85B9-461B-A79A-275195D6E208}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B9521CB4-85B9-461B-A79A-275195D6E208}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B9521CB4-85B9-461B-A79A-275195D6E208}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DEDDA4D-0B96-4962-ABCB-CB41D4D637FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DEDDA4D-0B96-4962-ABCB-CB41D4D637FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DEDDA4D-0B96-4962-ABCB-CB41D4D637FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DEDDA4D-0B96-4962-ABCB-CB41D4D637FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

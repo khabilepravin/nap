@@ -2,6 +2,7 @@
 using logic.RequestModels;
 using models;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace logic
@@ -10,11 +11,14 @@ namespace logic
     {
         private readonly IUserTestRecordRepository userTestRecordRepository;
         private readonly IAnswerRepository answerRepository;
+        private readonly ITestRepository testRepository;
         public PracticeTestLogic(IUserTestRecordRepository userTestRecordRepository,
-                                IAnswerRepository answerRepository)
+                                IAnswerRepository answerRepository,
+                                ITestRepository testRepository)
         {
             this.userTestRecordRepository = userTestRecordRepository;
             this.answerRepository = answerRepository;
+            this.testRepository = testRepository;
         }
 
         public async Task RecordTextAnswer(TextAnswerRecord textAnswerRecord)
@@ -45,5 +49,18 @@ namespace logic
                 AnswerText = textAnswerRecord.UserAnswerText
             });
         }
+
+        //public async Task<Test> GetByUserTestIdAsync(Guid userTestId)
+        //{
+            //var test = await this.testRepository.GetByUserTestIdAsync(userTestId);
+
+            //if(test != null)
+            //{
+
+            //}
+
+//            Shuffler.Shuffle<List<Test>>(test.);
+
+        //}
     }
 }
