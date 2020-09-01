@@ -77,5 +77,15 @@ namespace dataAccess.Repositories
 
             }
         }
+
+        public async Task<IEnumerable<UserTest>> GetByUserAndTestIdAsync(Guid userId, Guid testId)
+        {
+            using (var db = base._dbContextFactory.Create())
+            {
+                return await (from ut in db.UserTest
+                        where ut.UserId == userId && ut.TestId == testId
+                        select ut).ToListAsync<UserTest>();
+            }
+        }
     }
 }

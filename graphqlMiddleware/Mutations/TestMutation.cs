@@ -18,11 +18,10 @@ namespace graphqlMiddleware.Mutations
                             IAnswerRepository answerRepository,
                             IExplanationRepository explanationRepository,
                             ILookupRepository lookupRepository,
-                            IFileStorageRepository fileStorageRepository,
                             IUserTestRecordRepository userTestRecordRepository,
-                            IUserTestRepository userTestRepository,
                             IQuestionLogic questionLogic,
-                            IAnswerLogic answerLogic)
+                            IAnswerLogic answerLogic,
+                            IUserTestLogic userTestLogic)
         {
             Field<TestType>(
                 "createTest",
@@ -161,7 +160,7 @@ namespace graphqlMiddleware.Mutations
                         resolve: context =>
                         {
                             var userTest = context.GetArgument<UserTest>("userTest");
-                            return userTestRepository.AddAsync(userTest);
+                            return userTestLogic.AddUserTest(userTest);
                         });
 
 
