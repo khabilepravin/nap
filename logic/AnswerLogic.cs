@@ -178,5 +178,12 @@ namespace logic
 
             return imageFiles;
         }
+
+        public async Task<IEnumerable<Answer>> GetByQuestionIdAndShuffleSeedAsync(Guid questionId, int shuffleSeed)
+        {
+            var answers = await this.answerRepository.GetByQuestionIdAsync(questionId);
+
+            return Shuffler.Shuffle<Answer>(answers.ToList(), shuffleSeed);
+        }
     }
 }

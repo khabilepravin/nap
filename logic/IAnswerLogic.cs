@@ -15,6 +15,8 @@ namespace logic
         Task<FileResponse> GetBase64AnswerAudio(Guid answerId);
         Task<FileResponse> GetBase64AnswerImage(Guid answerId);
         Task<IEnumerable<AnswerFileStorage>> GetBase64AnswersImages(string comaSeperatedAnswerIds);
-        Task<Answer> UpdateAnswer(Answer answer, FileStorage imageData);        
+        Task<Answer> UpdateAnswer(Answer answer, FileStorage imageData);
+        Task<IEnumerable<Answer>> GetByQuestionIdAndShuffleSeedAsync(Guid questionId, int shuffleSeed);
+
     }
 }

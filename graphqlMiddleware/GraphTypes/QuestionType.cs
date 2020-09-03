@@ -1,5 +1,6 @@
 ﻿using dataAccess.Repositories;
 using GraphQL.Types;
+using logic;
 using models;
 using models.Custom;
 
@@ -7,9 +8,9 @@ namespace graphqlMiddleware.GraphTypes
 {
     public class QuestionType : ObjectGraphType<Question>
     {
-        public QuestionType(IAnswerRepository answerRepository,
-                            IExplanationRepository explanationRepository,
-                            IQuestionFileRepository questionImageRepository)
+        public QuestionType(IExplanationRepository explanationRepository,
+                            IQuestionFileRepository questionImageRepository,
+                            IAnswerLogic answerLogic)
         {
             Field(t => t.Id, type: typeof(IdGraphType));
             Field(t => t.TestId, type: typeof(IdGraphType));
@@ -26,7 +27,8 @@ namespace graphqlMiddleware.GraphTypes
             Field(t => t.FileId, type: typeof(IdGraphType));
             Field(t => t.PlainText);
             Field<ListGraphType<AnswerType>>("answers",
-                resolve: context => answerRepository.GetByQuestionIdAsync(context.Source.Id));
+                arguments: new QueryArguments(new QueryArgument<IntGraphType> { Name = "shuffleSeed" }),
+                resolve: context => answerLogic.GetByQuestionIdAndShuffleSeedAsync(context.Source.Id, context.GetArgument<int>("shuffleSeed")));
             Field<ListGraphType<ExplanationType>>("explanations",
                 resolve: context => explanationRepository.GetByQuestionId(context.Source.Id));
             Field<ListGraphType<QuestionFileType>>("images",
