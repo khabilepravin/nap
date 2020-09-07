@@ -1,4 +1,5 @@
 ﻿using dataAccess.Repositories;
+using logic.ResponseModels;
 using models;
 using System;
 using System.Linq;
@@ -17,12 +18,16 @@ namespace logic
             this.userTestRecordRepository = userTestRecordRepository;
         }
 
-        public async Task<double> GetTestCompletionPercentage(Guid userTestId)
+        public async Task<TestProgress> GetTestCompletionPercentage(Guid userTestId)
         {
             var numberOfQuestionsInATest = await this.userTestRepository.GetTotalNumberOfQuestions(userTestId);
             var numberOfAnsweredQuestions = await this.userTestRecordRepository.GetNumberOfAnsweredQuestions(userTestId);
 
-            return Math.Round(Convert.ToDouble((100*numberOfAnsweredQuestions) / numberOfQuestionsInATest));
+            return new TestProgress
+            {
+                Percentage = Math.Round(Convert.ToDouble((100 * numberOfAnsweredQuestions) / numberOfQuestionsInATest)),
+                Description = $"{numberOfAnsweredQuestions}/{numberOfQuestionsInATest}"
+            };
         }
 
         public async Task<UserTest> AddUserTest(UserTest userTest)
