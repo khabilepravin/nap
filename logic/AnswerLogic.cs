@@ -160,23 +160,24 @@ namespace logic
                 return new FileResponse { FileType = fileStorage.FileType, Base64Data = Convert.ToBase64String(fileStorage.Data) };
             }
         }
-        public async Task<IEnumerable<AnswerFileStorage>> GetBase64AnswersImages(string comaSeperatedAnswerIds)
+
+        public async Task<IEnumerable<AnswerFileStorage>> GetBase64AnswersFilesByType(string comaSeperatedAnswerIds, List<string> fileTypes)
         {
             var stringAnswerIds = comaSeperatedAnswerIds.Split(',').ToList<string>();
             var answerGuids = (from i in stringAnswerIds
                                select new Guid(i)).ToList<Guid>();
 
-            var imageFiles = await this.fileStorageRepository.GetByAnswerListAsync(answerGuids, new List<string> { "image/png", "image/jpeg" });
+            var answerFiles = await this.fileStorageRepository.GetByAnswerListAsync(answerGuids, fileTypes);
 
-            if(imageFiles != null)
+            if(answerFiles != null)
             {
-               foreach(var answerFile in imageFiles)
+               foreach(var answerFile in answerFiles)
                 {
                     answerFile.Base64Data = Convert.ToBase64String(answerFile.Data);
                 }   
             }
 
-            return imageFiles;
+            return answerFiles;
         }
 
         public async Task<IEnumerable<Answer>> GetByQuestionIdAndShuffleSeedAsync(Guid questionId, int shuffleSeed)

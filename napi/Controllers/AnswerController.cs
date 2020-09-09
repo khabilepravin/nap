@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using models;
 using napiUtility;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace napiControllers
@@ -62,9 +63,21 @@ namespace napiControllers
             {
                 return BadRequest("AnswerIds are missing");
             }
-            var images = await this.answerLogic.GetBase64AnswersImages(answerIds);
+            var images = await this.answerLogic.GetBase64AnswersFilesByType(answerIds, new List<string> { "image/png", "image/jpeg" });
 
             return Ok(images);
+        }
+
+        [HttpGet("audio")]
+        public async Task<IActionResult> GetAudioFiles([FromQuery]string answerIds)
+        {
+            if (string.IsNullOrWhiteSpace(answerIds))
+            {
+                return BadRequest("AnswerIds are missing");
+            }
+            var audioFiles = await this.answerLogic.GetBase64AnswersFilesByType(answerIds, new List<string> { "audio/mpeg" });
+
+            return Ok(audioFiles);
         }
     }
 }
