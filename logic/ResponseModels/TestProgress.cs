@@ -4,5 +4,6 @@
     {
         public double Percentage { get; set; }
         public string Description { get; set; }
+        public int NextQuestionIndex { get; set; }
     }
 }

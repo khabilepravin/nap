@@ -11,11 +11,15 @@ namespace logic
     {
         private readonly IUserTestRepository userTestRepository;
         private readonly IUserTestRecordRepository userTestRecordRepository;
+        private readonly IQuestionRepository questionRepository;
 
-        public UserTestLogic(IUserTestRepository userTestRepository, IUserTestRecordRepository userTestRecordRepository)
+        public UserTestLogic(IUserTestRepository userTestRepository, 
+                            IUserTestRecordRepository userTestRecordRepository, 
+                            IQuestionRepository questionRepository)
         {
             this.userTestRepository = userTestRepository;
             this.userTestRecordRepository = userTestRecordRepository;
+            this.questionRepository = questionRepository;
         }
 
         public async Task<TestProgress> GetTestCompletionPercentage(Guid userTestId)
@@ -26,7 +30,8 @@ namespace logic
             return new TestProgress
             {
                 Percentage = Math.Round(Convert.ToDouble((100 * numberOfAnsweredQuestions) / numberOfQuestionsInATest)),
-                Description = $"{numberOfAnsweredQuestions}/{numberOfQuestionsInATest}"
+                Description = $"{numberOfAnsweredQuestions}/{numberOfQuestionsInATest}",
+                NextQuestionIndex = numberOfAnsweredQuestions == numberOfQuestionsInATest ? (numberOfQuestionsInATest - 1) : numberOfAnsweredQuestions
             };
         }
 
