@@ -72,6 +72,8 @@ namespace dataAccess
                 entity.Property(e => e.DifficultyLevel)
                         .HasColumnType("varchar(100)");
                 entity.Property(e => e.Year);
+                entity.Property(e => e.TestType)
+                        .HasColumnType("varchar(100)");
             });
 
             modelBuilder.Entity<Test>().Property(e => e.Id).ValueGeneratedOnAdd();
