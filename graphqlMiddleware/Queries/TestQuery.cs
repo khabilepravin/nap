@@ -80,7 +80,14 @@ namespace graphqlMiddleware.Queries
                 resolve: context => userTestRecordRepository.GetByUserTestAndQuestionId(context.GetArgument<Guid>("userTestId"), 
                 context.GetArgument<Guid>("questionId"))
             );
-           
+
+            Field<ListGraphType<TestType>>
+                            ("testsByTypeAndYear",
+                            arguments: new QueryArguments(new QueryArgument<StringGraphType> { Name="testType"},
+                                                            new QueryArgument<StringGraphType> { Name="year"}),
+                            resolve: context => testRepository.GetByTypeAndYear(context.GetArgument<string>("testType"), 
+                            context.GetArgument<string>("year")));
+
         }
 
     }

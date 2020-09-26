@@ -74,5 +74,15 @@ namespace dataAccess.Repositories
                               select t).FirstOrDefaultAsync<Test>();
             }
         }
+
+        public async Task<IEnumerable<Test>> GetByTypeAndYear(string testType, string year)
+        {
+            using(var db = base._dbContextFactory.Create())
+            {
+                return await (from t in db.Test
+                              where t.TestType == testType && t.Year == year
+                              select t).ToListAsync<Test>();
+            }
+        }
     }
 }

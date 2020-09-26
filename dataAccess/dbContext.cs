@@ -71,7 +71,8 @@ namespace dataAccess
                     .HasColumnType("char(1)");
                 entity.Property(e => e.DifficultyLevel)
                         .HasColumnType("varchar(100)");
-                entity.Property(e => e.Year);
+                entity.Property(e => e.Year)
+                        .HasColumnType("varchar(100)");
                 entity.Property(e => e.TestType)
                         .HasColumnType("varchar(100)");
             });

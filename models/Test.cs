@@ -17,7 +17,7 @@ namespace models
         public Guid ModifiedByUser { get; set; }
         public string Status { get; set; }
         public string DifficultyLevel { get; set; }
-        public int Year { get; set; }
+        public string Year { get; set; }
         public string TestType { get; set; }
     }
 }

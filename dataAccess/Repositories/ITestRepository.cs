@@ -14,5 +14,6 @@ namespace dataAccess.Repositories
 
         Task<Test> UpdateAsync(Test test);
         Task<IEnumerable<Test>> GetAll();
+        Task<IEnumerable<Test>> GetByTypeAndYear(string testType, string year);
     }
 }

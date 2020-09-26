@@ -20,7 +20,7 @@ namespace graphqlMiddleware.GraphTypes
             Field(t => t.ModifiedByUser, type: typeof(IdGraphType));
             Field(t => t.Status);
             Field(t => t.DifficultyLevel);
-            Field(t => t.Year, type: typeof(IntGraphType));
+            Field(t => t.Year);
             Field(t => t.TestType);
             Field<ListGraphType<QuestionType>>("questions",
                 resolve: context => questionRepository.GetQuestionsByTestIdAsync(context.Source.Id));
