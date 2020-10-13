@@ -21,7 +21,8 @@ namespace graphqlMiddleware.Mutations
                             IUserTestRecordRepository userTestRecordRepository,
                             IQuestionLogic questionLogic,
                             IAnswerLogic answerLogic,
-                            IUserTestLogic userTestLogic)
+                            IUserTestLogic userTestLogic,
+                            IUserRepository userRepository)
         {
             Field<TestType>(
                 "createTest",
@@ -52,22 +53,7 @@ namespace graphqlMiddleware.Mutations
                     ),
                     resolve: context =>
                     {
-                        var question = context.GetArgument<Question>("question");
-                        var files = context.UserContext.As<IFormFileCollection>();
-                        if (files?.Count > 0)
-                        {
-                            FileStorage fileStorage = new FileStorage();
-                            if (files[0].Length > 0)
-                            {
-                                using (var ms = new MemoryStream())
-                                {
-                                    files[0].CopyTo(ms);
-                                    fileStorage.Data = ms.ToArray();
-                                }
-                                fileStorage.Name = files[0].FileName;
-                                fileStorage.FileType = files[0].ContentType;
-                            }
-                        }
+                        var question = context.GetArgument<Question>("question");                        
                         return questionLogic.AddQuestion(question);
                     });
 
@@ -186,6 +172,17 @@ namespace graphqlMiddleware.Mutations
                     arguments: new QueryArguments(new QueryArgument<IdGraphType> { Name = "id" }),
                     resolve: context => questionRepository.DeleteAsync(context.GetArgument<Guid>("id"))
                 );
+
+            Field<UserType>(
+                  "addUser",
+                  arguments: new QueryArguments(
+                          new QueryArgument<NonNullGraphType<UserInputType>> { Name = "user" }
+                      ),
+                  resolve: context =>
+                  {
+                      var user = context.GetArgument<User>("user");
+                      return userRepository.AddAsync(user);
+                  });
 
         }
     }

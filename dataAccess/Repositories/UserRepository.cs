@@ -11,14 +11,14 @@ namespace dataAccess.Repositories
     {
         public UserRepository(IDbContextFactory dbContextFactory) : base(dbContextFactory) { }
 
-        public async Task<Guid> AddAsync(User user)
+        public async Task<User> AddAsync(User user)
         {
             using(var db = base._dbContextFactory.Create())
             {
                 user.CreatedAt = DateTime.UtcNow;
                 await db.User.AddAsync(user);
                 await db.SaveChangesAsync();
-                return user.Id;
+                return user;
             }
         }
 
