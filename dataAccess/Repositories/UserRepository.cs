@@ -15,10 +15,21 @@ namespace dataAccess.Repositories
         {
             using(var db = base._dbContextFactory.Create())
             {
-                user.CreatedAt = DateTime.UtcNow;
-                await db.User.AddAsync(user);
-                await db.SaveChangesAsync();
-                return user;
+                var existingUser = (from u in db.User
+                                    where u.Email == user.Email
+                                    select u).FirstOrDefaultAsync<User>();
+
+                if (existingUser == null)
+                {
+                    user.CreatedAt = DateTime.UtcNow;
+                    await db.User.AddAsync(user);
+                    await db.SaveChangesAsync();
+                    return user;
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
 

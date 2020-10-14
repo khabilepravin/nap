@@ -18,6 +18,8 @@ namespace graphqlMiddleware.GraphTypes
             Field(t => t.ModifiedAt);
             Field(t => t.ParentUserId, type: typeof(IdGraphType));
             Field(t => t.Status);
+            Field(t => t.SocialLoginId);
+            Field(t => t.SocialProfilePicUrl);
         }
     }
 }

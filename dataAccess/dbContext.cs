@@ -102,6 +102,10 @@ namespace dataAccess
                         ;
                 entity.Property(e => e.Status)
                         .HasColumnType("char(1)");
+                entity.Property(e => e.SocialLoginId)
+                   .HasColumnType("varchar(500)");
+                entity.Property(e => e.SocialProfilePicUrl)
+                   .HasColumnType("varchar(3000)");
 
             });
             modelBuilder.Entity<User>().Property(e => e.Id).ValueGeneratedOnAdd();

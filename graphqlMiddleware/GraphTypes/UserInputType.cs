@@ -16,6 +16,8 @@ namespace graphqlMiddleware.GraphTypes
             Field<StringGraphType>("password");
             Field<StringGraphType>("parentUserId");
             Field<StringGraphType>("status");
+            Field<StringGraphType>("socialLoginId");
+            Field<StringGraphType>("socialProfilePicUrl");
         }
     }
 }

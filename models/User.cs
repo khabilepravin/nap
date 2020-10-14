@@ -15,5 +15,7 @@ namespace models
         public DateTime CreatedAt { get; set; }
         public DateTime ModifiedAt { get; set; }
         public string Status { get; set; }
+        public string SocialLoginId { get; set; }
+        public string SocialProfilePicUrl { get; set; }
     }
 }
