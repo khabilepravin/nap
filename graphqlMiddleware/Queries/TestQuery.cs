@@ -14,7 +14,8 @@ namespace graphqlMiddleware.Queries
                         ILookupRepository lookupRepository,
                         IAnswerRepository answerRepository,
                         IUserTestRepository userTestRepository,
-                        IUserTestRecordRepository userTestRecordRepository)
+                        IUserTestRecordRepository userTestRecordRepository,
+                        IUserRepository userRepository)
         {
             Field<ListGraphType<TestType>>
                 ("tests",
@@ -87,6 +88,11 @@ namespace graphqlMiddleware.Queries
                                                             new QueryArgument<StringGraphType> { Name="year"}),
                             resolve: context => testRepository.GetByTypeAndYear(context.GetArgument<string>("testType"), 
                             context.GetArgument<string>("year")));
+
+            Field<UserType>
+                            ("userBySocialId",
+                            arguments: new QueryArguments(new QueryArgument<StringGraphType> { Name = "socialId" }),
+                            resolve: context => userRepository.GetBySocialId(context.GetArgument<string>("socialId")));
 
         }
 

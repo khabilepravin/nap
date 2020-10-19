@@ -15,7 +15,7 @@ namespace dataAccess.Repositories
         {
             using(var db = base._dbContextFactory.Create())
             {
-                var existingUser = (from u in db.User
+                var existingUser = await (from u in db.User
                                     where u.Email == user.Email
                                     select u).FirstOrDefaultAsync<User>();
 
@@ -51,6 +51,16 @@ namespace dataAccess.Repositories
                 db.User.Update(user);
                 await db.SaveChangesAsync();
                 return user.Id;
+            }
+        }
+
+        public async Task<User> GetBySocialId(string socialId)
+        {
+            using(var db = base._dbContextFactory.Create())
+            {
+                return await (from u in db.User
+                              where u.SocialLoginId == socialId
+                              select u).FirstOrDefaultAsync<User>();
             }
         }
     }

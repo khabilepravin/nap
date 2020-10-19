@@ -9,5 +9,6 @@ namespace dataAccess.Repositories
         Task<User> AddAsync(User user);
         Task<User> GetByIdAsync(Guid id);
         Task<Guid> UpdateAsync(User user);
+        Task<User> GetBySocialId(string socialId);
     }
 }

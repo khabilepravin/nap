@@ -22,7 +22,7 @@ namespace graphqlMiddleware.Mutations
                             IQuestionLogic questionLogic,
                             IAnswerLogic answerLogic,
                             IUserTestLogic userTestLogic,
-                            IUserRepository userRepository)
+                            IUserLogic userLogic)
         {
             Field<TestType>(
                 "createTest",
@@ -181,7 +181,7 @@ namespace graphqlMiddleware.Mutations
                   resolve: context =>
                   {
                       var user = context.GetArgument<User>("user");
-                      return userRepository.AddAsync(user);
+                      return userLogic.AddAsync(user);
                   });
 
         }
