@@ -10,5 +10,6 @@ namespace dataAccess.Repositories
         Task<User> GetByIdAsync(Guid id);
         Task<Guid> UpdateAsync(User user);
         Task<User> GetBySocialId(string socialId);
+        Task<User> GetByEmailId(string email);
     }
 }

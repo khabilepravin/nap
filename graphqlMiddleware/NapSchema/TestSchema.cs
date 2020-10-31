@@ -1,16 +1,17 @@
-﻿using GraphQL;
-using GraphQL.Types;
+﻿using GraphQL.Types;
+using GraphQL.Utilities;
 using graphqlMiddleware.Mutations;
 using graphqlMiddleware.Queries;
+using System;
 
 namespace graphqlMiddleware.NapSchema
 {
     public class TestSchema : Schema
     {
-        public TestSchema(IDependencyResolver resolver) : base(resolver)
+        public TestSchema(IServiceProvider provider) : base(provider)
         {
-            Query = resolver.Resolve<TestQuery>();
-            Mutation = resolver.Resolve<TestMutation>();
+            Query = provider.GetRequiredService<TestQuery>();
+            Mutation = provider.GetRequiredService<TestMutation>();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using dataAccess.Repositories;
+using GraphQL;
 using GraphQL.Types;
 using graphqlMiddleware.GraphTypes;
 using models;

@@ -38,14 +38,14 @@ namespace logic
         public async Task<UserTest> AddUserTest(UserTest userTest)
         {
             var previousUserTestAttempts = await this.userTestRepository.GetByUserAndTestIdAsync(userTest.UserId, userTest.TestId);
-            int nestShuffleSeed = 0;
+            int nextShuffleSeed = 0;
 
             if(previousUserTestAttempts != null)
             {
-                nestShuffleSeed = previousUserTestAttempts.Count() + 1;
+                nextShuffleSeed = previousUserTestAttempts.Count() + 1;
             }
 
-            userTest.ShuffleSeed = nestShuffleSeed;
+            userTest.ShuffleSeed = nextShuffleSeed;
 
             return await this.userTestRepository.AddAsync(userTest);
         }

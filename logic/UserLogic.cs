@@ -14,12 +14,15 @@ namespace logic
 
         public async Task<User> AddAsync(User user)
         {
-            //if (user.SocialLoginId?.Contains("google") == true)
-            //{
-              //  user.Email = $"{user.UserName}@gmail.com";
-            //}
-
-            return await this.userRepository.AddAsync(user);
+            var existingUser = await this.userRepository.GetByEmailId(user.Email);
+            if(existingUser == null)
+            {
+                return await this.userRepository.AddAsync(user);
+            }
+            else
+            {
+                return existingUser;
+            }
         }
     }
 }

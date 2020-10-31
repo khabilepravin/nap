@@ -1,14 +1,15 @@
-﻿using GraphQL;
-using GraphQL.Types;
+﻿using GraphQL.Types;
+using GraphQL.Utilities;
 using graphqlMiddleware.Queries;
+using System;
 
 namespace graphqlMiddleware.NapSchema
 {
     public class UserSchema : Schema
     {
-        public UserSchema(IDependencyResolver resolver) : base(resolver)
+        public UserSchema(IServiceProvider provider) : base(provider)
         {
-            Query = resolver.Resolve<UserQuery>();
+            Query = provider.GetRequiredService<UserQuery>();
         }
     }
 }

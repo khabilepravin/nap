@@ -1,10 +1,8 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using GraphQL;
 using GraphQL.Server;
 using GraphQL.Server.Ui.Playground;
 using GraphQL.Types;
-using GraphQL.Utilities;
 using graphqlMiddleware.GraphTypes;
 using graphqlMiddleware.Mutations;
 using graphqlMiddleware.NapSchema;
@@ -12,12 +10,9 @@ using graphqlMiddleware.Queries;
 using logic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using System;
 
 namespace napclient
@@ -47,7 +42,8 @@ namespace napclient
                        .AllowAnyHeader();
             }));
 
-            services.AddSingleton<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
+            
+            //services.AddSingleton<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
             services.AddSingleton<ISchema, TestSchema>();
            // services.AddSingleton<ISchema, UserSchema>();
             services.AddSingleton<TestQuery>();
@@ -73,8 +69,11 @@ namespace napclient
             services.AddSingleton<QuestionFileType>();
             services.AddSingleton<AnswerFileType>();
             services.AddSingleton<UserInputType>();
-
-            services.AddGraphQL();
+            
+            services.AddGraphQL(options =>
+            {
+                options.EnableMetrics = false;
+            }).AddSystemTextJson(seserializerSettings => { }, serializerSettings => { });
 
             services.Configure<IISServerOptions>(options =>
             {
