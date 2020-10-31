@@ -131,6 +131,8 @@ namespace napclient
                 Path = "/ui/playground"
             });
 
+            app.UseGraphQLVoyager();
+
             app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
