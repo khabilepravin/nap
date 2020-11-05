@@ -184,6 +184,18 @@ namespace graphqlMiddleware.Mutations
                       return userLogic.AddAsync(user);
                   });
 
+
+            Field<UserType>(
+                  "checkUserExistence",
+                  arguments: new QueryArguments(
+                          new QueryArgument<NonNullGraphType<UserInputType>> { Name = "user" }
+                      ),
+                  resolve: context =>
+                  {
+                      var user = context.GetArgument<User>("user");
+                      return userLogic.CheckUserExistence(user);
+                  });
+
         }
     }
 }

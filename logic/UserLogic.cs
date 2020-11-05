@@ -24,5 +24,19 @@ namespace logic
                 return existingUser;
             }
         }
+
+        public async Task<User> CheckUserExistence(User user)
+        {
+            var existingUser = await this.userRepository.GetByEmailId(user.Email);
+
+            if(existingUser == null)
+            {
+                return await userRepository.AddAsync(user);
+            }
+            else
+            {
+                return existingUser;
+            }
+        }
     }
 }
