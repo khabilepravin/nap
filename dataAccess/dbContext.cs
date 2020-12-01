@@ -175,6 +175,8 @@ namespace dataAccess
                 entity.Property(e => e.CreatedAt);
                 entity.Property(e => e.ModifiedAt);
                 entity.Property(e => e.ShuffleSeed);
+                entity.Property(e => e.TimeSpentOnTest);
+                entity.Property(e => e.IsComplete);
             });
             modelBuilder.Entity<UserTest>().Property(e => e.Id).ValueGeneratedOnAdd();
 
