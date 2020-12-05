@@ -49,5 +49,10 @@ namespace logic
 
             return await this.userTestRepository.AddAsync(userTest);
         }
+
+        public async Task<UserTest> UpdateUserTest(UserTest userTest)
+        {
+            return await this.userTestRepository.UpdateAsync(userTest);
+        }
     }
 }

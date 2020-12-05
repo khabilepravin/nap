@@ -196,6 +196,17 @@ namespace graphqlMiddleware.Mutations
                       return userLogic.CheckUserExistence(user);
                   });
 
+            Field<UserTestType>(
+                "updateUserTest",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<UserTestInputType>> { Name = "userTest" }
+                    ),
+                    resolve: context =>
+                    {
+                        var userTest = context.GetArgument<UserTest>("userTest");
+                        return userTestLogic.UpdateUserTest(userTest);
+                    });
+
         }
     }
 }

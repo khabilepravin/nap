@@ -12,5 +12,7 @@ namespace models
         public DateTime ModifiedAt { get; set; }
         public string Status { get; set; }
         public int ShuffleSeed { get; set; }
+        public int TimeSpentOnTest { get; set; }
+        public bool IsComplete { get; set; }
     }
 }

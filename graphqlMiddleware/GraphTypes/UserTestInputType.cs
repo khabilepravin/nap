@@ -1,5 +1,4 @@
 ﻿using GraphQL.Types;
-using models;
 
 namespace graphqlMiddleware.GraphTypes
 {
@@ -8,9 +7,12 @@ namespace graphqlMiddleware.GraphTypes
         public UserTestInputType()
         {
             Name = "UserTestInput";
-            Field<NonNullGraphType<IdGraphType>>("testId");
-            Field<NonNullGraphType<IdGraphType>>("userId");
-            Field<NonNullGraphType<StringGraphType>>("mode");
+            Field<IdGraphType>("id");
+            Field<IdGraphType>("testId");
+            Field<IdGraphType>("userId");
+            Field<StringGraphType>("mode");
+            Field<IntGraphType>("timeSpentOnTest");
+            Field<BooleanGraphType>("isComplete");
         }
     }
 }
