@@ -2,7 +2,6 @@
 using logic.RequestModels;
 using models;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace logic
@@ -12,13 +11,17 @@ namespace logic
         private readonly IUserTestRecordRepository userTestRecordRepository;
         private readonly IAnswerRepository answerRepository;
         private readonly ITestRepository testRepository;
+        private readonly IUserTestRepository userTestRepository;
+        
         public PracticeTestLogic(IUserTestRecordRepository userTestRecordRepository,
                                 IAnswerRepository answerRepository,
-                                ITestRepository testRepository)
+                                ITestRepository testRepository,
+                                IUserTestRepository userTestRepository)
         {
             this.userTestRecordRepository = userTestRecordRepository;
             this.answerRepository = answerRepository;
             this.testRepository = testRepository;
+            this.userTestRepository = userTestRepository;
         }
 
         public async Task RecordTextAnswer(TextAnswerRecord textAnswerRecord)
@@ -50,16 +53,21 @@ namespace logic
             });
         }
 
+        public async Task<UserTestRecord> RecordAnswer(UserTestRecord userTestRecord)
+        {
+            return await this.userTestRecordRepository.AddAsync(userTestRecord);
+        }
+
         //public async Task<Test> GetByUserTestIdAsync(Guid userTestId)
         //{
-            //var test = await this.testRepository.GetByUserTestIdAsync(userTestId);
+        //var test = await this.testRepository.GetByUserTestIdAsync(userTestId);
 
-            //if(test != null)
-            //{
+        //if(test != null)
+        //{
 
-            //}
+        //}
 
-//            Shuffler.Shuffle<List<Test>>(test.);
+        //            Shuffler.Shuffle<List<Test>>(test.);
 
         //}
     }

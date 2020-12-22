@@ -22,7 +22,8 @@ namespace graphqlMiddleware.Mutations
                             IQuestionLogic questionLogic,
                             IAnswerLogic answerLogic,
                             IUserTestLogic userTestLogic,
-                            IUserLogic userLogic)
+                            IUserLogic userLogic,
+                            IPracticeTestLogic practiceTestLogic)
         {
             Field<TestType>(
                 "createTest",
@@ -158,7 +159,7 @@ namespace graphqlMiddleware.Mutations
                     resolve: context =>
                     {
                         var userTestRecord = context.GetArgument<UserTestRecord>("userTestRecord");
-                        return userTestRecordRepository.AddAsync(userTestRecord);
+                        return practiceTestLogic.RecordAnswer(userTestRecord);
                     });
 
             Field<BooleanGraphType>(
@@ -207,6 +208,18 @@ namespace graphqlMiddleware.Mutations
                         return userTestLogic.UpdateUserTest(userTest);
                     });
 
+            //Field<UserType>(
+            //      "markTestAsComplete",
+            //      arguments: new QueryArguments(
+            //              new QueryArgument<IdGraphType> { Name = "userTestId" },
+            //              new QueryArgument<IntGraphType> { Name= "timeSpentOnTestInSeconds" }
+            //          ),
+            //      resolve: context =>
+            //      {
+            //          var userTestId = context.GetArgument<Guid>("userTestId");
+            //          var timeSpentOnTest = context.GetArgument<int>("timeSpentOnTestInSeconds");
+            //          return practiceTestLogic.MarkTestComplete(userTestId, timeSpentOnTest);
+            //      });
         }
     }
 }
