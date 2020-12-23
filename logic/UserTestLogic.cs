@@ -37,17 +37,26 @@ namespace logic
 
         public async Task<UserTest> AddUserTest(UserTest userTest)
         {
-            var previousUserTestAttempts = await this.userTestRepository.GetByUserAndTestIdAsync(userTest.UserId, userTest.TestId);
-            int nextShuffleSeed = 0;
+            var inProgressInstancesOfTests = await this.userTestRepository.GetInProgressByUserAndTestIdAsync(userTest.UserId, userTest.TestId);
 
-            if(previousUserTestAttempts != null)
+            if(inProgressInstancesOfTests?.Count() > 0)
             {
-                nextShuffleSeed = previousUserTestAttempts.Count() + 1;
+                return inProgressInstancesOfTests.FirstOrDefault();
             }
+            else 
+            { 
+                var completedUserTestAttempts = await this.userTestRepository.GetCompletedByUserAndTestIdAsync(userTest.UserId, userTest.TestId);
+                int nextShuffleSeed = 0;
 
-            userTest.ShuffleSeed = nextShuffleSeed;
+                if(completedUserTestAttempts != null)
+                {
+                    nextShuffleSeed = completedUserTestAttempts.Count() + 1;
+                }
 
-            return await this.userTestRepository.AddAsync(userTest);
+                userTest.ShuffleSeed = nextShuffleSeed;
+
+                return await this.userTestRepository.AddAsync(userTest);
+            }
         }
 
         public async Task<UserTest> UpdateUserTest(UserTest userTest)

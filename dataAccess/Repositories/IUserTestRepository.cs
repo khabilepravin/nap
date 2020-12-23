@@ -12,6 +12,7 @@ namespace dataAccess.Repositories
         Task<UserTest> UpdateAsync(UserTest userTest);
         Task<UserTest> GetByIdAsync(Guid id);
         Task<int> GetTotalNumberOfQuestions(Guid userTestId);
-        Task<IEnumerable<UserTest>> GetByUserAndTestIdAsync(Guid userId, Guid testId);
+        Task<IEnumerable<UserTest>> GetCompletedByUserAndTestIdAsync(Guid userId, Guid testId);
+        Task<IEnumerable<UserTest>> GetInProgressByUserAndTestIdAsync(Guid userId, Guid testId);
     }
 }
