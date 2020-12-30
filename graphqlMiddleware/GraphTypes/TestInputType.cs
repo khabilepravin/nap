@@ -15,7 +15,9 @@ namespace graphqlMiddleware.GraphTypes
             Field<IdGraphType>("id");
             Field<StringGraphType>("status");
             Field<StringGraphType>("difficultyLevel");
-            Field<IntGraphType>("year");
+            Field<StringGraphType>("year");
+            Field<StringGraphType>("testType");
+
         }
     }
 }
