@@ -19,5 +19,6 @@ namespace models
         public string DifficultyLevel { get; set; }
         public string Year { get; set; }
         public string TestType { get; set; }
+        public string PublishedStatus { get; set; }
     }
 }
