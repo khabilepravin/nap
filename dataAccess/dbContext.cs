@@ -77,7 +77,8 @@ namespace dataAccess
                 entity.Property(e => e.TestType)
                         .HasColumnType("varchar(100)");
                 entity.Property(e => e.PublishedStatus)
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("varchar(100)")
+                        .HasDefaultValue("draft");
             });
 
             modelBuilder.Entity<Test>().Property(e => e.Id).ValueGeneratedOnAdd();
