@@ -80,7 +80,9 @@ namespace dataAccess.Repositories
             using(var db = base._dbContextFactory.Create())
             {
                 return await (from t in db.Test
-                              where t.TestType == testType && t.Year == year && t.PublishedStatus == publishedStatus
+                              where t.TestType == testType && 
+                              t.Year == year && 
+                              t.PublishedStatus == publishedStatus
                               select t).ToListAsync<Test>();
             }
         }

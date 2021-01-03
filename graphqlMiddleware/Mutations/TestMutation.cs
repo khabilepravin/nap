@@ -23,7 +23,8 @@ namespace graphqlMiddleware.Mutations
                             IAnswerLogic answerLogic,
                             IUserTestLogic userTestLogic,
                             IUserLogic userLogic,
-                            IPracticeTestLogic practiceTestLogic)
+                            IPracticeTestLogic practiceTestLogic,
+                            ITestLogic testLogic)
         {
             Field<TestType>(
                 "createTest",
@@ -54,7 +55,7 @@ namespace graphqlMiddleware.Mutations
                     ),
                     resolve: context =>
                     {
-                        var question = context.GetArgument<Question>("question");                        
+                        var question = context.GetArgument<Question>("question");
                         return questionLogic.AddQuestion(question);
                     });
 
@@ -208,18 +209,19 @@ namespace graphqlMiddleware.Mutations
                         return userTestLogic.UpdateUserTest(userTest);
                     });
 
-            //Field<UserType>(
-            //      "markTestAsComplete",
-            //      arguments: new QueryArguments(
-            //              new QueryArgument<IdGraphType> { Name = "userTestId" },
-            //              new QueryArgument<IntGraphType> { Name= "timeSpentOnTestInSeconds" }
-            //          ),
-            //      resolve: context =>
-            //      {
-            //          var userTestId = context.GetArgument<Guid>("userTestId");
-            //          var timeSpentOnTest = context.GetArgument<int>("timeSpentOnTestInSeconds");
-            //          return practiceTestLogic.MarkTestComplete(userTestId, timeSpentOnTest);
-            //      });
+            Field<BooleanGraphType>(
+         "updateTestStatus",
+         arguments: new QueryArguments(
+             new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "testId" },
+             new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "status" }
+             ),
+             resolve: context =>
+             {
+                 var testId = context.GetArgument<Guid>("testId");
+                 var status = context.GetArgument<string>("status");
+                 return testLogic.UpdateStatus(testId, status);
+             });
+
         }
     }
 }
