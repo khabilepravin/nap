@@ -36,17 +36,17 @@ namespace dataAccess
             optionsBuilder.UseLoggerFactory(_myLoggerFactory);
 
             #region Comment this region-code for database migration and update
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer("Data Source=(local);Initial Catalog=nap;Integrated Security=true;");
+            //if (!optionsBuilder.IsConfigured)
+            //{
+            //    optionsBuilder.UseSqlServer("Data Source=(local);Initial Catalog=nap;Integrated Security=true;");
 
-                this.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
-            }
+            //    this.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            //}
             #endregion
 
             #region Uncomment this region-code for database migration and update
             //Note: Put the connection string of your db            
-            //optionsBuilder.UseSqlServer("Data Source=(local);Initial Catalog=nap;Integrated Security=true;");
+            optionsBuilder.UseSqlServer("Data Source=(local);Initial Catalog=nap;Integrated Security=true;");
             #endregion
         }
 
@@ -139,6 +139,8 @@ namespace dataAccess
                         .HasColumnType("char(36)");
                 entity.Property(e => e.PlainText)
                     .HasColumnType("varchar(3000)");
+                entity.Property(e => e.Sequence)
+                .HasColumnType("int");
 
             });
             modelBuilder.Entity<Question>().Property(e => e.Id).ValueGeneratedOnAdd();
