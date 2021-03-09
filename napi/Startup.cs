@@ -74,7 +74,8 @@ namespace napclient
             services.AddGraphQL(options =>
             {
                 options.EnableMetrics = false;
-            }).AddSystemTextJson(seserializerSettings => { }, serializerSettings => { });
+            }).AddSystemTextJson(seserializerSettings => { }, serializerSettings => { })
+            .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = true);
 
             services.Configure<IISServerOptions>(options =>
             {
