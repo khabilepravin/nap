@@ -38,5 +38,10 @@ namespace logic
                 return existingUser;
             }
         }
+
+        public async Task<User> AddChildUser(User user)
+        {
+            return await userRepository.AddAsync(user);
+        }
     }
 }

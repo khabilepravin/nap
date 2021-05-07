@@ -95,7 +95,11 @@ namespace graphqlMiddleware.Queries
                             arguments: new QueryArguments(new QueryArgument<StringGraphType> { Name = "socialId" }),
                             resolve: context => userRepository.GetBySocialId(context.GetArgument<string>("socialId")));
 
-        }
+            Field<ListGraphType<UserType>>
+                ("usersByParentId",
+                arguments: new QueryArguments(new QueryArgument<IdGraphType> { Name = "parentUserId" }),
+                resolve: context => userRepository.GetByParentId(context.GetArgument<Guid>("parentUserId")));
 
+        }
     }
 }

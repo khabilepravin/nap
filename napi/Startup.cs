@@ -128,10 +128,7 @@ namespace napclient
             // add http for Schema at default url /graphql
             app.UseGraphQL<ISchema>("/graphql");
             // use graphql-playground at default url /ui/playground
-            app.UseGraphQLPlayground(new GraphQLPlaygroundOptions
-            {
-                Path = "/ui/playground"
-            });
+            app.UseGraphQLPlayground(path: "/ui/playground");
 
             app.UseGraphQLVoyager();
 

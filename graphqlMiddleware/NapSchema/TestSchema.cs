@@ -10,8 +10,8 @@ namespace graphqlMiddleware.NapSchema
     {
         public TestSchema(IServiceProvider provider) : base(provider)
         {
-            Query = provider.GetRequiredService<TestQuery>();
-            Mutation = provider.GetRequiredService<TestMutation>();
+            Query = provider.GetService(typeof(TestQuery)) as IObjectGraphType;
+            Mutation = provider.GetService(typeof(TestMutation)) as IObjectGraphType;
         }
     }
 }
