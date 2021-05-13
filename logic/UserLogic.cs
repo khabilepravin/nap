@@ -43,5 +43,10 @@ namespace logic
         {
             return await userRepository.AddAsync(user);
         }
+
+        public async Task<User> UpdateChildUser(User user)
+        {
+            return await userRepository.UpdateAsync(user);
+        }
     }
 }
