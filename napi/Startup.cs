@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using Microsoft.Extensions.Hosting;
 
 namespace napclient
 {
@@ -73,7 +74,8 @@ namespace napclient
             services.AddGraphQL(options =>
             {
                 options.EnableMetrics = false;
-            }).AddSystemTextJson(seserializerSettings => { }, serializerSettings => { });
+            }).AddSystemTextJson(seserializerSettings => { }, serializerSettings => { })
+            .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = true);
 
             services.Configure<IISServerOptions>(options =>
             {
@@ -104,7 +106,7 @@ namespace napclient
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseCors();
 
@@ -126,10 +128,7 @@ namespace napclient
             // add http for Schema at default url /graphql
             app.UseGraphQL<ISchema>("/graphql");
             // use graphql-playground at default url /ui/playground
-            app.UseGraphQLPlayground(new GraphQLPlaygroundOptions
-            {
-                Path = "/ui/playground"
-            });
+            app.UseGraphQLPlayground(path: "/ui/playground");
 
             app.UseGraphQLVoyager();
 

@@ -7,5 +7,7 @@ namespace logic
     {
         Task<User> AddAsync(User user);
         Task<User> CheckUserExistence(User user);
+        Task<User> AddChildUser(User user);
+        Task<User> UpdateChildUser(User user);
     }
 }

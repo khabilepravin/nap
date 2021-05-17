@@ -11,9 +11,9 @@ namespace graphqlMiddleware.GraphTypes
             Field(t => t.Id, type: typeof(IdGraphType));
             Field(t => t.Text);
             Field(t => t.Description);
-            Field(t => t.Sequence, type: typeof(IntGraphType));
+            Field(t => t.Sequence);
             Field(t => t.Subject);
-            Field(t => t.DurationMinutes, type: typeof(IntGraphType));
+            Field(t => t.DurationMinutes);
             Field(t => t.CreatedAt);
             Field(t => t.ModifiedAt);
             Field(t => t.CreatedByUser, type: typeof(IdGraphType));
@@ -22,6 +22,7 @@ namespace graphqlMiddleware.GraphTypes
             Field(t => t.DifficultyLevel);
             Field(t => t.Year);
             Field(t => t.TestType);
+            Field(t => t.PublishedStatus);
             Field<ListGraphType<QuestionType>>("questions",
                 resolve: context => questionRepository.GetQuestionsByTestIdAsync(context.Source.Id));
         }

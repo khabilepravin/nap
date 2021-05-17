@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Logging;
 using models;
 
@@ -75,6 +76,9 @@ namespace dataAccess
                         .HasColumnType("varchar(100)");
                 entity.Property(e => e.TestType)
                         .HasColumnType("varchar(100)");
+                entity.Property(e => e.PublishedStatus)
+                        .HasColumnType("varchar(100)")
+                        .HasDefaultValue("draft");
             });
 
             modelBuilder.Entity<Test>().Property(e => e.Id).ValueGeneratedOnAdd();
@@ -135,6 +139,8 @@ namespace dataAccess
                         .HasColumnType("char(36)");
                 entity.Property(e => e.PlainText)
                     .HasColumnType("varchar(3000)");
+                entity.Property(e => e.Sequence)
+                .HasColumnType("int");
 
             });
             modelBuilder.Entity<Question>().Property(e => e.Id).ValueGeneratedOnAdd();
@@ -165,16 +171,24 @@ namespace dataAccess
             {
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.UserId)
-                        .HasColumnType("char(36)");
+                        .HasColumnType("char(36)")
+                        .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
                 entity.Property(e => e.Status)
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("varchar(100)")
+                        .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
                 entity.Property(e => e.Mode)
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("varchar(50)")
+                        .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
                 entity.Property(e => e.TestId)
-                        .HasColumnType("char(36)");
-                entity.Property(e => e.CreatedAt);
+                        .HasColumnType("char(36)")
+                        .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
+                entity.Property(e => e.CreatedAt)
+                       .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
                 entity.Property(e => e.ModifiedAt);
-                entity.Property(e => e.ShuffleSeed);
+                entity.Property(e => e.ShuffleSeed)
+                     .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
+                entity.Property(e => e.TimeSpentOnTest);
+                entity.Property(e => e.IsComplete);
             });
             modelBuilder.Entity<UserTest>().Property(e => e.Id).ValueGeneratedOnAdd();
 

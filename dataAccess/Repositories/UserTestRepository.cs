@@ -78,13 +78,27 @@ namespace dataAccess.Repositories
             }
         }
 
-        public async Task<IEnumerable<UserTest>> GetByUserAndTestIdAsync(Guid userId, Guid testId)
+        public async Task<IEnumerable<UserTest>> GetCompletedByUserAndTestIdAsync(Guid userId, Guid testId)
         {
             using (var db = base._dbContextFactory.Create())
             {
                 return await (from ut in db.UserTest
-                        where ut.UserId == userId && ut.TestId == testId
+                        where ut.UserId == userId && 
+                        ut.TestId == testId &&
+                        ut.IsComplete
                         select ut).ToListAsync<UserTest>();
+            }
+        }
+
+        public async Task<IEnumerable<UserTest>> GetInProgressByUserAndTestIdAsync(Guid userId, Guid testId)
+        {
+            using (var db = base._dbContextFactory.Create())
+            {
+                return await (from ut in db.UserTest
+                              where ut.UserId == userId &&
+                              ut.TestId == testId &&
+                              ut.IsComplete == false
+                              select ut).ToListAsync<UserTest>();
             }
         }
     }

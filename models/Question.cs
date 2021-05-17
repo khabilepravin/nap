@@ -9,7 +9,7 @@ namespace models
         public string Description { get; set; }
         public string QuestionType { get; set; }
         public Guid TestId { get; set; }
-        public Int16 Sequence { get; set; }
+        public int Sequence { get; set; }
         public string ImageUrl { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime ModifiedAt { get; set; }

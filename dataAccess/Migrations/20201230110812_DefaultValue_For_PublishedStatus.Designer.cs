@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using dataAccess;
 
 namespace dataAccess.Migrations
 {
     [DbContext(typeof(dataContext))]
-    partial class dataContextModelSnapshot : ModelSnapshot
+    [Migration("20201230110812_DefaultValue_For_PublishedStatus")]
+    partial class DefaultValue_For_PublishedStatus
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -225,8 +227,8 @@ namespace dataAccess.Migrations
                     b.Property<string>("QuestionType")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Sequence")
-                        .HasColumnType("int");
+                    b.Property<short>("Sequence")
+                        .HasColumnType("smallint");
 
                     b.Property<string>("Status")
                         .HasColumnType("char(1)");
@@ -279,8 +281,8 @@ namespace dataAccess.Migrations
                     b.Property<string>("DifficultyLevel")
                         .HasColumnType("varchar(100)");
 
-                    b.Property<int>("DurationMinutes")
-                        .HasColumnType("int");
+                    b.Property<short>("DurationMinutes")
+                        .HasColumnType("smallint");
 
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
@@ -294,8 +296,8 @@ namespace dataAccess.Migrations
                         .HasColumnType("varchar(100)")
                         .HasDefaultValue("draft");
 
-                    b.Property<int>("Sequence")
-                        .HasColumnType("int");
+                    b.Property<short>("Sequence")
+                        .HasColumnType("smallint");
 
                     b.Property<string>("Status")
                         .HasColumnType("char(1)");

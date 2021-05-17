@@ -17,6 +17,8 @@ namespace graphqlMiddleware.GraphTypes
             Field(t => t.Status);
             Field(t => t.Mode);
             Field(t => t.ShuffleSeed);
+            Field(t => t.IsComplete);
+            Field(t => t.TimeSpentOnTest);
             Field<TestType>("test",
                 resolve: context => testRepository.GetByIdAsync(context.Source.TestId));
             Field<ListGraphType<QuestionType>>("questions",

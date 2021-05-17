@@ -9,7 +9,7 @@ namespace graphqlMiddleware.NapSchema
     {
         public UserSchema(IServiceProvider provider) : base(provider)
         {
-            Query = provider.GetRequiredService<UserQuery>();
+            Query = provider.GetService(typeof(UserQuery)) as IObjectGraphType;
         }
     }
 }

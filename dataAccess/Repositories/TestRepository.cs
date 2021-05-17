@@ -75,12 +75,14 @@ namespace dataAccess.Repositories
             }
         }
 
-        public async Task<IEnumerable<Test>> GetByTypeAndYear(string testType, string year)
+        public async Task<IEnumerable<Test>> GetByTypeAndYear(string testType, string year, string publishedStatus = "published")
         {
             using(var db = base._dbContextFactory.Create())
             {
                 return await (from t in db.Test
-                              where t.TestType == testType && t.Year == year
+                              where t.TestType == testType && 
+                              t.Year == year && 
+                              t.PublishedStatus == publishedStatus
                               select t).ToListAsync<Test>();
             }
         }

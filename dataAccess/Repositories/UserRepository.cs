@@ -4,6 +4,7 @@ using System;
 using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace dataAccess.Repositories
 {
@@ -32,14 +33,14 @@ namespace dataAccess.Repositories
             }
         }
 
-        public async Task<Guid> UpdateAsync(User user)
+        public async Task<User> UpdateAsync(User user)
         {
             using (var db = base._dbContextFactory.Create())
             {
                 user.ModifiedAt = DateTime.UtcNow;
                 db.User.Update(user);
                 await db.SaveChangesAsync();
-                return user.Id;
+                return user;
             }
         }
 
@@ -60,6 +61,16 @@ namespace dataAccess.Repositories
                 return await (from u in db.User
                               where u.Email == email
                               select u).FirstOrDefaultAsync<User>();
+            }
+        }
+
+        public async Task<IEnumerable<User>> GetByParentId(Guid id)
+        {
+            using(var db = base._dbContextFactory.Create())
+            {
+                return await (from u in db.User
+                              where u.ParentUserId == id
+                              select u).ToListAsync<User>();
             }
         }
     }

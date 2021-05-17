@@ -22,7 +22,9 @@ namespace graphqlMiddleware.Mutations
                             IQuestionLogic questionLogic,
                             IAnswerLogic answerLogic,
                             IUserTestLogic userTestLogic,
-                            IUserLogic userLogic)
+                            IUserLogic userLogic,
+                            IPracticeTestLogic practiceTestLogic,
+                            ITestLogic testLogic)
         {
             Field<TestType>(
                 "createTest",
@@ -53,7 +55,7 @@ namespace graphqlMiddleware.Mutations
                     ),
                     resolve: context =>
                     {
-                        var question = context.GetArgument<Question>("question");                        
+                        var question = context.GetArgument<Question>("question");
                         return questionLogic.AddQuestion(question);
                     });
 
@@ -158,7 +160,7 @@ namespace graphqlMiddleware.Mutations
                     resolve: context =>
                     {
                         var userTestRecord = context.GetArgument<UserTestRecord>("userTestRecord");
-                        return userTestRecordRepository.AddAsync(userTestRecord);
+                        return practiceTestLogic.RecordAnswer(userTestRecord);
                     });
 
             Field<BooleanGraphType>(
@@ -184,6 +186,28 @@ namespace graphqlMiddleware.Mutations
                       return userLogic.AddAsync(user);
                   });
 
+            Field<UserType>(
+                 "addChildUser",
+                    arguments: new QueryArguments(
+                        new QueryArgument<NonNullGraphType<UserInputType>> { Name = "user" }
+                        ),
+                      resolve: context =>
+                      {
+                          var user = context.GetArgument<User>("user");
+                          return userLogic.AddChildUser(user);
+                      });
+
+            Field<UserType>(
+                "updateChildUser",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<UserInputType>> { Name = "user" }
+                ),
+             resolve: context =>
+             {
+                 var user = context.GetArgument<User>("user");
+                 return userLogic.UpdateChildUser(user);
+             });
+
 
             Field<UserType>(
                   "checkUserExistence",
@@ -195,6 +219,30 @@ namespace graphqlMiddleware.Mutations
                       var user = context.GetArgument<User>("user");
                       return userLogic.CheckUserExistence(user);
                   });
+
+            Field<UserTestType>(
+                "updateUserTest",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<UserTestInputType>> { Name = "userTest" }
+                    ),
+                    resolve: context =>
+                    {
+                        var userTest = context.GetArgument<UserTest>("userTest");
+                        return userTestLogic.UpdateUserTest(userTest);
+                    });
+
+            Field<BooleanGraphType>(
+         "updateTestStatus",
+         arguments: new QueryArguments(
+             new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "testId" },
+             new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "status" }
+             ),
+             resolve: context =>
+             {
+                 var testId = context.GetArgument<Guid>("testId");
+                 var status = context.GetArgument<string>("status");
+                 return testLogic.UpdateStatus(testId, status);
+             });
 
         }
     }
