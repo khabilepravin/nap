@@ -9,7 +9,7 @@ namespace graphqlMiddleware.GraphTypes
         {
             Field(t => t.Id, type: typeof(IdGraphType));
             Field(t => t.FirstName);
-            Field(t => t.LastName);
+            Field(t => t.LastName, nullable:true);
             Field(t => t.Email);
             Field(t => t.UserName);
             Field(t => t.UserType);

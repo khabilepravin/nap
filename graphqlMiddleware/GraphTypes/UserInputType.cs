@@ -9,8 +9,8 @@ namespace graphqlMiddleware.GraphTypes
             Name = "UserInput";
             Field<IdGraphType>("id");
             Field<NonNullGraphType<StringGraphType>>("firstName");
-            Field<NonNullGraphType<StringGraphType>>("lastName");
-            Field<NonNullGraphType<StringGraphType>>("email");
+            Field<StringGraphType>("lastName");
+            Field<StringGraphType>("email");
             Field<NonNullGraphType<StringGraphType>>("userName");
             Field<StringGraphType>("userType");
             Field<StringGraphType>("password");
