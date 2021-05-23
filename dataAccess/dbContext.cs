@@ -141,6 +141,8 @@ namespace dataAccess
                     .HasColumnType("varchar(3000)");
                 entity.Property(e => e.Sequence)
                 .HasColumnType("int");
+                entity.Property(e => e.Category)
+                        .HasColumnType("varchar(200)");
 
             });
             modelBuilder.Entity<Question>().Property(e => e.Id).ValueGeneratedOnAdd();

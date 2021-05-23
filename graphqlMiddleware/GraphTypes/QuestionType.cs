@@ -28,6 +28,7 @@ namespace graphqlMiddleware.GraphTypes
             Field(t => t.FileId, type: typeof(IdGraphType));
             Field(t => t.PlainText);
             Field(t => t.DifficultyLevel, nullable:true, typeof(StringGraphType));
+            Field(t => t.Category, nullable: true, typeof(StringGraphType));
             Field<ListGraphType<AnswerType>>("answers",
                 arguments: new QueryArguments(new QueryArgument<IntGraphType> { Name = "shuffleSeed" }),
                 resolve: context => answerLogic.GetByQuestionIdAndShuffleSeedAsync(context.Source.Id, context.GetArgument<int>("shuffleSeed")));

@@ -17,6 +17,7 @@ namespace models
         public Guid ModifiedByUser { get; set; }
         public string Status { get; set; }
         public string DifficultyLevel { get; set; }
+        public string Category { get; set; }
         public Guid FileId { get; set; }
         public string PlainText { get; set; }
     }

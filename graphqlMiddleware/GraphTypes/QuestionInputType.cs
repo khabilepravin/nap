@@ -20,6 +20,7 @@ namespace graphqlMiddleware.GraphTypes
             Field<StringGraphType>("status");
             Field<StringGraphType>("difficultyLevel");
             Field<IdGraphType>("fileId");
+            Field<StringGraphType>("category");
         }
     }
 }
