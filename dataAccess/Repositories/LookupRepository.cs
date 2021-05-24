@@ -50,5 +50,17 @@ namespace dataAccess.Repositories
                               select v).ToListAsync<LookupValue>();
             }
         }
+
+        public async Task<IEnumerable<LookupValue>> GetValuesByGroupCodeAsync(string groupCode)
+        {
+            using(var db = base._dbContextFactory.Create())
+            {
+                return await (from v in db.LookupValue
+                              join g in db.LookupGroup
+                              on v.GroupId equals g.Id
+                              where g.Code == groupCode
+                              select v).ToListAsync<LookupValue>();
+            }
+        }
     }
 }
