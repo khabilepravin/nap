@@ -9,8 +9,8 @@ namespace graphqlMiddleware.Queries
 {
     public class TestQuery : ObjectGraphType
     {
-        
-        public TestQuery(ITestRepository testRepository, 
+
+        public TestQuery(ITestRepository testRepository,
                         IQuestionRepository questionRepository,
                         ILookupRepository lookupRepository,
                         IAnswerRepository answerRepository,
@@ -24,13 +24,13 @@ namespace graphqlMiddleware.Queries
 
             Field<ListGraphType<TestType>>(
                     "testsBySubject",
-                    arguments: new QueryArguments(new QueryArgument<StringGraphType> { Name = "subject" }), 
+                    arguments: new QueryArguments(new QueryArgument<StringGraphType> { Name = "subject" }),
                     resolve: context => testRepository.GetBySubjectAsync(context.GetArgument<string>("subject"))
                 );
 
             Field<TestType>(
                     "test",
-                    arguments: new QueryArguments(new QueryArgument<IdGraphType> { Name="id"}),
+                    arguments: new QueryArguments(new QueryArgument<IdGraphType> { Name = "id" }),
                     resolve: context => testRepository.GetByIdAsync(context.GetArgument<Guid>("id"))
                 );
 
@@ -59,7 +59,7 @@ namespace graphqlMiddleware.Queries
 
             Field<ListGraphType<AnswerType>>(
                     "answers",
-                    arguments: new QueryArguments(new QueryArgument<IdGraphType> { Name="questionId"}),
+                    arguments: new QueryArguments(new QueryArgument<IdGraphType> { Name = "questionId" }),
                     resolve: context => answerRepository.GetByQuestionIdAsync(context.GetArgument<Guid>("questionId"))
                 );
 
@@ -78,16 +78,16 @@ namespace graphqlMiddleware.Queries
             Field<UserTestRecordType>(
                 "userTestRecord",
                 arguments: new QueryArguments(new QueryArgument<IdGraphType> { Name = "userTestId" },
-                                               new QueryArgument<IdGraphType> { Name ="questionId" }),
-                resolve: context => userTestRecordRepository.GetByUserTestAndQuestionId(context.GetArgument<Guid>("userTestId"), 
+                                               new QueryArgument<IdGraphType> { Name = "questionId" }),
+                resolve: context => userTestRecordRepository.GetByUserTestAndQuestionId(context.GetArgument<Guid>("userTestId"),
                 context.GetArgument<Guid>("questionId"))
             );
 
             Field<ListGraphType<TestType>>
                             ("testsByTypeAndYear",
-                            arguments: new QueryArguments(new QueryArgument<StringGraphType> { Name="testType"},
-                                                            new QueryArgument<StringGraphType> { Name="year"}),
-                            resolve: context => testRepository.GetByTypeAndYear(context.GetArgument<string>("testType"), 
+                            arguments: new QueryArguments(new QueryArgument<StringGraphType> { Name = "testType" },
+                                                            new QueryArgument<StringGraphType> { Name = "year" }),
+                            resolve: context => testRepository.GetByTypeAndYear(context.GetArgument<string>("testType"),
                             context.GetArgument<string>("year")));
 
             Field<UserType>
@@ -100,6 +100,10 @@ namespace graphqlMiddleware.Queries
                 arguments: new QueryArguments(new QueryArgument<IdGraphType> { Name = "parentUserId" }),
                 resolve: context => userRepository.GetByParentId(context.GetArgument<Guid>("parentUserId")));
 
+            Field<ListGraphType<LookupValueType>>
+            ("lookupValuesByCode",
+            arguments: new QueryArguments(new QueryArgument<StringGraphType> { Name = "lookupGroupCode" }),
+            resolve: context => lookupRepository.GetValuesByGroupCodeAsync(context.GetArgument<String>("lookupGroupCode")));
         }
     }
 }
