@@ -3,10 +3,8 @@ using GraphQL;
 using GraphQL.Types;
 using graphqlMiddleware.GraphTypes;
 using logic;
-using Microsoft.AspNetCore.Http;
 using models;
 using System;
-using System.IO;
 
 namespace graphqlMiddleware.Mutations
 {

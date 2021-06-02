@@ -2,7 +2,7 @@
 using GraphQL;
 using GraphQL.Types;
 using graphqlMiddleware.GraphTypes;
-using models;
+using logic;
 using System;
 
 namespace graphqlMiddleware.Queries
@@ -16,7 +16,8 @@ namespace graphqlMiddleware.Queries
                         IAnswerRepository answerRepository,
                         IUserTestRepository userTestRepository,
                         IUserTestRecordRepository userTestRecordRepository,
-                        IUserRepository userRepository)
+                        IUserRepository userRepository,
+                        IExplanationLogic explanationLogic)
         {
             Field<ListGraphType<TestType>>
                 ("tests",
@@ -63,6 +64,12 @@ namespace graphqlMiddleware.Queries
                     resolve: context => answerRepository.GetByQuestionIdAsync(context.GetArgument<Guid>("questionId"))
                 );
 
+            //Field<ListGraphType<ExplanationType>>(
+            //        "explanations",
+            //        arguments: new QueryArguments(new QueryArgument<IdGraphType> { Name = "questionId" }),
+            //        resolve: context => explanationLogic.GetByQuestionId(context.GetArgument<Guid>("questionId"))
+            //    );
+
             Field<UserTestType>(
              "userTestById",
                 arguments: new QueryArguments(new QueryArgument<IdGraphType> { Name = "id" }),
@@ -101,9 +108,14 @@ namespace graphqlMiddleware.Queries
                 resolve: context => userRepository.GetByParentId(context.GetArgument<Guid>("parentUserId")));
 
             Field<ListGraphType<LookupValueType>>
-            ("lookupValuesByCode",
-            arguments: new QueryArguments(new QueryArgument<StringGraphType> { Name = "lookupGroupCode" }),
-            resolve: context => lookupRepository.GetValuesByGroupCodeAsync(context.GetArgument<String>("lookupGroupCode")));
+                    ("lookupValuesByCode",
+                    arguments: new QueryArguments(new QueryArgument<StringGraphType> { Name = "lookupGroupCode" }),
+                    resolve: context => lookupRepository.GetValuesByGroupCodeAsync(context.GetArgument<String>("lookupGroupCode")));
+
+            Field<ListGraphType<ExplanationType>>
+                        ("explanationsByQuestionId",
+                        arguments: new QueryArguments(new QueryArgument<IdGraphType> { Name = "questionId" }),
+                        resolve: context => explanationLogic.GetByQuestionId(context.GetArgument<Guid>("questionId")));
         }
     }
 }

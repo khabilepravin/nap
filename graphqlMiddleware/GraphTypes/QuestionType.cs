@@ -9,7 +9,7 @@ namespace graphqlMiddleware.GraphTypes
 {
     public class QuestionType : ObjectGraphType<Question>
     {
-        public QuestionType(IExplanationRepository explanationRepository,
+        public QuestionType(IExplanationLogic explanationLogic,
                             IQuestionFileRepository questionImageRepository,
                             IAnswerLogic answerLogic)
         {
@@ -33,7 +33,7 @@ namespace graphqlMiddleware.GraphTypes
                 arguments: new QueryArguments(new QueryArgument<IntGraphType> { Name = "shuffleSeed" }),
                 resolve: context => answerLogic.GetByQuestionIdAndShuffleSeedAsync(context.Source.Id, context.GetArgument<int>("shuffleSeed")));
             Field<ListGraphType<ExplanationType>>("explanations",
-                resolve: context => explanationRepository.GetByQuestionId(context.Source.Id));
+                resolve: context => explanationLogic.GetByQuestionId(context.Source.Id));
             Field<ListGraphType<QuestionFileType>>("images",
                 resolve: context => questionImageRepository.GetQuestionFiles(context.Source.Id, Constants.ImageFileTypes));
             Field<ListGraphType<QuestionFileType>>("audio",

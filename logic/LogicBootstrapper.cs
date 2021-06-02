@@ -13,8 +13,7 @@ namespace logic
             containerBuilder.RegisterType<PracticeTestLogic>().As<IPracticeTestLogic>().SingleInstance();
             containerBuilder.RegisterType<UserLogic>().As<IUserLogic>().SingleInstance();
             containerBuilder.RegisterType<TestLogic>().As<ITestLogic>().SingleInstance();
-
-
+            containerBuilder.RegisterType<ExplanationLogic>().As<IExplanationLogic>().SingleInstance();
         }
     }
 }
