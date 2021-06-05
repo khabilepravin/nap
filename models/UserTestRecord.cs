@@ -10,5 +10,6 @@ namespace models
         public Guid AnswerId { get; set; }
         public bool IsCorrect { get; set; }
         public string AnswerText { get; set; }
+        public bool IsActive { get; set; }
     }
 }
