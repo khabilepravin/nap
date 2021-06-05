@@ -32,6 +32,7 @@ namespace dataAccess.Repositories
                 {
                     recordInstance.AnswerId = userTestRecord.AnswerId;
                     recordInstance.IsCorrect = userTestRecord.IsCorrect;
+                    recordInstance.AnswerText = userTestRecord.AnswerText;
                     return await UpdateAsync(recordInstance);
                 }
             }

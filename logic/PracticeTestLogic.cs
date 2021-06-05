@@ -28,13 +28,17 @@ namespace logic
         {
             var questionAnswers = await this.answerRepository.GetByQuestionIdAsync(textAnswerRecord.QuestionId);
 
-            Answer selectedAnswer = null;
+            //Answer selectedAnswer = null;
+            Guid selectedAnswerId = Guid.Empty;
+            bool isCorrect = false;
 
             foreach(var answer in questionAnswers)
             {
-                if(string.Compare(answer.Text, textAnswerRecord.UserAnswerText, ignoreCase:false) == 0)
+                if(string.Compare(answer.Text, textAnswerRecord.UserAnswerText, ignoreCase:true) == 0)
                 {
-                    selectedAnswer = answer;
+                    //selectedAnswer = answer;
+                    isCorrect = true;
+                    selectedAnswerId = answer.Id;
                     break;
                 }
                 else
@@ -45,8 +49,8 @@ namespace logic
 
             await this.userTestRecordRepository.AddAsync(new models.UserTestRecord
             {
-                AnswerId = selectedAnswer == null ? Guid.Empty :  selectedAnswer.Id,
-                IsCorrect = selectedAnswer == null ? false : selectedAnswer.IsCorrect,
+                AnswerId = selectedAnswerId,
+                IsCorrect = isCorrect,
                 QuestionId = textAnswerRecord.QuestionId,
                 UserTestId = textAnswerRecord.UserTestId,
                 AnswerText = textAnswerRecord.UserAnswerText
