@@ -6,8 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="6.2.0" />
-    <PackageReference Include="AWSSDK.Polly" Version="3.7.0.17" />
-    <PackageReference Include="Google.Cloud.TextToSpeech.V1" Version="2.1.0" />
+    <PackageReference Include="Google.Cloud.TextToSpeech.V1" Version="2.2.0" />
   </ItemGroup>
 
 </Project>
